@@ -1,3 +1,4 @@
+from . import amq
 from . import ssh
 from . import logs
 from . import pids
