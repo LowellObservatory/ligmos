@@ -16,6 +16,8 @@ Further description.
 from __future__ import division, print_function, absolute_import
 
 import stomp
+import xmlschema as xmls
+import pkg_resources as pkgr
 
 
 class amqHelper():
@@ -89,3 +91,20 @@ class amqHelper():
         info = "\nMessage sent to {} on topic {}:\n{}\n"
         if debug is True:
             print(info.format(self.host, topic, message))
+
+
+def checkSchema(topicname):
+    """
+    """
+    # Put together the expected schema name
+    sn = 'schemas/' + topicname + '.xsd'
+    try:
+        # Define the schema we'll use to convert datatypes. If it doesn't
+        #   exist, catch the exception and return 'None' to show that
+        #   the schema didn't exist where it was expected
+        sf = pkgr.resource_filename('ligmos', sn)
+        schema = xmls.XMLSchema(sf)
+        return schema
+    except xmls.XMLSchemaURLError:
+        print("Schema for topic %s not found!" % (topicname))
+        return None
