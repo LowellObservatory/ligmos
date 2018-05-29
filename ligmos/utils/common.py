@@ -134,6 +134,74 @@ class HowtoStopNicely():
         self.halt = True
 
 
+class InstrumentMonitoring():
+    """
+    """
+    def __init__(self, conf=None, parseHardFail=True):
+        # This should mirror what's in ALL of the differnt .conf files.
+        # Assign them first just to make sure they always exist
+        self.name = ''
+        self.brokertype = 'ActiveMQ'
+        self.brokerhost = ''
+        self.brokerport = 61613
+        self.brokertopic = ''
+        self.influxdbname = ''
+        self.enabled = False
+        if conf is not None:
+            for key in self.__dict__:
+                try:
+                    if (key.lower() == 'enabled'):
+                        setattr(self, key, conf.getboolean(key))
+                    elif key.lower() == 'influxdbname':
+                        if conf[key].lower() == 'none':
+                            # SPECIAL handling to capture "None" -> None
+                            setattr(self, key, None)
+                        else:
+                            setattr(self, key, conf[key])
+                    elif key.lower().startswith('device'):
+                        pass
+                        if key.lower().endswith('host'):
+                            setattr(self, key, conf[key])
+                        elif (key.lower().endswith('ports')) or\
+                             (key.lower().endswith('types')):
+                            setattr(self, key, conf[key].split(','))
+                    else:
+                        setattr(self, key, conf[key])
+                except KeyError as err:
+                    if parseHardFail is True:
+                        nicerExit(err)
+                    else:
+                        key = err.args[0]
+                        setattr(self, key, None)
+                print("\t%s = %s (%s)" % (key, getattr(self, key),
+                                          type(getattr(self, key))))
+
+    def addPass(self, password=None, debug=False):
+        """Add in password information from a separate file for ``user``.
+
+        This small function allows the breaking up of usernames from passwords
+        into separate .conf files, mainly for a little extra security when
+        posting this all to GitHub.
+
+        .. seealso::
+            ``passwords.conf-TEMPLATE`` in the examples directory.
+
+        Args:
+            password (conf (:class:`configparser.ConfigParser`, optional)
+                Configuration information parsed from a .conf file.
+                Defaults to None.  If password is not None, then a
+                ``password`` attribute is created if matching usernames
+                are found.
+        debug (:obj:`bool`, optional)
+            Bool to trigger additional debugging outputs. Defaults to False.
+        """
+        if password is None:
+            if debug is True:
+                print("Password is empty!!")
+        else:
+            self.passw = password
+
+
 class InstrumentHost():
     """Contains the information to connect and find data on remote machines.
 
