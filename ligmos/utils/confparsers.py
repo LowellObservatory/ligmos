@@ -20,6 +20,41 @@ except ImportError:
 from . import common
 
 
+def parseMonConf(filename, debug=False, parseHardFail=True):
+    """
+    Parse the .conf file that gives the setup per instrument
+    Returns an ordered dict of Instrument classes that the conf file
+    has 'enabled=True'
+    """
+    try:
+        config = conf.SafeConfigParser()
+        config.read_file(open(filename, 'r'))
+    except IOError as err:
+        common.nicerExit(err)
+
+    print("Found the following instruments in the configuration file:")
+    sections = config.sections()
+    tsections = ' '.join(sections)
+    print("%s\n" % tsections)
+
+    print("Attempting to assign the configuration parameters...")
+    inlist = []
+    for each in sections:
+        print("Applying '%s' section of conf. file..." % (each))
+        inlist.append(common.InstrumentMonitoring(conf=config[each],
+                                                  parseHardFail=parseHardFail))
+
+    # Making a dict of *just* the active instruments
+    idict = OrderedDict()
+    for inst in inlist:
+        # Need to add None as well to help for the case where I forget
+        #   to put an 'enabled' line in a new flavor of conf file...
+        if inst.enabled is True or inst.enabled is None:
+            idict.update({inst.name: inst})
+
+    return idict
+
+
 def parseInstConf(filename, debug=False, parseHardFail=True):
     """
     Parse the .conf file that gives the setup per instrument

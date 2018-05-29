@@ -147,6 +147,11 @@ class InstrumentMonitoring():
         self.brokertopic = ''
         self.influxdbname = ''
         self.enabled = False
+
+        # Grow our attributes to fit the exact number of "deviceN*" entries
+        #   because if they're not defined above, they won't be verified/set
+        #   below and we'll never actually get the values into our class
+
         if conf is not None:
             for key in self.__dict__:
                 try:
