@@ -97,6 +97,10 @@ def parsePassConf(filename, idict, debug=False):
     Returns an ordered dict of results, that then need to be associated with
     the idict returned from parseInstConf.
     """
+    if filename is None:
+        print("No password file given!")
+        return idict
+
     try:
         config = conf.SafeConfigParser()
         config.read_file(open(filename, 'r'))

@@ -52,9 +52,12 @@ class amqHelper():
             self.conn.start()
             self.conn.connect()
 
-            for i, activeTopic in enumerate(self.topics):
-                print("Subscribing to %s" % (activeTopic))
-                self.conn.subscribe("/topic/" + activeTopic, baseid+i)
+            if type(self.topics) == str:
+                self.conn.subscribe("/topic/" + self.topics, baseid)
+            elif type(self.topics) == list:
+                for i, activeTopic in enumerate(self.topics):
+                    print("Subscribing to %s" % (activeTopic))
+                    self.conn.subscribe("/topic/" + activeTopic, baseid+i)
         except stomp.exception.NotConnectedException as err:
             self.conn = None
             print("STOMP.py not connected!")

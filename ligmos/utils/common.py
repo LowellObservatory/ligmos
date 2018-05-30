@@ -147,12 +147,25 @@ class InstrumentMonitoring():
         self.brokertopic = ''
         self.influxdbname = ''
         self.enabled = False
-
-        # Grow our attributes to fit the exact number of "deviceN*" entries
-        #   because if they're not defined above, they won't be verified/set
-        #   below and we'll never actually get the values into our class
+        # Support up to 4 device hostnames.
+        #  TODO: Add a method to add these automagically
+        #  based on the contents of the parsed configuration file.
+        self.device1host = ''
+        self.device1ports = []
+        self.device1types = []
+        self.device2host = ''
+        self.device2ports = []
+        self.device2types = []
+        self.device3host = ''
+        self.device3ports = []
+        self.device3types = []
+        self.device4host = ''
+        self.device4ports = []
+        self.device4types = []
 
         if conf is not None:
+            # This will loop over all the properties defined above!
+            #   If they're not defined, they'll just be ignored.
             for key in self.__dict__:
                 try:
                     if (key.lower() == 'enabled'):
@@ -164,11 +177,16 @@ class InstrumentMonitoring():
                         else:
                             setattr(self, key, conf[key])
                     elif key.lower().startswith('device'):
-                        pass
                         if key.lower().endswith('host'):
                             setattr(self, key, conf[key])
-                        elif (key.lower().endswith('ports')) or\
-                             (key.lower().endswith('types')):
+                        elif key.lower().endswith('ports'):
+                            ports = conf[key].split(',')
+                            # Make them integers
+                            #  Should probably handle conversion exceptions...
+                            #   Someday.
+                            ports = [int(each) for each in ports]
+                            setattr(self, key, ports)
+                        elif key.lower().endswith('types'):
                             setattr(self, key, conf[key].split(','))
                     else:
                         setattr(self, key, conf[key])
