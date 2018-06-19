@@ -34,6 +34,20 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
 
     print("Found the following instruments in the configuration file:")
     sections = config.sections()
+
+    # We have a common section, treat it special. Should always be there.
+    #   Might have to deal with capitalization at some point.
+    try:
+        csec = config['common']
+        # Use it to fill the common/core data structure
+        commconfig = common.commonParams(conf=csec)
+    except KeyError:
+        print("No 'common' configuration section found!")
+        commconfig = None
+
+    # Now purge the common section out so it doesn't get confused for an inst.
+    sections.remove('common')
+
     tsections = ' '.join(sections)
     print("%s\n" % tsections)
 
@@ -42,7 +56,8 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
     for each in sections:
         print("Applying '%s' section of conf. file..." % (each))
         inlist.append(common.InstrumentMonitoring(conf=config[each],
-                                                  parseHardFail=parseHardFail))
+                                                  parseHardFail=parseHardFail,
+                                                  common=commconfig))
 
     # Making a dict of *just* the active instruments
     idict = OrderedDict()

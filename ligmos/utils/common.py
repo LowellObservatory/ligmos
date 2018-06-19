@@ -134,10 +134,43 @@ class HowtoStopNicely():
         self.halt = True
 
 
+class commonParams():
+    """
+    """
+    def __init__(self, conf=None):
+        self.brokertype = ''
+        self.brokerhost = ''
+        self.brokerport = None
+        self.brokeruser = ''
+        self.influxhost = ''
+        self.influxport = None
+        self.influxuser = ''
+        self.influxdbname = ''
+
+        if conf is not None:
+            # This will loop over all the properties defined above!
+            #   If they're not defined, they'll just be ignored.
+            for key in self.__dict__:
+                try:
+                    if key.lower() == 'influxdbname':
+                        if conf[key].lower() == 'none':
+                            # SPECIAL handling to capture "None" -> None
+                            setattr(self, key, None)
+                        else:
+                            setattr(self, key, conf[key])
+                    else:
+                        setattr(self, key, conf[key])
+                except KeyError as err:
+                    nicerExit(err)
+
+                print("\t%s = %s (%s)" % (key, getattr(self, key),
+                                          type(getattr(self, key))))
+
+
 class InstrumentMonitoring():
     """
     """
-    def __init__(self, conf=None, parseHardFail=True):
+    def __init__(self, conf=None, parseHardFail=True, common=None):
         # This should mirror what's in ALL of the differnt .conf files.
         # Assign them first just to make sure they always exist
         self.name = ''
@@ -162,6 +195,11 @@ class InstrumentMonitoring():
         self.device4host = ''
         self.device4ports = []
         self.device4types = []
+
+        if common is not None:
+            self.commonconfig = common
+        else:
+            self.commonconfig = None
 
         if conf is not None:
             # This will loop over all the properties defined above!
