@@ -167,18 +167,13 @@ class commonParams():
                                           type(getattr(self, key))))
 
 
-class InstrumentMonitoring():
+class deviceMonitoring():
     """
     """
     def __init__(self, conf=None, parseHardFail=True, common=None):
         # This should mirror what's in ALL of the differnt .conf files.
         # Assign them first just to make sure they always exist
         self.name = ''
-        self.brokertype = 'ActiveMQ'
-        self.brokerhost = ''
-        self.brokerport = 61613
-        self.brokertopic = ''
-        self.influxdbname = ''
         self.enabled = False
         # Support up to 4 device hostnames.
         #  TODO: Add a method to add these automagically
