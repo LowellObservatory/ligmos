@@ -55,9 +55,9 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
     inlist = []
     for each in sections:
         print("Applying '%s' section of conf. file..." % (each))
-        inlist.append(common.InstrumentMonitoring(conf=config[each],
-                                                  parseHardFail=parseHardFail,
-                                                  common=commconfig))
+        inlist.append(common.deviceMonitoring(conf=config[each],
+                                              parseHardFail=parseHardFail,
+                                              common=commconfig))
 
     # Making a dict of *just* the active instruments
     idict = OrderedDict()
@@ -67,6 +67,7 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
         if inst.enabled is True or inst.enabled is None:
             idict.update({inst.name: inst})
 
+    # return idict, commconfig
     return idict
 
 
