@@ -20,7 +20,7 @@ except ImportError:
 from . import common
 
 
-def parseMonConf(filename, debug=False, parseHardFail=True):
+def parseConfFile(filename, debug=False):
     """
     Parse the .conf file that gives the setup per instrument
     Returns an ordered dict of Instrument classes that the conf file
@@ -32,10 +32,11 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
     except IOError as err:
         common.nicerExit(err)
 
-    print("Found the following instruments in the configuration file:")
+    print("Found the following sections in the configuration file:")
     sections = config.sections()
 
-    # We have a common section, treat it special. Should always be there.
+    # We have a common section, so treat it real nice.
+    #   May or may not be in there depending on the conf file.
     #   Might have to deal with capitalization at some point.
     try:
         csec = config['common']
@@ -46,14 +47,24 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
         commconfig = None
 
     # Now purge the common section out so it doesn't get confused for an inst.
+    #   If it was found and removed, == True; else False
     sections.remove('common')
 
     tsections = ' '.join(sections)
-    print("%s\n" % tsections)
+    if debug is True:
+        print("%s\n" % tsections)
+
+    return config, commconfig
+
+
+def parseMonConf(filename, debug=False, parseHardFail=True):
+    """
+    """
+    config, commconfig = parseConfFile(filename)
 
     print("Attempting to assign the configuration parameters...")
     inlist = []
-    for each in sections:
+    for each in config.sections:
         print("Applying '%s' section of conf. file..." % (each))
         inlist.append(common.deviceMonitoring(conf=config[each],
                                               parseHardFail=parseHardFail,
@@ -73,24 +84,12 @@ def parseMonConf(filename, debug=False, parseHardFail=True):
 
 def parseInstConf(filename, debug=False, parseHardFail=True):
     """
-    Parse the .conf file that gives the setup per instrument
-    Returns an ordered dict of Instrument classes that the conf file
-    has 'enabled=True'
     """
-    try:
-        config = conf.SafeConfigParser()
-        config.read_file(open(filename, 'r'))
-    except IOError as err:
-        common.nicerExit(err)
-
-    print("Found the following instruments in the configuration file:")
-    sections = config.sections()
-    tsections = ' '.join(sections)
-    print("%s\n" % tsections)
+    config, commconfig = parseConfFile(filename)
 
     print("Attempting to assign the configuration parameters...")
     inlist = []
-    for each in sections:
+    for each in config.sections:
         print("Applying '%s' section of conf. file..." % (each))
         inlist.append(common.InstrumentHost(conf=config[each],
                                             parseHardFail=parseHardFail))
@@ -108,25 +107,9 @@ def parseInstConf(filename, debug=False, parseHardFail=True):
 
 def parsePassConf(filename, idict, debug=False):
     """
-    Parse the .conf file that gives the passwords per user.
-
-    Returns an ordered dict of results, that then need to be associated with
-    the idict returned from parseInstConf.
     """
-    if filename is None:
-        print("No password file given!")
-        return idict
-
-    try:
-        config = conf.SafeConfigParser()
-        config.read_file(open(filename, 'r'))
-    except IOError as err:
-        common.nicerExit(err)
-
-    print("Found the following usernames in the password file:")
-    sections = config.sections()
-    tsections = ' '.join(sections)
-    print("%s\n" % tsections)
+    # Not supporting a [common] section for passwords so ditch it
+    config, _ = parseConfFile(filename)
 
     for each in idict.keys():
         # Get the username for this instrument
