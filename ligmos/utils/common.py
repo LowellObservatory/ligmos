@@ -167,188 +167,24 @@ class commonParams():
                                           type(getattr(self, key))))
 
 
-class deviceMonitoring():
+class baseTarget(object):
     """
+    Empty class that gets inherited by everyone needing to add a password
+    associated with the host parameter or needing to add in a common block.
     """
-    def __init__(self, conf=None, parseHardFail=True, common=None):
-        # This should mirror what's in ALL of the differnt .conf files.
-        # Assign them first just to make sure they always exist
-        self.name = ''
-        self.enabled = False
-        # Support up to 4 device hostnames.
-        #  TODO: Add a method to add these automagically
-        #  based on the contents of the parsed configuration file.
-        self.device1host = ''
-        self.device1ports = []
-        self.device1types = []
-        self.device2host = ''
-        self.device2ports = []
-        self.device2types = []
-        self.device3host = ''
-        self.device3ports = []
-        self.device3types = []
-        self.device4host = ''
-        self.device4ports = []
-        self.device4types = []
-
-        if common is not None:
-            self.commonconfig = common
-        else:
-            self.commonconfig = None
-
-        if conf is not None:
-            # This will loop over all the properties defined above!
-            #   If they're not defined, they'll just be ignored.
-            for key in self.__dict__:
-                try:
-                    if (key.lower() == 'enabled'):
-                        setattr(self, key, conf.getboolean(key))
-                    elif key.lower() == 'influxdbname':
-                        if conf[key].lower() == 'none':
-                            # SPECIAL handling to capture "None" -> None
-                            setattr(self, key, None)
-                        else:
-                            setattr(self, key, conf[key])
-                    elif key.lower().startswith('device'):
-                        if key.lower().endswith('host'):
-                            setattr(self, key, conf[key])
-                        elif key.lower().endswith('ports'):
-                            ports = conf[key].split(',')
-                            # Make them integers
-                            #  Should probably handle conversion exceptions...
-                            #   Someday.
-                            ports = [int(each) for each in ports]
-                            setattr(self, key, ports)
-                        elif key.lower().endswith('types'):
-                            setattr(self, key, conf[key].split(','))
-                    else:
-                        setattr(self, key, conf[key])
-                except KeyError as err:
-                    if parseHardFail is True:
-                        nicerExit(err)
-                    else:
-                        key = err.args[0]
-                        setattr(self, key, None)
-                print("\t%s = %s (%s)" % (key, getattr(self, key),
-                                          type(getattr(self, key))))
-
-    def addPass(self, password=None, debug=False):
-        """Add in password information from a separate file for ``user``.
-
-        This small function allows the breaking up of usernames from passwords
-        into separate .conf files, mainly for a little extra security when
-        posting this all to GitHub.
-
-        .. seealso::
-            ``passwords.conf-TEMPLATE`` in the examples directory.
-
-        Args:
-            password (conf (:class:`configparser.ConfigParser`, optional)
-                Configuration information parsed from a .conf file.
-                Defaults to None.  If password is not None, then a
-                ``password`` attribute is created if matching usernames
-                are found.
-        debug (:obj:`bool`, optional)
-            Bool to trigger additional debugging outputs. Defaults to False.
-        """
-        if password is None:
-            if debug is True:
-                print("Password is empty!!")
-        else:
-            self.passw = password
-
-
-class InstrumentHost():
-    """Contains the information to connect and find data on remote machines.
-
-    This class is a workhorse, containing every piece of information needed
-    to connect to remote machines, find data underneath some source directory
-    matching a pattern, and the knowledge of where that data should go on the
-    local host machine if archiving is being performed.
-
-    All of these are set either manually or via a
-    :class:`configparser.ConfigParser` configuration object
-    returned by :func:`dataservants.utils.confparsers.parseInstConf` and
-    :func:`dataservants.utils.confparsers.parsePassConf`.
-
-    .. seealso::
-        ``archiving.conf-TEMPLATE``, ``alfred.conf-TEMPLATE`` in the
-        examples directory.
-
-    Args:
-        conf (:class:`configparser.ConfigParser`, optional)
-            Configuration information parsed from a .conf file.
-            Defaults to None.  If conf is not None, then the configuration
-            is applied to the attributes via :func:`setattr` on self.  If the
-            attribute doesn't exist in self, and ``parseHardFail`` is True,
-            then :class:`KeyError` is raised.
-        parseHardFail (:obj:`bool`)
-            If True, and an attribute in ``conf`` does not exist in self,
-            :class:`KeyError` is raised (not caught) causing an Exception.
-            If False, the attribute is just skipped.
-
-            .. note::
-                This allows the use of a subset of options to be specified
-                but the use of the same confparser, as is done for the .conf
-                files for both :mod:`dataservants.alfred` and
-                :mod:`dataservants.wadsworth`.
-
-    Attributes:
-        name (:obj:`str`)
-            Nicer name to call specified host in output logs.
-        host (:obj:`str`)
-            Remote machine hostname to connect to. Could be an IP address too.
-        port (:obj:`int`)
-            Port in which to access ``host`` via SSH.
-        user (:obj:`str`)
-            Username to use when logging in to ``host``
-        srcdir (:obj:`str`)
-            Directory on remote host to look for data
-        destdir (:obj:`str`)
-            Directory on **local** host in which to place data being archived
-        dirmask (:obj:`str`)
-            Regular expression pattern to match against directories found
-            that could contain data.
-
-            .. seealso::
-                :func:`dataservants.utils.files.getDirListing`
-        enabled (:obj:`bool`)
-            Boolean to control whether the given remote host is actually
-            queried, or if it is disabled and not checked at all.
-        engEnabled (:obj:`bool`)
-            Boolean to control whether to look for and archive any
-            additional engineering data.
-        running (:obj:`bool`)
-            Boolean to show whether archiving and checks of ``host`` are
-            currently active
-        timeout (:obj:`int`)
-            Integer number of seconds that ``host`` can be actively archiving,
-            checking, or doing things as timed on the **local** machine.
-
-            .. note::
-                This ensures that if a timeout of some sort occurs,
-                one remote host won't block indefinitely.
-    """
-    def __init__(self, conf=None, parseHardFail=True):
-        # This should mirror what's in ALL of the differnt .conf files.
-        # Assign them first just to make sure they always exist
+    def __init__(self):
         self.name = ''
         self.host = ''
         self.port = 22
         self.user = ''
-        self.srcdir = ''
-        self.destdir = ''
-        self.dirmask = ''
-        self.filemask = ''
-        self.procmon = ''
-        self.type = ''
-        self.topics = ''
-        self.influxdbname = ''
         self.enabled = False
         self.engEnabled = False
-        self.running = False
-        self.timeout = 60
+
+    def assignConf(self, conf=None, parseHardFail=True):
         if conf is not None:
+            # This contains the assignment/parsing logic for all possible
+            #   subclasses of baseTarget since it's handy to just keep it
+            #   all wrapped up in one place rather than each subclass.
             for key in self.__dict__:
                 try:
                     if (key.lower() == 'enabled') or \
@@ -380,6 +216,12 @@ class InstrumentHost():
                 print("\t%s = %s (%s)" % (key, getattr(self, key),
                                           type(getattr(self, key))))
 
+    def addCommonBlock(self, common=None):
+        if common is not None:
+            self.common = common
+        else:
+            self.common = None
+
     def addPass(self, password=None, debug=False):
         """Add in password information from a separate file for ``user``.
 
@@ -404,6 +246,71 @@ class InstrumentHost():
                 print("Password is empty!!")
         else:
             self.passw = password
+
+
+class deviceMonitoring(baseTarget):
+    """
+    Subclasses baseTarget class
+    """
+    def __init__(self, conf=None, parseHardFail=True, common=None):
+        # Support up to 4 device hostnames.
+        #  TODO: Add a method to add these automagically
+        #  based on the contents of the parsed configuration file.
+        self.device1host = ''
+        self.device1ports = []
+        self.device1types = []
+        self.device2host = ''
+        self.device2ports = []
+        self.device2types = []
+        self.device3host = ''
+        self.device3ports = []
+        self.device3types = []
+        self.device4host = ''
+        self.device4ports = []
+        self.device4types = []
+
+        self.addCommonBlock(common=common)
+
+        self.assignConf(conf=conf, parseHardFail=parseHardFail)
+
+
+class archivingTarget(baseTarget):
+    """
+    Subclasses baseTarget class
+    """
+    def __init__(self, conf=None, parseHardFail=True, common=None):
+        # This should mirror what's in ALL of the differnt .conf files.
+        # Assign them first just to make sure they always exist
+        self.srcdir = ''
+        self.dirmask = ''
+        self.filemask = ''
+        self.destdir = ''
+
+        # These are updated/used elsewhere functionally
+        self.running = False
+        self.timeout = 60
+
+        self.addCommonBlock(common=common)
+
+        self.assignConf(conf=conf, parseHardFail=parseHardFail)
+
+
+class monitoringTarget(baseTarget):
+    """
+    Subclasses baseTarget class
+    """
+    def __init__(self, conf=None, parseHardFail=True, common=None):
+        # This should mirror what's in ALL of the differnt .conf files.
+        # Assign them first just to make sure they always exist
+        self.procmon = ''
+        self.type = ''
+        self.topics = ''
+        self.running = False
+        self.timeout = 60
+
+        self.addCommonBlock(common=common)
+
+        self.assignConf(conf=conf, parseHardFail=parseHardFail)
 
 
 def dateDiff(fstr, debug=False):
