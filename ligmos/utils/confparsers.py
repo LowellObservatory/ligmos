@@ -57,51 +57,37 @@ def parseConfFile(filename, debug=False):
     return config, commconfig
 
 
-def parseMonConf(filename, debug=False, parseHardFail=True):
+def getActiveConfiguration(filename, configtype=common.baseTarget,
+                           debug=False):
     """
     """
     config, commconfig = parseConfFile(filename)
 
+    # Last check of the proper/expected type of the given configtype
+    #   could be any of the *Target classes in ligmos.utils.common
+    if not isinstance(configtype, common.baseTarget):
+        print("Expected a subclass of ligmos.utils.common.baseTarget...")
+        print("Returning None but you really should abort and fix this.")
+        return None, None
+
     print("Attempting to assign the configuration parameters...")
+
+    # Ultimate storage locations of final results
+    #   inlist will contain everything
+    #   idict will contain only those with [eng,]enabled == True
     inlist = []
+    idict = OrderedDict()
+
     for each in config.sections:
         print("Applying '%s' section of conf. file..." % (each))
-        inlist.append(common.deviceMonitoring(conf=config[each],
-                                              parseHardFail=parseHardFail,
-                                              common=commconfig))
-
-    # Making a dict of *just* the active instruments
-    idict = OrderedDict()
-    for inst in inlist:
+        inst = configtype(conf=config[each], common=commconfig)
+        inlist.append(inst)
         # Need to add None as well to help for the case where I forget
         #   to put an 'enabled' line in a new flavor of conf file...
         if inst.enabled is True or inst.enabled is None:
             idict.update({inst.name: inst})
 
     # return idict, commconfig
-    return idict
-
-
-def parseInstConf(filename, debug=False, parseHardFail=True):
-    """
-    """
-    config, commconfig = parseConfFile(filename)
-
-    print("Attempting to assign the configuration parameters...")
-    inlist = []
-    for each in config.sections:
-        print("Applying '%s' section of conf. file..." % (each))
-        inlist.append(common.InstrumentHost(conf=config[each],
-                                            parseHardFail=parseHardFail))
-
-    # Making a dict of *just* the active instruments
-    idict = OrderedDict()
-    for inst in inlist:
-        # Need to add None as well to help for the case where I forget
-        #   to put an 'enabled' line in a new flavor of conf file...
-        if inst.enabled is True or inst.enabled is None:
-            idict.update({inst.name: inst})
-
     return idict
 
 

@@ -248,7 +248,7 @@ class baseTarget(object):
             self.passw = password
 
 
-class deviceMonitoring(baseTarget):
+class deviceTarget(baseTarget):
     """
     Subclasses baseTarget class
     """
@@ -274,7 +274,7 @@ class deviceMonitoring(baseTarget):
         self.assignConf(conf=conf, parseHardFail=parseHardFail)
 
 
-class archivingTarget(baseTarget):
+class dataTarget(baseTarget):
     """
     Subclasses baseTarget class
     """
@@ -295,7 +295,7 @@ class archivingTarget(baseTarget):
         self.assignConf(conf=conf, parseHardFail=parseHardFail)
 
 
-class monitoringTarget(baseTarget):
+class hostTarget(baseTarget):
     """
     Subclasses baseTarget class
     """
