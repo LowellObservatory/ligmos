@@ -253,6 +253,9 @@ class deviceTarget(baseTarget):
     Subclasses baseTarget class
     """
     def __init__(self, conf=None, parseHardFail=True, common=None):
+        # Gather up the properties from the base class
+        super().__init__()
+
         # Support up to 4 device hostnames.
         #  TODO: Add a method to add these automagically
         #  based on the contents of the parsed configuration file.
@@ -279,6 +282,9 @@ class dataTarget(baseTarget):
     Subclasses baseTarget class
     """
     def __init__(self, conf=None, parseHardFail=True, common=None):
+        # Gather up the properties from the base class
+        super().__init__()
+
         # This should mirror what's in ALL of the differnt .conf files.
         # Assign them first just to make sure they always exist
         self.srcdir = ''
@@ -300,6 +306,9 @@ class hostTarget(baseTarget):
     Subclasses baseTarget class
     """
     def __init__(self, conf=None, parseHardFail=True, common=None):
+        # Gather up the properties from the base class
+        super().__init__()
+
         # This should mirror what's in ALL of the differnt .conf files.
         # Assign them first just to make sure they always exist
         self.procmon = ''
