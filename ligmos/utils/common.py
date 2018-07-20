@@ -163,8 +163,79 @@ class commonParams():
                 except KeyError as err:
                     nicerExit(err)
 
-                print("\t%s = %s (%s)" % (key, getattr(self, key),
-                                          type(getattr(self, key))))
+
+def assignConf(base, conf=None, parseHardFail=True):
+    if conf is not None:
+        # This contains the assignment/parsing logic for all possible
+        #   subclasses of baseTarget since it's handy to just keep it
+        #   all wrapped up in one place rather than each subclass.
+        for key in conf.keys():
+            try:
+                if (key.lower() == 'enabled') or \
+                   (key.lower() == 'engenabled'):
+                    setattr(base, key, conf.getboolean(key))
+                elif (key.lower() == 'running') or \
+                        (key.lower() == 'timeout'):
+                    # Skip the keys that are self-defined in the class
+                    pass
+                elif (key.lower() == 'procmon') or \
+                     (key.lower() == 'influxdbname'):
+                    if conf[key].lower() == 'none':
+                        # SPECIAL handling to capture "None" -> None
+                        #  Could do some extra split() here to allow
+                        #  multiple process names...
+                        setattr(base, key, None)
+                    else:
+                        setattr(base, key, conf[key])
+                elif key.lower() == "topics":
+                    setattr(base, key, conf[key].split(","))
+                else:
+                    setattr(base, key, conf[key])
+            except KeyError as err:
+                if parseHardFail is True:
+                    nicerExit(err)
+                else:
+                    key = err.args[0]
+                    setattr(base, key, None)
+
+    return base
+
+
+def addCommonBlock(base, common=None):
+    if common is not None:
+        base.common = common
+    else:
+        base.common = None
+
+    return base
+
+
+def addPass(base, password=None, debug=False):
+    """Add in password information from a separate file for ``user``.
+
+    This small function allows the breaking up of usernames from passwords
+    into separate .conf files, mainly for a little extra security when
+    posting this all to GitHub.
+
+    .. seealso::
+        ``passwords.conf-TEMPLATE`` in the examples directory.
+
+    Args:
+        password (conf (:class:`configparser.ConfigParser`, optional)
+            Configuration information parsed from a .conf file.
+            Defaults to None.  If password is not None, then a
+            ``password`` attribute is created if matching usernames
+            are found.
+    debug (:obj:`bool`, optional)
+        Bool to trigger additional debugging outputs. Defaults to False.
+    """
+    if password is None:
+        if debug is True:
+            print("Password is empty!!")
+    else:
+        base.passw = password
+
+    return base
 
 
 class baseTarget(object):
@@ -179,73 +250,6 @@ class baseTarget(object):
         self.user = ''
         self.enabled = False
         self.engEnabled = False
-
-    def assignConf(self, conf=None, parseHardFail=True):
-        if conf is not None:
-            # This contains the assignment/parsing logic for all possible
-            #   subclasses of baseTarget since it's handy to just keep it
-            #   all wrapped up in one place rather than each subclass.
-            for key in self.__dict__:
-                try:
-                    if (key.lower() == 'enabled') or \
-                       (key.lower() == 'engenabled'):
-                        setattr(self, key, conf.getboolean(key))
-                    elif (key.lower() == 'running') or \
-                         (key.lower() == 'timeout'):
-                        # Skip the keys that are self-defined in the class
-                        pass
-                    elif (key.lower() == 'procmon') or \
-                         (key.lower() == 'influxdbname'):
-                        if conf[key].lower() == 'none':
-                            # SPECIAL handling to capture "None" -> None
-                            #  Could do some extra split() here to allow
-                            #  multiple process names...
-                            setattr(self, key, None)
-                        else:
-                            setattr(self, key, conf[key])
-                    elif key.lower() == "topics":
-                        setattr(self, key, conf[key].split(","))
-                    else:
-                        setattr(self, key, conf[key])
-                except KeyError as err:
-                    if parseHardFail is True:
-                        nicerExit(err)
-                    else:
-                        key = err.args[0]
-                        setattr(self, key, None)
-                print("\t%s = %s (%s)" % (key, getattr(self, key),
-                                          type(getattr(self, key))))
-
-    def addCommonBlock(self, common=None):
-        if common is not None:
-            self.common = common
-        else:
-            self.common = None
-
-    def addPass(self, password=None, debug=False):
-        """Add in password information from a separate file for ``user``.
-
-        This small function allows the breaking up of usernames from passwords
-        into separate .conf files, mainly for a little extra security when
-        posting this all to GitHub.
-
-        .. seealso::
-            ``passwords.conf-TEMPLATE`` in the examples directory.
-
-        Args:
-            password (conf (:class:`configparser.ConfigParser`, optional)
-                Configuration information parsed from a .conf file.
-                Defaults to None.  If password is not None, then a
-                ``password`` attribute is created if matching usernames
-                are found.
-        debug (:obj:`bool`, optional)
-            Bool to trigger additional debugging outputs. Defaults to False.
-        """
-        if password is None:
-            if debug is True:
-                print("Password is empty!!")
-        else:
-            self.passw = password
 
 
 class deviceTarget(baseTarget):
@@ -272,10 +276,6 @@ class deviceTarget(baseTarget):
         self.device4ports = []
         self.device4types = []
 
-        self.addCommonBlock(common=common)
-
-        self.assignConf(conf=conf, parseHardFail=parseHardFail)
-
 
 class dataTarget(baseTarget):
     """
@@ -296,10 +296,6 @@ class dataTarget(baseTarget):
         self.running = False
         self.timeout = 60
 
-        self.addCommonBlock(common=common)
-
-        self.assignConf(conf=conf, parseHardFail=parseHardFail)
-
 
 class hostTarget(baseTarget):
     """
@@ -316,10 +312,6 @@ class hostTarget(baseTarget):
         self.topics = ''
         self.running = False
         self.timeout = 60
-
-        self.addCommonBlock(common=common)
-
-        self.assignConf(conf=conf, parseHardFail=parseHardFail)
 
 
 def dateDiff(fstr, debug=False):

@@ -32,9 +32,6 @@ def parseConfFile(filename, debug=False):
     except IOError as err:
         common.nicerExit(err)
 
-    print("Found the following sections in the configuration file:")
-    sections = config.sections()
-
     # We have a common section, so treat it real nice.
     #   May or may not be in there depending on the conf file.
     #   Might have to deal with capitalization at some point.
@@ -48,27 +45,31 @@ def parseConfFile(filename, debug=False):
 
     # Now purge the common section out so it doesn't get confused for an inst.
     #   If it was found and removed, == True; else False
-    sections.remove('common')
+    config.remove_section('common')
 
+    sections = config.sections()
     tsections = ' '.join(sections)
     if debug is True:
+        print("Found the following sections in the configuration file:")
         print("%s\n" % tsections)
 
     return config, commconfig
 
 
-def getActiveConfiguration(filename, configtype=common.baseTarget,
+def getActiveConfiguration(filename, conftype=common.baseTarget,
                            debug=False):
     """
     """
-    config, commconfig = parseConfFile(filename)
+    config, commconfig = parseConfFile(filename, debug=debug)
 
     # Last check of the proper/expected type of the given configtype
     #   could be any of the *Target classes in ligmos.utils.common
-    if not isinstance(configtype, common.baseTarget):
+    # Note that since we pass in the class reference itself (as configtype)
+    #   we can check issubclass() INSTEAD of isinstance.
+    if not issubclass(conftype, common.baseTarget):
         print("Expected a subclass of ligmos.utils.common.baseTarget...")
         print("Returning None but you really should abort and fix this.")
-        return None, None
+        return None
 
     print("Attempting to assign the configuration parameters...")
 
@@ -78,9 +79,12 @@ def getActiveConfiguration(filename, configtype=common.baseTarget,
     inlist = []
     idict = OrderedDict()
 
-    for each in config.sections:
+    for each in config.sections():
         print("Applying '%s' section of conf. file..." % (each))
-        inst = configtype(conf=config[each], common=commconfig)
+        inst = conftype()
+        inst = common.assignConf(inst, conf=config[each])
+        # inst = common.addCommonBlock(inst, common=commconfig)
+
         inlist.append(inst)
         # Need to add None as well to help for the case where I forget
         #   to put an 'enabled' line in a new flavor of conf file...
@@ -88,7 +92,7 @@ def getActiveConfiguration(filename, configtype=common.baseTarget,
             idict.update({inst.name: inst})
 
     # return idict, commconfig
-    return idict
+    return idict, commconfig
 
 
 def parsePassConf(filename, idict, debug=False):
