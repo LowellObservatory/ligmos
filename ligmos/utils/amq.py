@@ -21,7 +21,7 @@ import pkg_resources as pkgr
 
 
 class amqHelper():
-    def __init__(self, default_host, topics,
+    def __init__(self, default_host, topics=None,
                  dbname=None, user=None, passw=None, port=61613,
                  baseid=8675309, connect=True, listener=None):
         self.host = default_host
@@ -33,9 +33,11 @@ class amqHelper():
         self.password = passw
 
         if connect is True:
-            self.connect(baseid=self.baseid, listener=listener)
+            self.connect(listener=listener)
+            if topics is not None:
+                self.subscribe(self.topics, baseid=baseid)
 
-    def connect(self, baseid=8675309, listener=None):
+    def connect(self, listener=None):
         # TODO:
         #   Put a timer on connection
         try:
@@ -52,12 +54,8 @@ class amqHelper():
             self.conn.start()
             self.conn.connect()
 
-            if type(self.topics) == str:
-                self.conn.subscribe("/topic/" + self.topics, baseid)
-            elif type(self.topics) == list:
-                for i, activeTopic in enumerate(self.topics):
-                    print("Subscribing to %s" % (activeTopic))
-                    self.conn.subscribe("/topic/" + activeTopic, baseid+i)
+            if self.topics is not None:
+                self.subscribe(self.topics)
         except stomp.exception.NotConnectedException as err:
             self.conn = None
             print("STOMP.py not connected!")
@@ -73,6 +71,15 @@ class amqHelper():
         if self.conn is not None:
             self.conn.disconnect()
             print("Disconnected from %s" % (self.host))
+
+    def subscribe(self, topic, baseid=8675309):
+        if self.conn is not None:
+            if type(self.topics) == str:
+                    self.conn.subscribe("/topic/" + self.topics, baseid)
+            elif type(self.topics) == list:
+                for i, activeTopic in enumerate(self.topics):
+                    print("Subscribing to %s" % (activeTopic))
+                    self.conn.subscribe("/topic/" + activeTopic, baseid+i)
 
     def publish(self, dest, message, mtype='text', debug=True):
         """
