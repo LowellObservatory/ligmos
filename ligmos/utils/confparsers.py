@@ -32,20 +32,18 @@ def parseConfFile(filename, debug=False):
     except IOError as err:
         common.nicerExit(err)
 
-    # We have a common section, so treat it real nice.
+    # We might have a common section, so treat it real nice.
     #   May or may not be in there depending on the conf file.
     #   Might have to deal with capitalization at some point.
     try:
         csec = config['common']
         # Use it to fill the common/core data structure
         commconfig = common.commonParams(conf=csec)
+        # Now purge the common section out so it doesn't get confused
+        config.remove_section('common')
     except KeyError:
         print("No 'common' configuration section found!")
         commconfig = None
-
-    # Now purge the common section out so it doesn't get confused for an inst.
-    #   If it was found and removed, == True; else False
-    config.remove_section('common')
 
     sections = config.sections()
     tsections = ' '.join(sections)
