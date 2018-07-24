@@ -134,6 +134,17 @@ class HowtoStopNicely():
         self.halt = True
 
 
+class deviceType():
+    """
+    """
+    def __init__(self):
+        self.hostname = None
+        self.port = None
+        self.type = None
+        self.tag = None
+        self.serialURL = None
+
+
 class commonParams():
     """
     """
@@ -165,6 +176,10 @@ class commonParams():
 
 
 def assignConf(base, conf=None, parseHardFail=True):
+    """
+    NOTE: parseHardFail will likely be removed since I switched to itterating
+    over keys in the conf rather than properties in the base.
+    """
     if conf is not None:
         # This contains the assignment/parsing logic for all possible
         #   subclasses of baseTarget since it's handy to just keep it
@@ -190,7 +205,31 @@ def assignConf(base, conf=None, parseHardFail=True):
                 elif key.lower() == "topics":
                     setattr(base, key, conf[key].split(","))
                 else:
-                    setattr(base, key, conf[key])
+                    # Special handling/parsing/filling of deviceTarget lines
+                    if isinstance(base, deviceTarget):
+                        if key.startswith("device"):
+                            dvals = conf[key].split(",")
+                            # Just manually fill in the things.
+                            #   NOTE: I'm not type checking at this point, so
+                            #   invalid entries can/will cause exceptions
+                            if len(dvals) >= 3:
+                                dvice = deviceType()
+                                setattr(dvice, "hostname", dvals[0])
+                                setattr(dvice, "port", int(dvals[1]))
+                                setattr(dvice, "type", dvals[2])
+                                # We throw away any past #4
+                                if len(dvals) >= 4:
+                                    setattr(dvice, "tag", dvals[3])
+
+                                # If we got here, that means everything is
+                                #   ok-ish. Create the string needed
+                                #   by serial.serial_for_url()
+                                serURL = "socket://%s:%s" % (dvice.hostname,
+                                                             dvice.port)
+                                setattr(dvice, "serialURL", serURL)
+                            base.devices.append(dvice)
+                    else:
+                        setattr(base, key, conf[key])
             except KeyError as err:
                 if parseHardFail is True:
                     nicerExit(err)
@@ -256,32 +295,20 @@ class deviceTarget(baseTarget):
     """
     Subclasses baseTarget class
     """
-    def __init__(self, conf=None, parseHardFail=True, common=None):
+    def __init__(self):
         # Gather up the properties from the base class
         super().__init__()
 
-        # Support up to 4 device hostnames.
-        #  TODO: Add a method to add these automagically
-        #  based on the contents of the parsed configuration file.
-        self.device1host = ''
-        self.device1ports = []
-        self.device1types = []
-        self.device2host = ''
-        self.device2ports = []
-        self.device2types = []
-        self.device3host = ''
-        self.device3ports = []
-        self.device3types = []
-        self.device4host = ''
-        self.device4ports = []
-        self.device4types = []
+        # All of the devices will be parsed and put into this list, so
+        #   you can figure out how many there are just by len(devices).
+        self.devices = []
 
 
 class dataTarget(baseTarget):
     """
     Subclasses baseTarget class
     """
-    def __init__(self, conf=None, parseHardFail=True, common=None):
+    def __init__(self):
         # Gather up the properties from the base class
         super().__init__()
 
@@ -301,7 +328,7 @@ class hostTarget(baseTarget):
     """
     Subclasses baseTarget class
     """
-    def __init__(self, conf=None, parseHardFail=True, common=None):
+    def __init__(self):
         # Gather up the properties from the base class
         super().__init__()
 
