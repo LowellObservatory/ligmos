@@ -206,20 +206,23 @@ def assignConf(base, conf=None, parseHardFail=True):
                     setattr(base, key, conf[key].split(","))
                 else:
                     # Special handling/parsing/filling of deviceTarget lines
-                    if isinstance(base, deviceTarget):
-                        if key.startswith("device"):
+                    #   Trigger off of the device line FIRST to make sure that
+                    #   other standard parsable lines (line name) aren't
+                    #   skipped and are caught in the else condition
+                    if key.lower().startswith("device"):
+                        if isinstance(base, deviceTarget):
                             dvals = conf[key].split(",")
                             # Just manually fill in the things.
                             #   NOTE: I'm not type checking at this point, so
                             #   invalid entries can/will cause exceptions
                             if len(dvals) >= 3:
                                 dvice = deviceType()
-                                setattr(dvice, "hostname", dvals[0])
+                                setattr(dvice, "hostname", dvals[0].strip())
                                 setattr(dvice, "port", int(dvals[1]))
-                                setattr(dvice, "type", dvals[2])
+                                setattr(dvice, "type", dvals[2].strip())
                                 # We throw away any past #4
                                 if len(dvals) >= 4:
-                                    setattr(dvice, "tag", dvals[3])
+                                    setattr(dvice, "tag", dvals[3].strip())
 
                                 # If we got here, that means everything is
                                 #   ok-ish. Create the string needed
