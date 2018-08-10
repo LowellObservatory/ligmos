@@ -294,6 +294,17 @@ class baseTarget(object):
         self.engEnabled = False
 
 
+class snoopTarget(baseTarget):
+    """
+    Subclasses baseTarget class
+    """
+    def __init__(self):
+        # Gather up the properties from the base class
+        super().__init__()
+
+        self.topics = []
+
+
 class deviceTarget(baseTarget):
     """
     Subclasses baseTarget class
