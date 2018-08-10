@@ -83,6 +83,4 @@ def parseArguments(conf=None, prog=None, passes=None, log=None, descr=None):
                         help='Print extra debugging messages while running',
                         default=False)
 
-    args = parser.parse_args()
-
-    return args
+    return parser

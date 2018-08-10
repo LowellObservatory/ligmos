@@ -32,7 +32,7 @@ from . import defaultParser
 
 
 def toServeMan(procname, conffile, passfile, log,
-               parser=defaultParser.parseArguments,
+               extraargs=None,
                conftype=utils.common.baseTarget,
                logfile=True, desc=None):
     """Main entry point, which also handles arguments.
@@ -40,6 +40,8 @@ def toServeMan(procname, conffile, passfile, log,
     ... it's - it's a cookbook!
 
     This will parse the arguments specified in XXXXXXXX
+
+    THIS IS OUT OF DATE! MUCH HAS CHANGED! LIVE IN FEAR!
 
     Args:
         procname (:obj:`str`)
@@ -79,8 +81,14 @@ def toServeMan(procname, conffile, passfile, log,
     #   (which PidFile would block)
     #   ALSO NOTE: If you give a custom one, it needs (at a minimum):
     #       fratricide|kill, log, nlogs, config, passes
-    args = parser(conf=conffile, passes=passfile,
-                  prog=procname, log=log, descr=desc)
+    parser = defaultParser.parseArguments(conf=conffile, passes=passfile,
+                                          prog=procname, log=log, descr=desc)
+
+    if extraargs is not None:
+        parser = extraargs(parser)
+
+    # Actually parse the things
+    args = parser.parse_args()
 
     pid = utils.pids.check_if_running(pname=procname)
 
