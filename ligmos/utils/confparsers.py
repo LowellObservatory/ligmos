@@ -110,6 +110,6 @@ def parsePassConf(filename, idict, debug=False):
                 print("Username %s has no password!" % (iuser))
             passw = None
 
-        idict[each].addPass(passw)
+        idict[each] = common.addPass(idict[each], passw)
 
     return idict
