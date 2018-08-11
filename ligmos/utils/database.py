@@ -129,9 +129,33 @@ class influxobj():
         """
         if self.client is not None:
             if imsure is False:
-                print("You're not sure! Doing nothing.")
+                print("You're not *really* sure! Doing nothing.")
             else:
                 try:
                     self.client.drop_database(self.dbase)
                 except Exception as err:
                     print(str(err))
+
+    def connect(self):
+        # Just a stub in case I can't remember...
+        self.openDB()
+
+    def write(self, vals, debug=False):
+        # Just a stub in case I can't remember...
+        self.writeToDB(vals, debug=debug)
+
+    def disconnect(self):
+        # Just a stub in case I can't remember...
+        self.closeDB()
+
+    def close(self):
+        # Just a stub in case I can't remember...
+        self.closeDB()
+
+    def singleCommit(self, packet, debug=False, close=True):
+        if self.client is not None:
+            self.closeDB()
+        self.openDB()
+        self.writeToDB(packet, debug=debug)
+        if close is True:
+            self.closeDB()
