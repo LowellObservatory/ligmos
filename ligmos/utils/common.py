@@ -153,17 +153,20 @@ class commonParams():
         self.brokerhost = ''
         self.brokerport = None
         self.brokeruser = ''
-        self.influxhost = ''
-        self.influxport = None
-        self.influxuser = ''
-        self.influxdbname = ''
+        self.dbtype = None
+        self.dbhost = None
+        self.dbport = None
+        self.dbuser = ''
+        self.dbname = ''
 
+        # TODO: Remove this and merge it with assignConf
+        #    which means adjusting confparsers.parseConfFile
         if conf is not None:
             # This will loop over all the properties defined above!
             #   If they're not defined, they'll just be ignored.
             for key in self.__dict__:
                 try:
-                    if key.lower() == 'influxdbname':
+                    if key.lower() == 'dbtype':
                         if conf[key].lower() == 'none':
                             # SPECIAL handling to capture "None" -> None
                             setattr(self, key, None)
@@ -194,7 +197,8 @@ def assignConf(base, conf=None, parseHardFail=True):
                     # Skip the keys that are self-defined in the class
                     pass
                 elif (key.lower() == 'procmon') or \
-                     (key.lower() == 'influxdbname'):
+                     (key.lower() == 'dbname') or \
+                     (key.lower() == 'dbtype'):
                     if conf[key].lower() == 'none':
                         # SPECIAL handling to capture "None" -> None
                         #  Could do some extra split() here to allow
