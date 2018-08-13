@@ -78,10 +78,14 @@ class amqHelper():
     def subscribe(self, topic, baseid=8675309):
         if self.conn is not None:
             if type(self.topics) == str:
+                    # First unsubscribe anything else with this baseid
+                    self.conn.unsubscribe(baseid)
                     self.conn.subscribe("/topic/" + self.topics, baseid)
             elif type(self.topics) == list:
                 for i, activeTopic in enumerate(self.topics):
                     print("Subscribing to %s" % (activeTopic))
+                    # First unsubscribe anything else with this baseid
+                    self.conn.unsubscribe(baseid+i)
                     self.conn.subscribe("/topic/" + activeTopic, baseid+i)
 
     def publish(self, dest, message, mtype='text', debug=True):
