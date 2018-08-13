@@ -36,6 +36,8 @@ class amqHelper():
             self.connect(listener=listener)
             if topics is not None:
                 self.subscribe(self.topics, baseid=baseid)
+        else:
+            self.conn = None
 
     def connect(self, listener=None):
         # TODO:
