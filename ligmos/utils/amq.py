@@ -55,6 +55,7 @@ class amqHelper():
             # For STOMP.py versions >= 4.1.20, .start() does nothing.
             self.conn.start()
             self.conn.connect()
+            print("Connection established. Hooray!")
 
             if self.topics is not None:
                 self.subscribe(self.topics)
