@@ -514,7 +514,7 @@ def instAction(each, outertime=None):
 
 
 def instLooper(idict, runner, args, actions, updateArguments,
-               dbname=None, alarmtime=600):
+               db=None, alarmtime=600):
     """
     Could bump the instrument loop out and back to the main calling function
     if we want to do stuff per-instrument rather than on all the instruments'
@@ -524,7 +524,7 @@ def instLooper(idict, runner, args, actions, updateArguments,
         iobj = idict[inst]
 
         # Update all function arguments with new iobj
-        cactions = updateArguments(actions, iobj, args, dbname=dbname)
+        cactions = updateArguments(actions, iobj, args, db=db)
 
         # Pre-fill our expected answers so we can see fails
         allanswers = [None]*len(cactions)
