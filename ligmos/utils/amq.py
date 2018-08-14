@@ -50,6 +50,8 @@ class amqHelper():
             if listener is not None:
                 # NOTE: listener must be a valid ConnectionListener type!!
                 self.conn.set_listener('LIGmosSpy', listener)
+            else:
+                print("WARNING! No listener defined! Nothing will occur!")
 
             # For STOMP.py versions >= 4.1.20, .start() does nothing.
             self.conn.start()
