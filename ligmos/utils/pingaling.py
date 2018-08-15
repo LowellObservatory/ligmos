@@ -20,7 +20,7 @@ from . import multialarm
 def calcMedian(vals):
     """
     """
-#    print(vals)
+    # print("Pings:", vals)
     if all(np.isnan(vals)):
         avg = -9999.
     else:
@@ -45,7 +45,9 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
         with multialarm.Timeout(id_="Pings", seconds=timeout):
             try:
                 res = serviceping.network.scan(host, port=22, timeout=timeout)
-                pres.append(res['durations']['connect']*1000.)
+                # As of serviceping 18.x, res['durations']['connect']
+                #   is a datetime.timedelta object! So manually convert.
+                pres.append(res['durations']['connect'].total_seconds()*1000.)
                 if debug is True:
                     print(res)
             except multialarm.TimeoutError as err:
