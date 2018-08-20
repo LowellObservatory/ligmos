@@ -107,9 +107,7 @@ class amqHelper():
 
             # For STOMP.py versions >= 4.1.20, .start() does nothing.
             self.conn.start()
-            # Testing heartbeats; might need to add in an on_heartbeat
-            #   function in our custom listener to actually do anything?
-            self.conn.connect(keepalive=True)
+            self.conn.connect()
             print("Connection established. Hooray!")
 
             if self.topics is not None:
