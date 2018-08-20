@@ -16,14 +16,65 @@ Further description.
 from __future__ import division, print_function, absolute_import
 
 import stomp
+import xmltodict as xmld
 import xmlschema as xmls
 import pkg_resources as pkgr
+
+
+class ParrotSubscriber(stomp.listener.ConnectionListener):
+    """
+    Default subscriber that will at least print out stuff
+    """
+    def __init__(self):
+        pass
+
+    # Subclassing stomp.listener.ConnectionListener
+    def on_message(self, headers, body):
+        tname = headers['destination'].split('/')[-1]
+        # Manually turn the bytestring into a string
+        try:
+            body = body.decode("utf-8")
+            badMsg = False
+        except Exception as err:
+            print(str(err))
+            print("Badness 10000")
+            print(body)
+            badMsg = True
+
+        if badMsg is False:
+            try:
+                xml = xmld.parse(body)
+                # If we want to have the XML as a string:
+                # res = {tname: [headers, dumpPacket(xml)]}
+                # If we want to have the XML as an object:
+                res = {tname: [headers, xml]}
+            except xmld.expat.ExpatError:
+                # This means that XML wasn't found, so it's just a string
+                #   packet with little/no structure. Attach the sub name
+                #   as a tag so someone else can deal with the thing
+                res = {tname: [headers, body]}
+            except Exception as err:
+                # This means that there was some kind of transport error
+                #   or it couldn't figure out the encoding for some reason.
+                #   Scream into the log but keep moving
+                print("="*42)
+                print(headers)
+                print(body)
+                print("="*42)
+                badMsg = True
+
+        print("Message Source: %s" % (tname))
+        if badMsg:
+            print("Header: %s" % (headers))
+            print("Body: %s" % (body))
+        else:
+            print(res)
 
 
 class amqHelper():
     def __init__(self, default_host, topics=None,
                  user=None, passw=None, port=61613,
-                 baseid=8675309, connect=True, listener=None):
+                 baseid=8675309, connect=True, listener=ParrotSubscriber()):
         self.host = default_host
         self.port = port
         self.topics = topics
@@ -38,7 +89,7 @@ class amqHelper():
         else:
             self.conn = None
 
-    def connect(self, listener=None):
+    def connect(self, listener=ParrotSubscriber()):
         # TODO:
         #   Put a timer on connection
         try:
@@ -55,7 +106,9 @@ class amqHelper():
 
             # For STOMP.py versions >= 4.1.20, .start() does nothing.
             self.conn.start()
-            self.conn.connect()
+            # Testing heartbeats; might need to add in an on_heartbeat
+            #   function in our custom listener to actually do anything?
+            self.conn.connect(heartbeats=(1000, 1000), keepalive=True)
             print("Connection established. Hooray!")
 
             if self.topics is not None:
