@@ -95,7 +95,8 @@ class amqHelper():
         try:
             print("Connecting to %s" % (self.host))
             self.conn = stomp.Connection([(self.host, self.port)],
-                                         auto_decode=False)
+                                         auto_decode=False,
+                                         heartbeats=(5000, 5000))
             # Note that self.conn is now type stomp.connect.StompConnectionXX
             #   where XX is either 10, 11, or 12 indicating STOMP version
             if listener is not None:
@@ -108,7 +109,7 @@ class amqHelper():
             self.conn.start()
             # Testing heartbeats; might need to add in an on_heartbeat
             #   function in our custom listener to actually do anything?
-            self.conn.connect(heartbeats=(1000, 1000), keepalive=True)
+            self.conn.connect(keepalive=True)
             print("Connection established. Hooray!")
 
             if self.topics is not None:
