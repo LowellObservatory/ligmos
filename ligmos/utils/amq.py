@@ -96,7 +96,8 @@ class amqHelper():
             print("Connecting to %s" % (self.host))
             self.conn = stomp.Connection([(self.host, self.port)],
                                          auto_decode=False,
-                                         heartbeats=(5000, 5000))
+                                         heartbeats=(4000, 4000),
+                                         heart_beat_receive_scale=2.0)
             # Note that self.conn is now type stomp.connect.StompConnectionXX
             #   where XX is either 10, 11, or 12 indicating STOMP version
             if listener is not None:
