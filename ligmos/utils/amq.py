@@ -138,7 +138,7 @@ class amqHelper():
                     print("Subscribing to %s" % (activeTopic))
                     self.conn.subscribe("/topic/" + activeTopic, baseid+i)
 
-    def publish(self, dest, message, mtype='text', debug=True):
+    def publish(self, dest, message, mtype='text', replyto=None, debug=True):
         """
         TODO:
         What are the accepted values for 'amq-msg-type' and
@@ -146,18 +146,32 @@ class amqHelper():
         No clue currently.
         """
 
-        # Note: If it doesn't start with /topic/ it'll fail silently!
-        if not dest.startswith('/topic/'):
-            topic = '/topic/' + dest
-        else:
-            topic = dest
+        topic = self.checkTopic(dest)
 
         if self.conn is not None:
-            self.conn.send(destination=topic, body=message,
-                           headers={'amq-msg-type': 'text'})
+            if replyto is None:
+                self.conn.send(destination=topic, body=message,
+                               headers={'amq-msg-type': 'text'})
+            else:
+                replyto = self.checkTopic(replyto)
+                self.conn.send(destination=topic, body=message,
+                               headers={'amq-msg-type': 'text',
+                                        'reply-to': replyto})
         info = "\nMessage sent to {} on topic {}:\n{}\n"
         if debug is True:
             print(info.format(self.host, topic, message))
+
+    def checkTopic(self, tpc):
+        """
+        If the ActiveMQ topic string doesn't start with /topic/ it'll fail!
+          This adds it if it's not already there.
+        """
+        if not tpc.lower().startswith('/topic/'):
+            topic = '/topic/' + tpc
+        else:
+            topic = tpc
+
+        return topic
 
 
 def checkSchema(topicname):
