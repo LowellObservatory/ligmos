@@ -146,14 +146,14 @@ class amqHelper():
         No clue currently.
         """
 
-        topic = self.checkTopic(dest)
+        topic = checkTopic(dest)
 
         if self.conn is not None:
             if replyto is None:
                 self.conn.send(destination=topic, body=message,
                                headers={'amq-msg-type': 'text'})
             else:
-                replyto = self.checkTopic(replyto)
+                replyto = checkTopic(replyto)
                 self.conn.send(destination=topic, body=message,
                                headers={'amq-msg-type': 'text',
                                         'reply-to': replyto})
@@ -161,17 +161,23 @@ class amqHelper():
         if debug is True:
             print(info.format(self.host, topic, message))
 
-    def checkTopic(self, tpc):
-        """
-        If the ActiveMQ topic string doesn't start with /topic/ it'll fail!
-          This adds it if it's not already there.
-        """
-        if not tpc.lower().startswith('/topic/'):
-            topic = '/topic/' + tpc
-        else:
-            topic = tpc
 
-        return topic
+def checkTopic(self, tpc):
+    """
+    If the ActiveMQ topic string doesn't start with /topic/ it'll fail!
+        This adds it if it's not already there.
+    """
+    if not tpc.lower().startswith('/topic/') or \
+       not tpc.lower().startswith('/queue/'):
+        # If it's not already a topic or a queue, assume that it's at least
+        #   a topic so it won't get silently ignored. Not the best, but
+        #   not bad of a start at least.
+        topic = '/topic/' + tpc
+    else:
+        # Otherwise assume that it's ok as-is
+        topic = tpc
+
+    return topic
 
 
 def checkSchema(topicname):
