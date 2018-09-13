@@ -513,7 +513,7 @@ def instAction(each, outertime=None):
     return ans, estop
 
 
-def instLooper(idict, runner, args, actions, updateArguments,
+def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
                db=None, alarmtime=600):
     """
     Could bump the instrument loop out and back to the main calling function
@@ -524,7 +524,7 @@ def instLooper(idict, runner, args, actions, updateArguments,
         iobj = idict[inst]
 
         # Update all function arguments with new iobj
-        cactions = updateArguments(actions, iobj, args, db=db)
+        cactions = updateArguments(actions, iobj, args, baseYcmd, db=db)
 
         # Pre-fill our expected answers so we can see fails
         allanswers = [None]*len(cactions)
