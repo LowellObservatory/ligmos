@@ -162,7 +162,7 @@ class amqHelper():
             print(info.format(self.host, topic, message))
 
 
-def checkTopic(self, tpc):
+def checkTopic(tpc):
     """
     If the ActiveMQ topic string doesn't start with /topic/ it'll fail!
         This adds it if it's not already there.
