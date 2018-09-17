@@ -36,6 +36,7 @@ class SSHWrapper():
         self.ssh = paramiko.SSHClient()
         self.ssh.load_system_host_keys()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.sftp = None
 
         if connectOnInit is True:
             self.connect(retries=retries, maxtime=self.timeout)

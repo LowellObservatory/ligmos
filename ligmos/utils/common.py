@@ -19,7 +19,6 @@ import signal
 import datetime as dt
 from os.path import basename
 
-from . import pids
 from . import ssh as mssh
 from . import multialarm as malarms
 
