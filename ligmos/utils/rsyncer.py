@@ -18,7 +18,7 @@ from __future__ import division, print_function, absolute_import
 import subprocess as sub
 
 
-def subpRsync(src, dest, cmd=None, args=None, printErrs=True, timeout=600.):
+def subpRsync(src, dest, cmd=None, args=None, timeout=600., debug=True):
     """
     rsync, called via subprocess to get at the binary on the local machine
     """
@@ -35,9 +35,11 @@ def subpRsync(src, dest, cmd=None, args=None, printErrs=True, timeout=600.):
         #   instance that run() returns pretty nice.
         output = sub.run(subcmdwargs, timeout=timeout,
                          stdout=sub.PIPE, stderr=sub.PIPE)
+
         # Check for anything on stdout/stderr
-        if output.stdout != b'':
-            print((output.stdout).decode("utf-8"))
+        if debug is True:
+            if output.stdout != b'':
+                print((output.stdout).decode("utf-8"))
 
         # If the return code was non-zero, this will raise CalledProcessError
         output.check_returncode()
@@ -45,25 +47,51 @@ def subpRsync(src, dest, cmd=None, args=None, printErrs=True, timeout=600.):
         # If we're here, then we're fine. Stay golden, Ponyboy
         return 0
     except sub.TimeoutExpired as err:
-        if printErrs is True:
-            print("Timed out!")
-            errstr = "'%s' timed out" % (" ".join(err.cmd))
+        errstr = parseRsyncErr(err.stderr)
+        if errstr is None:
+            errstr = "'%s' took too long!" % (" ".join(err.cmd))
+        if debug is True:
+            print("Full STDERR: ", end='')
+            print((err.stderr).decode("utf-8"))
+
+        errstr = "'%s' timed out" % (" ".join(err.cmd))
 
         return -99, errstr
     except sub.CalledProcessError as err:
-        if printErrs is True:
-            print("Command error!")
+        errstr = parseRsyncErr(err.stderr)
+        if errstr is None:
             errstr = "'%s' returned code %d" % (" ".join(err.cmd),
                                                 err.returncode)
-            # We're in Python 3 territory, so err.stderr is b'' so convert
-            print("Standard Error Output:")
-
+        if debug is True:
+            print("Full STDERR: ", end='')
             print((err.stderr).decode("utf-8"))
 
         return -999, errstr
     except FileNotFoundError as err:
-        if printErrs is True:
-            print("Command not found!")
+        if debug is True:
+            print("rsync command not found!")
             errstr = err.strerror
 
         return -9999, errstr
+
+
+def parseRsyncErr(errbuf):
+    """
+    """
+    # We're in Python 3 territory, so err.stderr is a bytestring!
+    if isinstance(errbuf, bytes) is True:
+        errstr = errbuf.decode("utf-8")
+    elif isinstance(errbuf, str) is True:
+        errstr = errbuf
+    else:
+        errstr = None
+
+    print(errstr)
+
+    errsplit = errstr.split("\n")
+    if errsplit[0].lower().startswith("rsync: "):
+        errmsg = errsplit[0]
+    else:
+        errmsg = None
+
+    return errmsg
