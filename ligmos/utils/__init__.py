@@ -7,6 +7,7 @@ from . import hashes
 from . import cpumem
 from . import common
 from . import alarms
+from . import rsyncer
 from . import database
 from . import pingaling
 from . import packetizer

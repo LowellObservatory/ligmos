@@ -18,10 +18,13 @@ from __future__ import division, print_function, absolute_import
 import subprocess as sub
 
 
-def subpRsync(cmd, src, dest, args=None, printErrs=True, timeout=600.):
+def subpRsync(src, dest, cmd=None, args=None, printErrs=True, timeout=600.):
     """
     rsync, called via subprocess to get at the binary on the local machine
     """
+    if cmd is None:
+        cmd = 'rsync'
+
     if args is None:
         args = ['-arvz', '--progress']
 
@@ -44,23 +47,23 @@ def subpRsync(cmd, src, dest, args=None, printErrs=True, timeout=600.):
     except sub.TimeoutExpired as err:
         if printErrs is True:
             print("Timed out!")
-            print("'%s' timed out" % (" ".join(err.cmd)))
+            errstr = "'%s' timed out" % (" ".join(err.cmd))
 
-        return -99
+        return -99, errstr
     except sub.CalledProcessError as err:
         if printErrs is True:
             print("Command error!")
-            print("'%s' returned code %d" % (" ".join(err.cmd),
-                                             err.returncode))
+            errstr = "'%s' returned code %d" % (" ".join(err.cmd),
+                                                err.returncode)
             # We're in Python 3 territory, so err.stderr is b'' so convert
             print("Standard Error Output:")
 
             print((err.stderr).decode("utf-8"))
 
-        return -999
+        return -999, errstr
     except FileNotFoundError as err:
         if printErrs is True:
             print("Command not found!")
-            print(err.strerror)
+            errstr = err.strerror
 
-        return -9999
+        return -9999, errstr
