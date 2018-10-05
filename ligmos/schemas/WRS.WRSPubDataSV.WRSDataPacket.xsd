@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="WRSDataPacket">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="airTemp_C" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="barPressure_mbar" minOccurs="0" type="xsd:dateTime"/>
+                <xsd:element name="dewPointCurrentValue" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="rainRate" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="relativeHumidity" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="timestamp" minOccurs="0" type="xsd:dateTime"/>
+                <xsd:element name="temperatureStatistics" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="max" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="mean" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tempRateOfChange_C" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="windDirection_deg" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="windSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="tenMinWindGustSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="windSpeedStatistics" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="max" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="min" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="mean" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="AOSDataPacket">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="timestamp" minOccurs="0" type="xsd:dateTime"/>
+                <xsd:element name="detailedState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="summaryState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="tipTiltPistonDemandM1" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="X_Tilt_rad" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="Y_Tilt_rad" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="Piston_m" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="tipTiltPistonDemandM2" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="X_Tilt_rad" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="Y_Tilt_rad" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="Piston_m" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="comaPointingOffset" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="xCorrection_arcsec" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="yCorrection_arcsec" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="totalFocusOffset" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="focusOffsetDemandOutOfRange" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="wavefrontDataOutOfRange" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="M1FSettled" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="M1LSettled" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="M1PSettled" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="M2PSettled" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="M2VSettled" minOccurs="0" type="xsd:boolean"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

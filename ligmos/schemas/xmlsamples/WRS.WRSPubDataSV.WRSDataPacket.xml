@@ -1,0 +1,22 @@
+<WRSDataPacket>
+  <airTemp_C>19.7</airTemp_C>
+  <barPressure_mbar>1025</barPressure_mbar>
+  <dewPointCurrentValue>-0.4</dewPointCurrentValue>
+  <rainRate>0</rainRate>
+  <relativeHumidity>26</relativeHumidity>
+  <timestamp>2018-09-29T01:43:29.000+00:00</timestamp>
+  <temperatureStatistics>
+    <max>21.9</max>
+    <min>19.7</min>
+    <mean>20.804761904762</mean>
+  </temperatureStatistics>
+  <tempRateOfChange_C>-2.3309359270959</tempRateOfChange_C>
+  <windDirection_deg>294</windDirection_deg>
+  <windSpeed>2.3</windSpeed>
+  <tenMinWindGustSpeed>5.2</tenMinWindGustSpeed>
+  <windSpeedStatistics>
+    <max>4</max>
+    <min>2</min>
+    <mean>2.8206349206349</mean>
+  </windSpeedStatistics>
+</WRSDataPacket>

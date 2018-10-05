@@ -1,0 +1,27 @@
+<AOSDataPacket>
+  <timestamp>2018-09-29T06:09:34.662+00:00</timestamp>
+  <detailedState>ClosedLoopState</detailedState>
+  <summaryState>Enabled</summaryState>
+  <tipTiltPistonDemandM1>
+    <X_Tilt_rad>0</X_Tilt_rad>
+    <Y_Tilt_rad>0</Y_Tilt_rad>
+    <Piston_m>0</Piston_m>
+  </tipTiltPistonDemandM1>
+  <tipTiltPistonDemandM2>
+    <X_Tilt_rad>-0.0002110814922463</X_Tilt_rad>
+    <Y_Tilt_rad>0.00019307168001873</Y_Tilt_rad>
+    <Piston_m>0.00041627664130278</Piston_m>
+  </tipTiltPistonDemandM2>
+  <comaPointingOffset>
+    <xCorrection_arcsec>-23.493994861632</xCorrection_arcsec>
+    <yCorrection_arcsec>-25.685525156972</yCorrection_arcsec>
+  </comaPointingOffset>
+  <totalFocusOffset>0.001195</totalFocusOffset>
+  <focusOffsetDemandOutOfRange>false</focusOffsetDemandOutOfRange>
+  <wavefrontDataOutOfRange>false</wavefrontDataOutOfRange>
+  <M1FSettled>true</M1FSettled>
+  <M1LSettled>true</M1LSettled>
+  <M1PSettled>true</M1PSettled>
+  <M2PSettled>true</M2PSettled>
+  <M2VSettled>true</M2VSettled>
+</AOSDataPacket>
