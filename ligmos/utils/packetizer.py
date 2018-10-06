@@ -14,13 +14,18 @@ import sys
 import datetime as dt
 
 
-def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags={}, fields={},
-                     debug=False):
+def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags=None,
+                     fields=None, debug=False):
     """
     Makes an InfluxDB styled packet given the measurement name, metadata tags,
     and actual fields/values to put into the database
     """
     packet = {}
+    if tags is None:
+        tags = {}
+    if fields is None:
+        fields = {}
+
     for m in meas:
         packet.update({'measurement': m})
         if tags is not None:
@@ -45,6 +50,7 @@ def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags={}, fields={},
         if type(fields) != dict:
             print("ERROR! fields must be of type dict.")
             sys.exit(-1)
+
         packet.update({'fields': fields})
 
     if debug is True:
