@@ -44,7 +44,7 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
     while nretries < repeats:
         with multialarm.Timeout(id_="Pings", seconds=timeout):
             try:
-                res = serviceping.network.scan(host, port=22, timeout=timeout)
+                res = serviceping.scan(host, port=port, timeout=timeout)
                 # As of serviceping 18.x, res['durations']['connect']
                 #   is a datetime.timedelta object! So manually convert.
                 pres.append(res['durations']['connect'].total_seconds()*1000.)
