@@ -20,17 +20,25 @@ except ImportError:
 from . import common
 
 
-def parseConfFile(filename, debug=False):
+def parseConfFile(filename, debug=False, abort=True):
     """
     Parse the .conf file that gives the setup per instrument
     Returns an ordered dict of Instrument classes that the conf file
     has 'enabled=True'
+
+    If abort is True, than an IOError on the configuration file
+    will sink the code and stop immediately. False will return None.
     """
     try:
         config = conf.SafeConfigParser()
         config.read_file(open(filename, 'r'))
     except IOError as err:
-        common.nicerExit(err)
+        if abort is True:
+            common.nicerExit(err)
+        else:
+            print("WARNING: %s not found! Ignoring it and continuing..." %
+                  (filename))
+            return None, None
 
     # We might have a common section, so treat it real nice.
     #   May or may not be in there depending on the conf file.
