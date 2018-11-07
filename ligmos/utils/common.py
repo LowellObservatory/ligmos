@@ -147,7 +147,7 @@ class deviceType():
 class commonParams():
     """
     """
-    def __init__(self, conf=None):
+    def __init__(self):
         self.brokertype = ''
         self.brokerhost = ''
         self.brokerport = None
@@ -156,26 +156,29 @@ class commonParams():
         self.dbhost = None
         self.dbport = None
         self.dbuser = ''
-        self.dbpass = ''
         self.dbname = ''
 
-        # TODO: Remove this and merge it with assignConf
-        #    which means adjusting confparsers.parseConfFile
-        if conf is not None:
-            # This will loop over all the properties defined above!
-            #   If they're not defined, they'll just be ignored.
-            for key in self.__dict__:
-                try:
-                    if key.lower() == 'dbtype':
-                        if conf[key].lower() == 'none':
-                            # SPECIAL handling to capture "None" -> None
-                            setattr(self, key, None)
-                        else:
-                            setattr(self, key, conf[key])
+    def assignConf(self, conf, ctype):
+        if ctype.lower() == 'broker':
+            akeys = ['brokertype', 'brokerhost', 'brokerport', 'brokeruser']
+        elif ctype.lower() == 'database':
+            akeys = ['dbtype', 'dbhost', 'dbport', 'dbuser', 'dbname']
+        else:
+            akeys = []
+
+        # This will loop over all the properties defined above!
+        for key in akeys:
+            try:
+                if key.lower() == 'dbtype':
+                    if conf[key].lower() == 'none':
+                        # SPECIAL handling to capture "None" -> None
+                        setattr(self, key, None)
                     else:
                         setattr(self, key, conf[key])
-                except KeyError as err:
-                    nicerExit(err)
+                else:
+                    setattr(self, key, conf[key])
+            except KeyError as err:
+                nicerExit(err)
 
 
 def assignConf(base, conf=None, parseHardFail=True):

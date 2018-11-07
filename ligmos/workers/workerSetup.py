@@ -149,7 +149,8 @@ def toServeMan(procname, conffile, passfile, log,
 
     # If there's a password file, associate that with the above
     if passfile is not None:
-        idict = utils.confparsers.parsePassConf(args.passes, idict,
-                                                debug=args.debug)
+        idict, cblk = utils.confparsers.parsePassConf(args.passes, idict,
+                                                      cblk=cblk,
+                                                      debug=args.debug)
 
     return idict, cblk, args, runner

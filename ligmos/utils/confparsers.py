@@ -43,15 +43,43 @@ def parseConfFile(filename, debug=False, abort=True):
     # We might have a common section, so treat it real nice.
     #   May or may not be in there depending on the conf file.
     #   Might have to deal with capitalization at some point.
+
+    # Set up the final resting place for the common database/broker params
+    commconfig = common.commonParams()
+
     try:
-        csec = config['common']
-        # Use it to fill the common/core data structure
-        commconfig = common.commonParams(conf=csec)
+        # Do we have a database config?
+        csec = config['common-database']
+
+        # Use it to fill the common/core data structure. Since it's a
+        #   class method it'll just fill up the class appropriately.
+        commconfig.assignConf(csec, 'database')
+
         # Now purge the common section out so it doesn't get confused
-        config.remove_section('common')
+        config.remove_section('common-database')
+        print("Assigned database configuration parameters")
+        dbinfo = True
     except KeyError:
-        print("No 'common' configuration section found!")
+        print("No database configuration section found!")
+        dbinfo = False
+
+    # Second verse, same as the first
+    try:
+        csec = config['common-broker']
+        commconfig.assignConf(csec, 'broker')
+        config.remove_section('common-broker')
+        print("Assigned broker configuration parameters")
+        bkinfo = True
+    except KeyError:
+        print("No broker configuration section found!")
+        bkinfo = False
+
+    # Final step to flag common block stuff
+    if (dbinfo is False) and (bkinfo is False):
+        print("No broker and database configuration!")
         commconfig = None
+    else:
+        print(commconfig.__dict__)
 
     sections = config.sections()
     tsections = ' '.join(sections)
@@ -101,23 +129,46 @@ def getActiveConfiguration(filename, conftype=common.baseTarget,
     return idict, commconfig
 
 
-def parsePassConf(filename, idict, debug=False):
+def parsePassConf(filename, idict, cblk=None, debug=False):
     """
     """
-    # Not supporting a [common] section for passwords so ditch it
-    config, _ = parseConfFile(filename)
+    try:
+        config = conf.SafeConfigParser()
+        config.read_file(open(filename, 'r'))
+    except IOError as err:
+        print("WARNING: %s not found! Ignoring it and continuing..." %
+              (filename))
+        print(str(err))
+
+        return idict
 
     for each in idict.keys():
         # Get the username for this instrument
         iuser = idict[each].user
         # Now see if we have a password for this username
+        if iuser != '':
+            try:
+                passw = config[iuser]['pw']
+            except KeyError:
+                if debug is True:
+                    print("Username %s has no password!" % (iuser))
+                passw = None
+
+            idict[each] = common.addPass(idict[each], passw)
+
+    # Since we're in here, check the possible 'common' stuff too.
+    #  TODO: Clean this up. It's pretty damn sloppy, since None is
+    #  getting in here as 'None' (i.e. not the right type)
+    if cblk is not None:
         try:
-            passw = config[iuser]['pw']
+            bpw = config['common-broker']['pw']
+            setattr(cblk, 'brokerpass', bpw)
         except KeyError:
-            if debug is True:
-                print("Username %s has no password!" % (iuser))
-            passw = None
+            setattr(cblk, 'brokerpass', None)
+        try:
+            dpw = config['common-database']['pw']
+            setattr(cblk, 'dbpass', dpw)
+        except KeyError:
+            setattr(cblk, 'dbpass', None)
 
-        idict[each] = common.addPass(idict[each], passw)
-
-    return idict
+    return idict, cblk
