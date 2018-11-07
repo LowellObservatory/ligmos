@@ -57,10 +57,9 @@ def parseConfFile(filename, debug=False, abort=True):
 
         # Now purge the common section out so it doesn't get confused
         config.remove_section('common-database')
-        print("Assigned database configuration parameters")
+        print("Found common database configuration parameters")
         dbinfo = True
     except KeyError:
-        print("No database configuration section found!")
         dbinfo = False
 
     # Second verse, same as the first
@@ -68,18 +67,14 @@ def parseConfFile(filename, debug=False, abort=True):
         csec = config['common-broker']
         commconfig.assignConf(csec, 'broker')
         config.remove_section('common-broker')
-        print("Assigned broker configuration parameters")
+        print("Found common broker configuration parameters")
         bkinfo = True
     except KeyError:
-        print("No broker configuration section found!")
         bkinfo = False
 
     # Final step to flag common block stuff
     if (dbinfo is False) and (bkinfo is False):
-        print("No broker and database configuration!")
         commconfig = None
-    else:
-        print(commconfig.__dict__)
 
     sections = config.sections()
     tsections = ' '.join(sections)
@@ -139,7 +134,6 @@ def parsePassConf(filename, idict, cblk=None, debug=False):
         print("WARNING: %s not found! Ignoring it and continuing..." %
               (filename))
         print(str(err))
-
         return idict
 
     for each in idict.keys():
