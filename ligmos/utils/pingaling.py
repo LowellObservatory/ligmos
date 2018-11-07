@@ -79,4 +79,4 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
         ping = -9999.
         dns = -9999.
 
-        return ping, dropped, dns
+    return ping, dropped, dns
