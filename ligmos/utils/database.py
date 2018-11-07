@@ -10,10 +10,7 @@
 
 from __future__ import division, print_function, absolute_import
 
-import sys
 import json
-import numpy as np
-import datetime as dt
 
 from requests.exceptions import ConnectionError
 
@@ -32,7 +29,7 @@ class influxobj():
     """
     def __init__(self, dbase, connect=True,
                  host='localhost', port=8086,
-                 user='root', pw='root'):
+                 user='marty', pw='mcfly'):
         self.host = host
         self.port = port
         self.username = user
@@ -66,10 +63,6 @@ class influxobj():
                                              username=self.username,
                                              password=self.password,
                                              database=self.dbase)
-                # Create the database if it doesn't exist; underneath the hood
-                #   InfluxDB is basically doing
-                #   CREATE DATABASE IF NOT EXISTS dbname
-                self.client.create_database(self.dbase)
             except Exception as err:
                 self.client = None
                 print("Could not open database %s:\n%s" % (self.dbase,
@@ -93,7 +86,20 @@ class influxobj():
             try:
                 if debug is True:
                     print("Trying to write_points")
-                res = self.client.write_points(vals)
+
+                # Create the database if it doesn't exist; under the hood,
+                #   influx is basically doing this:
+                #     CREATE DATABASE IF NOT EXISTS dbname
+                #   so it WILL fail if the user doesn't have WRITE access!
+                try:
+                    self.client.create_database(self.dbase)
+                    res = self.client.write_points(vals)
+                except InfluxDBClientError as err:
+                    if err.code == 403:
+                        print("Authentication error! %s" % (err.content))
+                        # Clear the client to make other stuff break
+                        self.client = None
+                        res = False
             except ConnectionError as err:
                 print("Fatal Connection Error!")
                 print("Is InfluxDB running?")
