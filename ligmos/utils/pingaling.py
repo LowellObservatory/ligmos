@@ -30,7 +30,7 @@ def calcMedian(vals):
 
 
 def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
-         pingavg=True, debug=False):
+         median=True, debug=False):
     """
     Want a decent number of pings since some hosts (like OS X) can
     take a few seconds to wake up their hard drives if they're sleeping
@@ -41,13 +41,15 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
     nretries = 0
     dropped = 0
     pres = []
+    dnss = []
     while nretries < repeats:
         with multialarm.Timeout(id_="Pings", seconds=timeout):
             try:
                 res = serviceping.scan(host, port=port, timeout=timeout)
                 # As of serviceping 18.x, res['durations']['connect']
-                #   is a datetime.timedelta object! So manually convert.
+                #   is a datetime.timedelta object! So convert.
                 pres.append(res['durations']['connect'].total_seconds()*1000.)
+                dnss.append(res['durations']['dns'].total_seconds()*1000.)
                 if debug is True:
                     print(res)
             except multialarm.TimeoutError as err:
@@ -55,8 +57,10 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
                     print("Timed out: %s" % (str(err)))
                 dropped += 1
                 pres.append(np.nan)
+                dnss.append(np.nan)
             except serviceping.network.ScanFailed as err:
                 pres.append(np.nan)
+                dnss.append(np.nan)
                 dropped += 1
                 if debug is True:
                     print("Connection to host '%s' failed!" % (host))
@@ -64,12 +68,15 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
             nretries += 1
             time.sleep(waittime)
 
-    if pingavg is True:
+    if median is True:
         ping = calcMedian(pres)
+        dns = calcMedian(dnss)
     else:
         ping = pres
+        dns = dnss
 
     if dropped == 7:
         ping = -9999.
+        dns = -9999.
 
-    return ping, dropped
+        return ping, dropped, dns
