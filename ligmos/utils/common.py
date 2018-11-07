@@ -156,6 +156,7 @@ class commonParams():
         self.dbhost = None
         self.dbport = None
         self.dbuser = ''
+        self.dbpass = ''
         self.dbname = ''
 
         # TODO: Remove this and merge it with assignConf
