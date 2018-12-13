@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="tcsTCSStatus">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="accessMode" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="azCurrentWrap" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="heartbeat" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="inPositionIsTrue" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="m1CoverState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="mountGuideMode" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="rotCurrentWrap" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="tcsHealth" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="tcsState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="currentTimes" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="lst" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="hours" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="minutesTime" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="secondsTime" minOccurs="0" type="xsd:decimal"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="time" minOccurs="0" type="xsd:dateTime"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="limits" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="moonProximity" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="distance_deg" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="proximityFlag" minOccurs="0" type="xsd:boolean"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="sunProximity" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="distance_deg" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="proximityFlag" minOccurs="0" type="xsd:boolean"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="zenith" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="currentZD_deg" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="elZenithLimit_deg" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="inBlindSpotIsTrue" minOccurs="0" type="xsd:boolean"/>
+                                        <xsd:element name="timeToBlindSpot_min" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="timeToBlindSpotExit_min" minOccurs="0" type="xsd:int"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="airmass" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="currentTimeToObservable_min" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="currentTimeToUnobservable_min" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="timeToRotLimit_min" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="timeToAzLimit_min" minOccurs="0" type="xsd:int"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="pointingPositions" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="azElError" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="azError" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="elError" minOccurs="0" type="xsd:decimal"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="currentAzEl" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="azimuth" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="degreesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:int"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="elevation" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="degreesAlt" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="currentHA" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="hours" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="minutesTime" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="secondsTime" minOccurs="0" type="xsd:decimal"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="currentRADec" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="declination" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="degreesDec" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="equinoxPrefix" minOccurs="0" type="xsd:normalizedString"/>
+                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:dateTime"/>
+                                        <xsd:element name="frame" minOccurs="0" type="xsd:normalizedString"/>
+                                        <xsd:element name="ra" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="hours" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesTime" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsTime" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="currentRotatorPositions" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="rotPA" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="iaa" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="rotIPA" minOccurs="0" type="xsd:int"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="demandAzEl" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="azimuth" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="degreesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="elevation" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="degreesAlt" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="demandRADec" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="declination" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="degreesDec" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="equinoxPrefix" minOccurs="0" type="xsd:normalizedString"/>
+                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:dateTime"/>
+                                        <xsd:element name="frame" minOccurs="0" type="xsd:normalizedString"/>
+                                        <xsd:element name="ra" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="hours" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="minutesTime" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsTime" minOccurs="0" type="xsd:decimal"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="demandRotatorPositions" minOccurs="0">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="rotPA" minOccurs="0" type="xsd:decimal"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="targetName" minOccurs="0" type="xsd:string"/>
+                            <xsd:element name="currentParAngle" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="axesTrackMode" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="inPositionAzIsTrue" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="inPositionElIsTrue" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="inPositionRotIsTrue" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="externalTargetCfgCmdPreviewIsTrue" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="OffsetStatus" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="offsetType" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="userOff1" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="userOff2" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="handsetOff1" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="handsetOff2" minOccurs="0" type="xsd:decimal"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
