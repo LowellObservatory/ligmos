@@ -40,19 +40,23 @@ class influxobj():
         else:
             self.client = None
 
-    def alterRetention(self, pname='Hold6w', duration='6w'):
+    def alterRetention(self, pname='Hold26w', duration='26w'):
         """
         """
         if influxdb is not None and self.client is not None:
-            try:
-                self.client.alter_retention_policy(pname,
-                                                   duration=duration,
-                                                   default=True)
-            except influxdb.exceptions.InfluxDBClientError:
+            rets = self.client.get_list_retention_policies()
+            retExists = [True for d in rets if d['name'] == pname]
+
+            # It's technically a list because I used a comprehension ...
+            if retExists[0] is False:
+                # It didn't exist, so create it
                 self.client.create_retention_policy(pname,
                                                     duration,
                                                     1,
                                                     default=True)
+            else:
+                # Retention policy already exists so just move on.
+                pass
 
     def openDB(self):
         """
