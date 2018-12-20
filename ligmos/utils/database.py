@@ -48,8 +48,9 @@ class influxobj():
             retExists = [True for d in rets if d['name'] == pname]
 
             # It's technically a list because I used a comprehension ...
-            if retExists[0] is False:
-                # It didn't exist, so create it
+            if retExists != []:
+                # Empty list means the named policy ('pname') didn't exist!
+                #   ... So create it
                 self.client.create_retention_policy(pname,
                                                     duration,
                                                     1,
