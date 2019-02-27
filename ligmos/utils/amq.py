@@ -15,6 +15,8 @@ Further description.
 
 from __future__ import division, print_function, absolute_import
 
+from os.path import basename
+
 import stomp
 import xmltodict as xmld
 import xmlschema as xmls
@@ -90,6 +92,8 @@ class amqHelper():
             self.conn = None
 
     def connect(self, listener=ParrotSubscriber()):
+        """
+        """
         # TODO:
         #   Put a timer on connection
         try:
@@ -125,14 +129,18 @@ class amqHelper():
             print(str(type(err)))
 
     def disconnect(self):
+        """
+        """
         if self.conn is not None:
             self.conn.disconnect()
             print("Disconnected from %s" % (self.host))
 
     def subscribe(self, topic, baseid=8675309):
+        """
+        """
         if self.conn is not None:
             if type(self.topics) == str:
-                    self.conn.subscribe("/topic/" + self.topics, baseid)
+                self.conn.subscribe("/topic/" + self.topics, baseid)
             elif type(self.topics) == list:
                 for i, activeTopic in enumerate(self.topics):
                     print("Subscribing to %s" % (activeTopic))
@@ -195,3 +203,33 @@ def checkSchema(topicname):
     except xmls.XMLSchemaURLError:
         print("Schema for topic %s not found!" % (topicname))
         return None
+
+
+def schemaDicter():
+    """
+    Grab all of the schemas in the package directory and return
+    a dict organized by topic name.
+    """
+    sdict = {}
+
+    # Get the list of everything in the schema repo
+    allschemas = pkgr.resource_listdir('ligmos', 'schemas')
+
+    for tsch in allschemas:
+        spath = "%s/%s" % ('schemas', tsch)
+        schname = basename(tsch)
+
+        if pkgr.resource_isdir('ligmos', spath):
+            print("%s is a directory! Skipping it." % (tsch))
+        else:
+            print("%s is a potential schema! Looking at it." % (schname))
+
+            try:
+                # Define the schema we'll use to convert datatypes
+                sf = pkgr.resource_filename('ligmos', spath)
+                schema = xmls.XMLSchema(sf)
+                sdict.update({schname: schema})
+            except xmls.XMLSchemaURLError:
+                print("Schema for topic %s not found!" % (schname))
+
+    return sdict
