@@ -219,6 +219,9 @@ def schemaDicter():
         spath = "%s/%s" % ('schemas', tsch)
         schname = basename(tsch)
 
+        # Strip the file extension off of it!
+        schname = schname[:-4]
+
         if pkgr.resource_isdir('ligmos', spath):
             print("%s is a directory! Skipping it." % (tsch))
         else:
