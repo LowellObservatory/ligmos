@@ -1,0 +1,47 @@
+<DCTweather>
+    <mtSampTime>2019/05/01 16:42:39</mtSampTime>
+    <mtStartOfDay>2019/05/01 00:00:00</mtStartOfDay>
+    <mtTemp1>45.3</mtTemp1>
+    <mtWindChill>30.5</mtWindChill>
+    <mtHeatIndex>45.0</mtHeatIndex>
+    <mtDewPoint>37.6</mtDewPoint>
+    <mtDegreeDay>172.6</mtDegreeDay>
+    <mtDensityAltitude>8502</mtDensityAltitude>
+    <mtAvgTempToday>42.4</mtAvgTempToday>
+    <mtWetBulbGlobeTemp>52.0</mtWetBulbGlobeTemp>
+    <mtSaturatedVaporPressure>0.30</mtSaturatedVaporPressure>
+    <mtVaporPressure>0.23</mtVaporPressure>
+    <mtDryAirPressure>22.41</mtDryAirPressure>
+    <mtDryAirDensity>0.0589</mtDryAirDensity>
+    <mtAbsoluteHumidity>0.0004</mtAbsoluteHumidity>
+    <mtAirDensityRatio>1</mtAirDensityRatio>
+    <mtAdjustedAltitude>7782</mtAdjustedAltitude>
+    <mtSAECorrectionFactor>1.265065</mtSAECorrectionFactor>
+    <mtWetAirDensity>0.0593</mtWetAirDensity>
+    <mtWetBulbTemp>41.0</mtWetBulbTemp>
+    <mtRelHumidity>74</mtRelHumidity>
+    <mtWindSpeed>13.9</mtWindSpeed>
+    <mtRawWindDir>283</mtRawWindDir>
+    <mtAdjWindDir>283</mtAdjWindDir>
+    <mt3SecRollAvgWindSpeed>14.9</mt3SecRollAvgWindSpeed>
+    <mt3SecRollAvgWindDir>286</mt3SecRollAvgWindDir>
+    <mt2MinRollAvgWindSpeed>11.6</mt2MinRollAvgWindSpeed>
+    <mt2MinRollAvgWindDir>299</mt2MinRollAvgWindDir>
+    <mt10MinRollAvgWindSpeed>11.7</mt10MinRollAvgWindSpeed>
+    <mt10MinRollAvgWindDir>302</mt10MinRollAvgWindDir>
+    <mt60MinWindGustDir>328</mt60MinWindGustDir>
+    <mt60MinWindGustSpeed>22.2</mt60MinWindGustSpeed>
+    <mt60MinWindGustTime>2019/05/01 15:44:47</mt60MinWindGustTime>
+    <mt10MinWindGustDir>312</mt10MinWindGustDir>
+    <mt10MinWindGustSpeed>20.7</mt10MinWindGustSpeed>
+    <mt10MinWindGustTime>2019/05/01 16:33:17</mt10MinWindGustTime>
+    <mtRainToday>0.00</mtRainToday>
+    <mtRainThisWeek>0.29</mtRainThisWeek>
+    <mtRainThisMonth>0.00</mtRainThisMonth>
+    <mtRainThisYear>6.91</mtRainThisYear>
+    <mtRainRate>0.00</mtRainRate>
+    <mtRainLastHr>0.00</mtRainLastHr>
+    <mtPrecipType>0.000000</mtPrecipType>
+    <mtRawBaromPress>22.64</mtRawBaromPress>
+    <mtAdjBaromPress>30.08</mtAdjBaromPress>
+</DCTweather>
