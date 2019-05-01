@@ -98,11 +98,18 @@ class amqHelper():
         else:
             self.conn = None
 
-    def connect(self, listener=ParrotSubscriber()):
+    def connect(self, listener=None):
         """
         """
         # TODO:
         #   Put a timer on connection
+
+        # Do I really need to duplicate this check that I do in __init__ ?
+        #   Seems like I just need to choose one or the other, but I'm leaving
+        #   this here since I think I have some codes that need this check.
+        if listener is None:
+            listener = ParrotSubscriber()
+
         try:
             print("Connecting to %s" % (self.host))
             self.conn = stomp.Connection([(self.host, self.port)],
