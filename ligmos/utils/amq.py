@@ -76,13 +76,20 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
 class amqHelper():
     def __init__(self, default_host, topics=None,
                  user=None, passw=None, port=61613,
-                 baseid=8675309, connect=True, listener=ParrotSubscriber()):
+                 baseid=8675309, connect=True, listener=None):
         self.host = default_host
         self.port = port
         self.topics = topics
         self.baseid = baseid
         self.user = user
         self.password = passw
+
+        # Setting up a default endpoint so we at least always see the
+        #   messages on the subscribed topics. If you want a silent
+        #   experience, then make one or directly pass in the default
+        #   stomp.listener ConnectionListener
+        if listener is None:
+            listener = ParrotSubscriber()
 
         if connect is True:
             self.connect(listener=listener)
