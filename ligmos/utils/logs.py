@@ -36,7 +36,7 @@ class MyLogger(object):
         pass
 
 
-def setup_logging(logName='/tmp/wadsworth.log', nLogs=30):
+def setup_logging(logName='/tmp/wadsworth.log', nLogs=30, level='info'):
     """
     A place for the mundane setup tasks to clear up __main__ or whatever
     main loop is decided upon
@@ -49,7 +49,12 @@ def setup_logging(logName='/tmp/wadsworth.log', nLogs=30):
     'TimedRotationFileHandler' via the 'utc' and 'when' arguments.
     """
     # The below could also be "DEBUG" or "WARNING"
-    LOG_LEVEL = logging.INFO
+    if level.lower() == 'info':
+        LOG_LEVEL = logging.INFO
+    elif level.lower() == 'debug':
+        LOG_LEVEL = logging.DEBUG
+    else:
+        LOG_LEVEL = logging.FATAL
 
     # Configure logging to log to a file, making a new file at midnight and
     #  keeping the last 3 day's data.
