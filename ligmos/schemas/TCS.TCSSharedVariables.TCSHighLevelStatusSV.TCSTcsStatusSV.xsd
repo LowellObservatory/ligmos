@@ -59,10 +59,10 @@
                                 </xsd:complexType>
                             </xsd:element>
                             <xsd:element name="airmass" minOccurs="0" type="xsd:decimal"/>
-                            <xsd:element name="currentTimeToObservable_min" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="currentTimeToUnobservable_min" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="timeToRotLimit_min" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="timeToAzLimit_min" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="currentTimeToObservable_min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="currentTimeToUnobservable_min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="timeToRotLimit_min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="timeToAzLimit_min" minOccurs="0" type="xsd:decimal"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
@@ -85,7 +85,7 @@
                                                 <xsd:sequence>
                                                     <xsd:element name="degreesArc" minOccurs="0" type="xsd:int"/>
                                                     <xsd:element name="minutesArc" minOccurs="0" type="xsd:int"/>
-                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="secondsArc" minOccurs="0" type="xsd:decimal"/>
                                                 </xsd:sequence>
                                             </xsd:complexType>
                                         </xsd:element>
@@ -123,7 +123,7 @@
                                             </xsd:complexType>
                                         </xsd:element>
                                         <xsd:element name="equinoxPrefix" minOccurs="0" type="xsd:normalizedString"/>
-                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:dateTime"/>
+                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="frame" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="ra" minOccurs="0">
                                             <xsd:complexType mixed="true">
@@ -142,7 +142,7 @@
                                     <xsd:sequence>
                                         <xsd:element name="rotPA" minOccurs="0" type="xsd:decimal"/>
                                         <xsd:element name="iaa" minOccurs="0" type="xsd:decimal"/>
-                                        <xsd:element name="rotIPA" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="rotIPA" minOccurs="0" type="xsd:decimal"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -183,7 +183,7 @@
                                             </xsd:complexType>
                                         </xsd:element>
                                         <xsd:element name="equinoxPrefix" minOccurs="0" type="xsd:normalizedString"/>
-                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:dateTime"/>
+                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="frame" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="ra" minOccurs="0">
                                             <xsd:complexType mixed="true">
@@ -218,8 +218,8 @@
                     <xsd:complexType mixed="true">
                         <xsd:sequence>
                             <xsd:element name="offsetType" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="userOff1" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="userOff2" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="userOff1" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="userOff2" minOccurs="0" type="xsd:decimal"/>
                             <xsd:element name="handsetOff1" minOccurs="0" type="xsd:decimal"/>
                             <xsd:element name="handsetOff2" minOccurs="0" type="xsd:decimal"/>
                         </xsd:sequence>
