@@ -23,6 +23,53 @@ import xmlschema as xmls
 import pkg_resources as pkgr
 
 
+class silentSubscriber(stomp.listener.ConnectionListener):
+    def __init__(self):
+        pass
+
+
+class commandSubscriber(stomp.listener.ConnectionListener):
+    def __init__(self):
+        pass
+
+        # Subclassing stomp.listener.ConnectionListener
+    def on_message(self, headers, body):
+        tname = headers['destination'].split('/')[-1]
+        # Manually turn the bytestring into a string
+        try:
+            body = body.decode("utf-8")
+            badMsg = False
+        except Exception as err:
+            print(str(err))
+            print("Badness 10000")
+            print(body)
+            badMsg = True
+
+        if badMsg is False:
+            try:
+                xml = xmld.parse(body)
+                # If we want to have the XML as a string:
+                # res = {tname: [headers, dumpPacket(xml)]}
+                # If we want to have the XML as an object:
+                res = {tname: [headers, xml]}
+            except Exception as err:
+                # This means that there was some kind of transport error
+                #   or it couldn't figure out the encoding for some reason.
+                #   Scream into the log but keep moving
+                print("="*42)
+                print(headers)
+                print(body)
+                print("="*42)
+                badMsg = True
+
+        print("Message Source: %s" % (tname))
+        if badMsg:
+            print("Header: %s" % (headers))
+            print("Body: %s" % (body))
+        else:
+            print(tname, xml)
+
+
 class ParrotSubscriber(stomp.listener.ConnectionListener):
     """
     Default subscriber that will at least print out stuff
@@ -98,7 +145,7 @@ class amqHelper():
         else:
             self.conn = None
 
-    def connect(self, listener=None):
+    def connect(self, listener=None, subscribe=True):
         """
         """
         # TODO:
@@ -129,8 +176,11 @@ class amqHelper():
             self.conn.connect()
             print("Connection established. Hooray!")
 
-            if self.topics is not None:
-                self.subscribe(self.topics)
+            if subscribe is True:
+                if self.topics is not None:
+                    print("Subscribing to:")
+                    print(self.topics)
+                    self.subscribe(self.topics)
         except stomp.exception.NotConnectedException as err:
             self.conn = None
             print("STOMP.py not connected!")

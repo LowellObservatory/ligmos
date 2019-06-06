@@ -301,6 +301,18 @@ class baseTarget(object):
         self.engEnabled = False
 
 
+class brokerCommandingTarget(baseTarget):
+    """
+    Subclasses baseTarget class
+    """
+    def __init__(self):
+        # Gather up the properties from the base class
+        super().__init__()
+
+        self.cmdtopic = ''
+        self.replytopic = ''
+
+
 class snoopTarget(baseTarget):
     """
     Subclasses baseTarget class
