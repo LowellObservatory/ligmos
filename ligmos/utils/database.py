@@ -97,7 +97,7 @@ class influxobj():
                 #     CREATE DATABASE IF NOT EXISTS dbname
                 #   so it WILL fail if the user doesn't have WRITE access!
                 try:
-                    self.client.create_database(self.dbase)
+                    # self.client.create_database(self.dbase)
                     res = self.client.write_points(vals)
                 except InfluxDBClientError as err:
                     if err.code == 403:
