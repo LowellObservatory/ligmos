@@ -166,3 +166,25 @@ def parsePassConf(filename, idict, cblk=None, debug=False):
             setattr(cblk, 'dbpass', None)
 
     return idict, cblk
+
+
+def parseBrokerConfig(conffile, passfile, conftype, debug=True):
+    """
+    I hate how I'm going about all of these conf. parsers. It's a damn mess!
+    This one is for spinning up a broker connection without depending
+    on the structure in workers.toServeMan().
+    """
+    # idict: dictionary of parsed config file
+    # cblk: common block from config file
+    # Read in the configuration file and act upon it
+    idict, cblk = getActiveConfiguration(conffile,
+                                         conftype=conftype,
+                                         debug=debug)
+
+    # If there's a password file, associate that with the above
+    if passfile is not None:
+        idict, cblk = parsePassConf(passfile, idict,
+                                    cblk=cblk,
+                                    debug=debug)
+
+    return idict, cblk
