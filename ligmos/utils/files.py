@@ -12,8 +12,8 @@ from __future__ import division, print_function, absolute_import
 
 import re
 import fnmatch
-from os import walk, statvfs
-from os.path import listdir, join, isdir, expanduser, exists
+from os import walk, statvfs, listdir
+from os.path import join, isdir, expanduser, exists
 
 import numpy as np
 
