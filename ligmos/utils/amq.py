@@ -30,48 +30,6 @@ class silentSubscriber(stomp.listener.ConnectionListener):
         pass
 
 
-class commandSubscriber(stomp.listener.ConnectionListener):
-    def __init__(self):
-        pass
-
-        # Subclassing stomp.listener.ConnectionListener
-    def on_message(self, headers, body):
-        tname = headers['destination'].split('/')[-1]
-        # Manually turn the bytestring into a string
-        try:
-            body = body.decode("utf-8")
-            badMsg = False
-        except Exception as err:
-            print(str(err))
-            print("Badness 10000")
-            print(body)
-            badMsg = True
-
-        if badMsg is False:
-            try:
-                xml = xmld.parse(body)
-                # If we want to have the XML as a string:
-                # res = {tname: [headers, dumpPacket(xml)]}
-                # If we want to have the XML as an object:
-                res = {tname: [headers, xml]}
-            except Exception as err:
-                # This means that there was some kind of transport error
-                #   or it couldn't figure out the encoding for some reason.
-                #   Scream into the log but keep moving
-                print("="*42)
-                print(headers)
-                print(body)
-                print("="*42)
-                badMsg = True
-
-        print("Message Source: %s" % (tname))
-        if badMsg:
-            print("Header: %s" % (headers))
-            print("Body: %s" % (body))
-        else:
-            print(tname, xml)
-
-
 class ParrotSubscriber(stomp.listener.ConnectionListener):
     """
     Default subscriber that will at least print out stuff
@@ -143,7 +101,7 @@ class amqHelper():
         if connect is True:
             self.connect(listener=listener)
             if topics is not None:
-                self.subscribe(self.topics, baseid=baseid)
+                self.subscribe(baseid=baseid)
         else:
             self.conn = None
 
@@ -201,13 +159,13 @@ class amqHelper():
             self.conn.disconnect()
             print("Disconnected from %s" % (self.host))
 
-    def subscribe(self, topic, baseid=8675309):
+    def subscribe(self, baseid=8675309):
         """
         """
         if self.conn is not None:
-            if type(self.topics) == str:
+            if isinstance(self.topics, str):
                 self.conn.subscribe("/topic/" + self.topics, baseid)
-            elif type(self.topics) == list:
+            elif isinstance(self.topics, list):
                 for i, activeTopic in enumerate(self.topics):
                     print("Subscribing to %s" % (activeTopic))
                     self.conn.subscribe("/topic/" + activeTopic, baseid+i)
@@ -225,11 +183,11 @@ class amqHelper():
         if self.conn is not None:
             if replyto is None:
                 self.conn.send(destination=topic, body=message,
-                               headers={'amq-msg-type': 'text'})
+                               headers={'amq-msg-type': mtype})
             else:
                 replyto = checkTopic(replyto)
                 self.conn.send(destination=topic, body=message,
-                               headers={'amq-msg-type': 'text',
+                               headers={'amq-msg-type': mtype,
                                         'reply-to': replyto})
         info = "\nMessage sent to {} on topic {}:\n{}\n"
         if debug is True:
@@ -242,8 +200,8 @@ def setupBroker(idict, cblk, conftype, listener=None):
     # ActiveMQ connection checker
     conn = None
 
-    if cblk.brokertype is not None and\
-        cblk.brokertype.lower() == "activemq":
+    if cblk.brokertype is not None and \
+       cblk.brokertype.lower() == "activemq":
         # Register the listener class for this connection.
         #   This will be the thing that parses packets depending
         #   on their topic name and does the hard stuff!
