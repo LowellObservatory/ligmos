@@ -14,7 +14,7 @@ import time
 import socket
 
 import paramiko
-from paramiko import SSHException, AuthenticationException
+# from paramiko import SSHException, AuthenticationException
 
 from . import multialarm
 
@@ -39,9 +39,9 @@ class SSHWrapper():
         self.sftp = None
 
         if connectOnInit is True:
-            self.connect(retries=retries, maxtime=self.timeout)
+            self.connect()
 
-    def connect(self, retries=5, maxtime=60):
+    def connect(self, maxtime=60):
         """
         """
         # Hardcoded wait/timeout of 10 seconds for SSH connection
@@ -141,14 +141,14 @@ class SSHWrapper():
                 print("File transfer took too long!")
                 return False
 
-    def sendCommand(self, command, debug=False):
+    def sendCommand(self, command):
         """
         """
         # Use this to directly print out stdout/stderr
         superdebug = False
 
         ses, stdout_data, stderr_data = None, None, None
-        if(self.ssh):
+        if self.ssh:
             stdin, stdout, stderr = self.ssh.exec_command(command)
             # Close stdin since we're not using it
             stdin.close()

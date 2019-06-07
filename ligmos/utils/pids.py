@@ -10,11 +10,9 @@
 
 from __future__ import division, print_function, absolute_import
 
-
-#import os
-#import sys
-import psutil
 import tempfile
+
+import psutil
 
 
 def check_if_running(pname='wadsworth', debug=False):

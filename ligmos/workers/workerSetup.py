@@ -23,9 +23,6 @@ from __future__ import division, print_function, absolute_import
 import os
 import time
 import signal
-import argparse as argp
-
-from pid import PidFile, PidFileError
 
 from .. import utils
 from . import defaultParser

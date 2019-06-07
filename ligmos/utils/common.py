@@ -395,7 +395,7 @@ def dateDiff(fstr, debug=False):
     """
     dstr = basename(fstr)
     dtobj = strToDate(dstr)
-    if type(dtobj) is dt.datetime:
+    if isinstance(dtobj, dt.datetime):
         dtts = dt.datetime.timestamp(dtobj)
         now = dt.datetime.timestamp(dt.datetime.utcnow())
         diff = (now - dtts)

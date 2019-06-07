@@ -10,15 +10,12 @@
 
 from __future__ import division, print_function, absolute_import
 
-import os
 import re
 import fnmatch
+from os import walk, statvfs
+from os.path import listdir, join, isdir, expanduser, exists
+
 import numpy as np
-try:
-    from os.path import join, isdir
-    from os.path import listdir
-except ImportError:
-    from os import listdir
 
 from . import common
 
@@ -50,7 +47,7 @@ def getDirListing(loc, window=2, oldest=7300, dirmask="[0-9]{8}.*",
 
     # Need to match loc+dirmask to only catch directories ending in the
     #   regular expression (well, after the last slash)
-    validdirs = [it for it in dirlist if (re.fullmatch(loc + dirmask, it))]
+    validdirs = [it for it in dirlist if re.fullmatch(loc + dirmask, it)]
     if debug is True:
         print(validdirs)
 
@@ -101,10 +98,10 @@ def recursiveSearcher(base, fileext="*.fits"):
 
     curdata = []
     # The 2nd return value is dirnames but we don't need them so dump to _
-    for root, _, filenames in os.walk(str(base)):
+    for root, _, filenames in walk(str(base)):
         for ext in allexts:
             for filename in fnmatch.filter(filenames, ext):
-                curdata.append(os.path.join(root, filename))
+                curdata.append(join(root, filename))
 
     # It'll be sorted by name, but it's better than nothing
     return sorted(curdata)
@@ -116,10 +113,10 @@ def checkDir(loc, debug=False):
     somewhere accessible on the filesystem.
     """
     # First expand any relative paths (expanduser takes ~/ to a real place)
-    fqloc = os.path.expanduser(loc)
+    fqloc = expanduser(loc)
 
     # Make sure the place actually exists...
-    if os.path.exists(fqloc) is False:
+    if exists(fqloc) is False:
         if debug is True:
             print("%s doesn't exist!" % (fqloc))
         return False, fqloc
@@ -133,7 +130,7 @@ def checkFreeSpace(loc, debug=False):
     on the partition that contains that location
     """
     # First expand any relative paths (expanduser takes ~/ to a real place)
-    fqloc = os.path.expanduser(loc)
+    fqloc = expanduser(loc)
 
     # Make sure the place actually exists...
     if checkDir(loc) is False:
@@ -143,7 +140,7 @@ def checkFreeSpace(loc, debug=False):
     else:
         try:
             # TODO: statvfs kinda sucks and I should replace this with psutil
-            statvfs = os.statvfs(fqloc)
+            osstatvfs = statvfs(fqloc)
         except Exception as e:
             if debug is True:
                 print("Unknown Error: %s" % (str(e)))
@@ -158,11 +155,11 @@ def checkFreeSpace(loc, debug=False):
         #   f_blocks   Total num of blocks on file system in units of f_frsize.
         #   f_bfree    Total num of free blocks.
         #   f_bavail   Num of free blocks available to non-privileged process.
-        total = (statvfs.f_frsize * statvfs.f_blocks)/1024./1024./1024.
+        total = (osstatvfs.f_frsize * osstatvfs.f_blocks)/1024./1024./1024.
 
         # Check free, same as above. NEED .f_bavail because
         #   .f_bfree is counting some space that's actually reserved
-        free = (statvfs.f_frsize * statvfs.f_bavail)/1024./1024./1024.
+        free = (osstatvfs.f_frsize * osstatvfs.f_bavail)/1024./1024./1024.
 
         if debug is True:
             print("Total: %.2f\nFree: %.2f" % (total, free))
