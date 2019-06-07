@@ -140,7 +140,7 @@ class amqHelper():
                 if self.topics is not None:
                     print("Subscribing to:")
                     print(self.topics)
-                    self.subscribe(self.topics)
+                    self.subscribe(topic=self.topics)
         except stomp.exception.NotConnectedException as err:
             self.conn = None
             print("STOMP.py not connected!")
@@ -159,14 +159,24 @@ class amqHelper():
             self.conn.disconnect()
             print("Disconnected from %s" % (self.host))
 
-    def subscribe(self, baseid=8675309):
+    def subscribe(self, topic=None, baseid=8675309):
         """
+        If given a topic argument, subscribe to just that one.
+        If it's not given, check for anything to subscribe to in
+        the self.topics property.  It's one, or the other. NOT BOTH.
         """
+        if topic is not None:
+            sub = topic
+        else:
+            sub = self.topics
+
         if self.conn is not None:
-            if isinstance(self.topics, str):
-                self.conn.subscribe("/topic/" + self.topics, baseid)
-            elif isinstance(self.topics, list):
-                for i, activeTopic in enumerate(self.topics):
+            if isinstance(sub, str):
+                tstr = "/topic/" + sub
+                # NOTE this is the STOMP.py subscribe call here
+                self.conn.subscribe(tstr, baseid)
+            elif isinstance(sub, list):
+                for i, activeTopic in enumerate(sub):
                     print("Subscribing to %s" % (activeTopic))
                     self.conn.subscribe("/topic/" + activeTopic, baseid+i)
 

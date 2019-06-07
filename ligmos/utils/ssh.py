@@ -141,12 +141,9 @@ class SSHWrapper():
                 print("File transfer took too long!")
                 return False
 
-    def sendCommand(self, command):
+    def sendCommand(self, command, debug=False):
         """
         """
-        # Use this to directly print out stdout/stderr
-        superdebug = False
-
         ses, stdout_data, stderr_data = None, None, None
         if self.ssh:
             stdin, stdout, stderr = self.ssh.exec_command(command)
@@ -161,7 +158,7 @@ class SSHWrapper():
             stdout_data = []
             # If stuff gets put onto stderr, it could block...I think.
             for line in stdout:
-                if superdebug is True:
+                if debug is True:
                     print(line)
                 stdout_data.append(line)
 
