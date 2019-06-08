@@ -22,7 +22,7 @@ import xmltodict as xmld
 import xmlschema as xmls
 import pkg_resources as pkgr
 
-from . import common
+from . import classes
 
 
 class silentSubscriber(stomp.listener.ConnectionListener):
@@ -242,8 +242,7 @@ def setupBroker(idict, cblk, conftype, listener=None):
     # ActiveMQ connection checker
     conn = None
 
-    if cblk.brokertype is not None and\
-        cblk.brokertype.lower() == "activemq":
+    if cblk is not None and cblk.brokertype.lower() == "activemq":
         # Register the listener class for this connection.
         #   This will be the thing that parses packets depending
         #   on their topic name and does the hard stuff!
@@ -257,16 +256,18 @@ def setupBroker(idict, cblk, conftype, listener=None):
 
     # Collect the activemq topics that are desired
     topics = []
-    if conftype is common.brokerCommandingTarget:
+    if conftype is classes.brokerCommandingTarget:
         for each in idict:
             topics.append(idict[each].cmdtopic)
             topics.append(idict[each].replytopic)
-    elif conftype is common.snoopTarget:
+    elif conftype is classes.snoopTarget:
         for each in idict:
-            topics.append(idict[each].topics)
-
-        # Flatten the topic list (only good for 2D)
-        topics = [val for sub in topics for val in sub]
+            eachesTopics = idict[each].topics
+            # Attempt to deal with single vs. multi-topic possibilities
+            if isinstance(eachesTopics, list):
+                topics += eachesTopics
+            elif isinstance(eachesTopics, str):
+                topics.append(eachesTopics)
 
     # A final downselect to make sure we don't have any duplicates
     topics = list(set(topics))
