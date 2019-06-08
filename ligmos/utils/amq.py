@@ -236,8 +236,10 @@ class amqHelper():
             print(info.format(self.host, topic, message))
 
 
-def setupBroker(idict, cblk, conftype, listener=None):
+def setupBroker(idict, cblk, listener=None):
     """
+    idict should be a dict of classes, of type conftype
+    cblk should be an instance of ligmos.utils.classes.commonParams
     """
     # ActiveMQ connection checker
     conn = None
@@ -256,12 +258,13 @@ def setupBroker(idict, cblk, conftype, listener=None):
 
     # Collect the activemq topics that are desired
     topics = []
-    if conftype is classes.brokerCommandingTarget:
-        for each in idict:
+
+    for each in idict:
+        thisone = idict[each]
+        if isinstance(thisone, classes.brokerCommandingTarget):
             topics.append(idict[each].cmdtopic)
             topics.append(idict[each].replytopic)
-    elif conftype is classes.snoopTarget:
-        for each in idict:
+        elif isinstance(thisone, classes.snoopTarget):
             eachesTopics = idict[each].topics
             # Attempt to deal with single vs. multi-topic possibilities
             if isinstance(eachesTopics, list):
