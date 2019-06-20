@@ -12,7 +12,7 @@ from __future__ import division, print_function, absolute_import
 
 import json
 
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError as RCE
 
 try:
     import influxdb
@@ -105,7 +105,7 @@ class influxobj():
                         # Clear the client to make other stuff break
                         self.client = None
                         res = False
-            except ConnectionError as err:
+            except RCE as err:
                 print("Fatal Connection Error!")
                 print("Is InfluxDB running?")
                 # sys.exit(-1)

@@ -29,25 +29,27 @@ def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags=None,
     for m in meas:
         packet.update({'measurement': m})
         if tags is not None:
-            if type(tags) != dict:
+            if not isinstance(tags, dict):
                 print("ERROR! tags must be of type dict.")
                 sys.exit(-1)
             else:
                 packet.update({'tags': tags})
 
-        if type(ts) == dt.datetime:
+        if isinstance(ts, dt.datetime):
             # InfluxDB wants timestamps in nanoseconds from Epoch (1970/01/01)
             #   but Grafana defaults to ms precision from Epoch.
             #   influxdb-python is a little fuzzy here, so convert it ourselves
             #   (dt.datetime.utcnow() doesn't supply .tzinfo, I think, and
             #     that is what influxdb-python looks for to autoconvert)
-            nsts = int(ts.timestamp() * 1e3)
-        elif type(ts) == int or type(ts) == float:
+            # nsts = int(ts.timestamp() * 1e3)
+            pass
+        elif isinstance(ts, int) or isinstance(ts, float):
             # Assume that it's right
-            nsts = int(ts)
+            # nsts = int(ts)
+            pass
         # packet.update({'time': nsts})
 
-        if type(fields) != dict:
+        if not isinstance(fields, dict):
             print("ERROR! fields must be of type dict.")
             sys.exit(-1)
 

@@ -11,18 +11,21 @@
 from __future__ import division, print_function, absolute_import
 
 import os
-import psutil
 import datetime as dt
 
+import psutil
 
-def find_procs_by_name(name,
-                       ignore=['yvette.py', 'alfred.py', 'wadsworth.py']):
+
+def find_procs_by_name(name, ignore=None):
     """
     Return a list of processes matching 'name'.
 
     Ignores processes with ignore in them to keep it from finding the
     searching process, which would be silly.
     """
+    if ignore is None:
+        ignore = ['yvette.py', 'alfred.py', 'wadsworth.py']
+
     ls = []
     for p in psutil.process_iter(attrs=["name", "exe", "cmdline"]):
         skip = False
@@ -33,10 +36,8 @@ def find_procs_by_name(name,
             exe = p.exe()
         except (psutil.AccessDenied, psutil.ZombieProcess):
             skip = True
-            pass
         except psutil.NoSuchProcess:
             skip = True
-            continue
 
         if cmd is None:
             skip = True
@@ -78,7 +79,7 @@ def checkProcess(name='lois'):
         name = None
 
     ts = dt.datetime.now().timestamp()
-    tsu = dt.datetime.utcnow().timestamp()
+    # tsu = dt.datetime.utcnow().timestamp()
 
     if name is not None:
         fprocs = find_procs_by_name(name)

@@ -57,7 +57,7 @@ def setAlarm(handler=None, timeout=10, debug=False):
         if debug is True:
             print("Warning: Timeout must be an integer >= 1")
         timeout = 1
-    if type(timeout) is float:
+    if isinstance(timeout, float):
         if debug is True:
             print("Warning: Timeout %f set to %d" % (timeout,
                                                      int(timeout)))

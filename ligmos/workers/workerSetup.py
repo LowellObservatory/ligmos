@@ -24,8 +24,7 @@ import os
 import time
 import signal
 
-from . import defaultParser
-from ..utils import common, classes, confutils, pids, logs
+from .. import utils
 
 
 def toServeMan(procname, conffile, passfile, log,
