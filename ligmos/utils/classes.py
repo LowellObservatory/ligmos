@@ -13,7 +13,23 @@
 
 from __future__ import division, print_function, absolute_import
 
-# from .common import nicerExit
+
+class databaseQuery(object):
+    """
+    Subclasses...nothing! It's mostly standalone, though it's intended that
+    an instance describing the database connection gets shoved into
+    self.connection here for actual usage.
+
+    Can be used to query or write to a database...?
+    """
+    def __init__(self):
+        self.connection = None
+        self.dbname = None
+        self.tablename = None
+        self.fields = None
+        self.tagnanes = None
+        self.tagvals = None
+        self.rangehours = 24
 
 
 class baseTarget(object):
@@ -29,24 +45,6 @@ class baseTarget(object):
         self.password = None
         self.type = None
         self.enabled = False
-
-
-class databaseQuery(object):
-    """
-    Subclasses...nothing! It's mostly standalone, though it's intended that
-    an instance describing the database connection gets shoved into
-    self.hookup here for actual usage.
-
-    Can be used to query or write to a database...?
-    """
-    def __init__(self):
-        self.hookup = None
-        self.dbname = None
-        self.tablename = None
-        self.fields = None
-        self.tagnanes = None
-        self.tagvals = None
-        self.rangehours = 24
 
 
 class brokerCommandingTarget(baseTarget):
@@ -69,7 +67,21 @@ class snoopTarget(baseTarget):
         # Gather up the properties from the base class
         super().__init__()
 
+        self.broker = None
         self.topics = None
+
+
+class sneakyTarget(snoopTarget):
+    """
+    Subclasses snoopTarget class
+    """
+    def __init__(self):
+        # Gather up the properties from the base class
+        super().__init__()
+
+        self.resourcemethod = None
+        self.resourcelocation = None
+        self.resourcepor = None
 
 
 class deviceTarget(baseTarget):
@@ -137,7 +149,9 @@ class hostTarget(baseTarget):
 
         self.srcdir = None
         self.procmon = None
+        self.database = None
 
         # Is this legit? Should one delete attributes inherited from a base
         #   that you actually don't really need?  Who knows!
         delattr(self, 'type')
+        delattr(self, 'name')

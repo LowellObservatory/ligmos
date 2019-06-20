@@ -74,16 +74,21 @@ def parseConfig(conffile, confclass, passfile=None, debug=True,
             #   sections, and add passwords where they match
             config = confutils.assignPasses(config, passwords)
 
+    # Order of operations is important!
+    #   By checking the enabled status here, we can check to see if the
+    #   common database- or broker- sections are enabled/disabled too.
+    if enableCheck is True:
+        enconfig = checkEnabled(config, enableKey='enabled')
+    else:
+        enconfig = dict(config)
+
     comcfg = None
     if searchCommon is True:
         # We pop the common config section if it's found, so need to remember
         #   to get the config back as a return value
-        config, comcfg = checkCommon(config)
-
-    if enableCheck is True:
-        retconfig = checkEnabled(config, enableKey='enabled')
+        ncconfig, comcfg = checkCommon(enconfig)
     else:
-        retconfig = dict(config)
+        ncconfig = dict(enconfig)
 
     # We do the debug output here because it's easier to just work on
     #   all the given dicts rather than dance around the objects
@@ -95,29 +100,34 @@ def parseConfig(conffile, confclass, passfile=None, debug=True,
         print("Found the following sections in the configuration file:")
         print("%s\n" % tsections)
 
+        if enableCheck is True:
+            print("Enabled:")
+            esections = ' '.join(enconfig.keys())
+            print("%s\n" % esections)
+
         if searchCommon is True:
             print("Common:")
             bsections = ' '.join(comcfg.keys())
             print("%s\n" % bsections)
 
-        if enableCheck is True:
-            print("Enabled:")
-            esections = ' '.join(retconfig.keys())
-            print("%s\n" % esections)
-
     # Now make the config into a proper class of type confclass
     finconfig = {}
-    for each in retconfig:
-        classed = confutils.assignConf(retconfig[each], confclass, debug=debug)
+    for each in ncconfig:
+        classed = confutils.assignConf(ncconfig[each], confclass, debug=debug)
         finconfig.update({each: classed})
 
     return finconfig, comcfg
 
 
-def checkCommon(cfg):
+def checkCommon(cfg, objtype=None):
     """
+    Expects that cfg is a dict of configparser sections, which are then
+    assigned to an instance of type objtype.
     """
     comms = {}
+
+    if objtype is None:
+        objtype = classes.baseTarget
 
     # Things that will trigger us
     #   We keep the delimiter separate from the tags because it's easier
@@ -125,7 +135,7 @@ def checkCommon(cfg):
     commonTags = ['database-', 'broker-']
 
     # First get the list of all sections
-    sects = cfg.sections()
+    sects = cfg.keys()
 
     for tag in commonTags:
         # See if any start with our current tag, and if so, grab their names
@@ -134,7 +144,7 @@ def checkCommon(cfg):
         for each in csecs:
             # Use it to fill the common/core data structure. Since it's a
             #   class method it'll just fill up the class appropriately.
-            targObj = confutils.assignConf(cfg[each], classes.baseTarget)
+            targObj = confutils.assignConf(cfg[each], objtype)
 
             # Now purge the common section out so it doesn't get confused
             cfg.remove_section(each)
@@ -147,6 +157,8 @@ def checkCommon(cfg):
 
 def checkEnabled(conf, enableKey='enabled'):
     """
+    Expects that conf is still a configparser instance.
+
     Check the conf for sections with a paramater matching the 'enableKey'
     parameter and return that section IFF (if and only if) it is True.
 
