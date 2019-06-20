@@ -24,12 +24,13 @@ import os
 import time
 import signal
 
-from .. import utils
+from . import defaultParser
+from ..utils import common, logs, pids, confutils, classes
 
 
 def toServeMan(procname, conffile, passfile, log,
                extraargs=None,
-               conftype=utils.classes.baseTarget,
+               conftype=classes.baseTarget,
                logfile=True, desc=None):
     """Main entry point, which also handles arguments.
 
@@ -139,6 +140,8 @@ def toServeMan(procname, conffile, passfile, log,
         logs.setup_logging(logName=args.log, nLogs=args.nlogs)
 
     # Read in the configuration file and act upon it
+    #
+    # THIS IS BROKEN!
     idict, cblk = confutils.parseConfPasses(args.config, args.passes,
                                             conftype=conftype,
                                             debug=args.debug)
