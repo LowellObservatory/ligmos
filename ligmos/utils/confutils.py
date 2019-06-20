@@ -14,44 +14,44 @@ These helpers make it possible to avoid calling the raw parsers yourself.
 
 from __future__ import division, print_function, absolute_import
 
-from .confparsers import parseConfFile, parsePassFile
+# from .confparsers import parseConfFile, parsePassFile
 
 
-def parseConfPasses(conffile, passfile, conftype, debug=True):
-    """
-    Given a configuration and password filename, as well as the name of
-    the ligmos.utils.classes definition that they match, parse both and
-    return an object that integrates the passwords.
+# def parseConfPasses(conffile, passfile, conftype, debug=True):
+#     """
+#     Given a configuration and password filename, as well as the name of
+#     the ligmos.utils.classes definition that they match, parse both and
+#     return an object that integrates the passwords.
 
-    conftype should be a *reference* and not an *instance* of the class; it
-    will be instantiated here and added to a dict, returned to the caller.
-    """
-    # Read in the configuration file and act upon it
-    # config: dictionary of parsed config file
-    # comcfg: common block from config file
-    config, comcfg = parseConfFile(conffile,
-                                   enableCheck=True,
-                                   commonBlocks=True,
-                                   debug=debug)
+#     conftype should be a *reference* and not an *instance* of the class; it
+#     will be instantiated here and added to a dict, returned to the caller.
+#     """
+#     # Read in the configuration file and act upon it
+#     # config: dictionary of parsed config file
+#     # comcfg: common block from config file
+#     config, comcfg = parseConfFile(conffile,
+#                                    enableCheck=True,
+#                                    commonBlocks=True,
+#                                    debug=debug)
 
-    idict = {}
-    for each in config:
-        print("Applying '%s' section of conf. file..." % (each))
-        # Actually make an instance of the given configuration class,
-        #   and then attempt to fill it
-        inst = conftype()
-        inst = assignConf(inst, conf=config[each], backfill=True)
+#     idict = {}
+#     for each in config:
+#         print("Applying '%s' section of conf. file..." % (each))
+#         # Actually make an instance of the given configuration class,
+#         #   and then attempt to fill it
+#         inst = conftype()
+#         inst = assignConf(inst, conf=config[each], backfill=True)
 
-        idict.update({inst.name: inst})
+#         idict.update({inst.name: inst})
 
-    # If there's a password file, associate that with the above.
-    #   It includes the common block, which is why it's also a return value
-    if passfile is not None:
-        idict, comcfg = parsePassFile(passfile, idict,
-                                      cblk=comcfg,
-                                      debug=debug)
+#     # If there's a password file, associate that with the above.
+#     #   It includes the common block, which is why it's also a return value
+#     if passfile is not None:
+#         idict, comcfg = parsePassFile(passfile, idict,
+#                                       cblk=comcfg,
+#                                       debug=debug)
 
-    return idict, comcfg
+#     return idict, comcfg
 
 
 def assignConf(obj, conf, backfill=False, debug=False):
