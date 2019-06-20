@@ -12,15 +12,14 @@ from __future__ import division, print_function, absolute_import
 
 import os
 import re
+import glob
 import fnmatch
-import numpy as np
-try:
-    from os.path import join, isdir
-    from os.path import listdir
-except ImportError:
-    from os import listdir
+from os import listdir
+from os.path import join, isdir
 
-from . import common
+import numpy as np
+
+from . import dateutils as dstuff
 
 
 def getDirListing(loc, window=2, oldest=7300, dirmask="[0-9]{8}.*",
@@ -50,18 +49,18 @@ def getDirListing(loc, window=2, oldest=7300, dirmask="[0-9]{8}.*",
 
     # Need to match loc+dirmask to only catch directories ending in the
     #   regular expression (well, after the last slash)
-    validdirs = [it for it in dirlist if (re.fullmatch(loc + dirmask, it))]
+    validdirs = [it for it in dirlist if re.fullmatch(loc + dirmask, it)]
     if debug is True:
         print(validdirs)
 
     # Make a list of dirs in which their parsed date < than param. window
     if comptype is 'newer':
-        recentmod = [it for it in validdirs if common.dateDiff(it) < window]
+        recentmod = [it for it in validdirs if dstuff.dateDiff(it) < window]
     elif comptype is 'older':
-        recentmod = [it for it in validdirs if common.dateDiff(it) >= window]
+        recentmod = [it for it in validdirs if dstuff.dateDiff(it) >= window]
         # One final round of this to allow downselecting of files
         #   older than window but less than oldest
-        recentmod = [it for it in recentmod if common.dateDiff(it) <= oldest]
+        recentmod = [it for it in recentmod if dstuff.dateDiff(it) <= oldest]
 
     if debug is True:
         if recentmod != []:
@@ -114,6 +113,8 @@ def checkDir(loc, debug=False):
     """
     Given a location, check to make sure that location actually exists
     somewhere accessible on the filesystem.
+
+    TODO: Merge/replace this with checkOutDir ?
     """
     # First expand any relative paths (expanduser takes ~/ to a real place)
     fqloc = os.path.expanduser(loc)
@@ -125,6 +126,32 @@ def checkDir(loc, debug=False):
         return False, fqloc
     else:
         return True, fqloc
+
+
+def checkOutDir(outdir, getList=True):
+    """
+    TODO: Merge/replace this with checkDir ?
+    """
+    # Check if the directory exists, and if not, create it!
+    try:
+        os.makedirs(outdir)
+    except FileExistsError:
+        pass
+    except OSError as err:
+        # Something bad happened. Could be a race condition between
+        #   the check for dirExists and the actual creation of the
+        #   directory/tree, but scream and signal an abort.
+        print(str(err))
+    except Exception as err:
+        # Catch for other (permission?) errors just to be safe for now
+        print(str(err))
+
+    flist = None
+    if getList is True:
+        flist = sorted(glob.glob(outdir + "/*"))
+        flist = [os.path.basename(each) for each in flist]
+
+    return flist
 
 
 def checkFreeSpace(loc, debug=False):
@@ -179,3 +206,41 @@ def checkFreeSpace(loc, debug=False):
         retdict['percentfree'] = np.around(free/total, decimals=2)
 
         return retdict
+
+
+def deleteOldFiles(fdict):
+    """
+    fdict should be a dictionary whose key is the filename and the
+    value is that filename's determined age (in seconds)
+    """
+    for key in fdict:
+        print("Deleting %s since it's too old (%.3f hr)" %
+              (key, fdict[key]/60./60.))
+        try:
+            os.remove(key)
+        except OSError as err:
+            # At least see what the issue was
+            print(str(err))
+
+
+def findOldFiles(inloc, fmask, now, maxage=24., dtfmt="%Y%j%H%M%S%f"):
+    """
+    'maxage' is in hours
+
+    Returns two dictionaries, one for the current (young) files and one
+    for the out-of-date (old) files. Both dicts are set up the same,
+    with the keys being the filenames and their values their determined age.
+    """
+    maxage *= 60. * 60.
+    flist = sorted(glob.glob(inloc + fmask))
+
+    goldenoldies = {}
+    youngsters = {}
+    for each in flist:
+        diff = dstuff.getFilenameAgeDiff(each, now, dtfmt=dtfmt)
+        if diff > maxage:
+            goldenoldies.update({each: diff})
+        else:
+            youngsters.update({each: diff})
+
+    return youngsters, goldenoldies

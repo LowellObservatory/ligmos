@@ -40,7 +40,7 @@ def dateDiff(fstr, debug=False):
     """
     dstr = basename(fstr)
     dtobj = strToDate(dstr)
-    if type(dtobj) is dt.datetime:
+    if isinstance(dtobj, dt.datetime):
         dtts = dt.datetime.timestamp(dtobj)
         now = dt.datetime.timestamp(dt.datetime.utcnow())
         diff = (now - dtts)
@@ -96,3 +96,22 @@ def strToDate(st):
                 pass
 
     return dted
+
+
+def getFilenameAgeDiff(fname, now, dtfmt="%Y%j%H%M%S%f"):
+    """
+    NOTE: HERE 'maxage' is already in seconds! Convert before calling.
+    """
+    # Need to basename it to get just the actual filename and not the path
+    beach = basename(fname)
+
+    try:
+        dts = dt.datetime.strptime(beach, dtfmt)
+        diff = (now - dts).total_seconds()
+    except Exception as err:
+        # TODO: Catch the right datetime conversion error!
+        print(str(err))
+        # Make it "current" to not delete it
+        diff = 0
+
+    return diff

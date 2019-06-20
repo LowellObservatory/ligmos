@@ -22,7 +22,7 @@ import xmltodict as xmld
 import xmlschema as xmls
 import pkg_resources as pkgr
 
-from . import common
+from . import classes
 
 
 class silentSubscriber(stomp.listener.ConnectionListener):
@@ -236,14 +236,15 @@ class amqHelper():
             print(info.format(self.host, topic, message))
 
 
-def setupBroker(idict, cblk, conftype, listener=None):
+def setupBroker(idict, cblk, listener=None):
     """
+    idict should be a dict of classes, of type conftype
+    cblk should be an instance of ligmos.utils.classes.commonParams
     """
     # ActiveMQ connection checker
     conn = None
 
-    if cblk.brokertype is not None and\
-        cblk.brokertype.lower() == "activemq":
+    if cblk is not None and cblk.brokertype.lower() == "activemq":
         # Register the listener class for this connection.
         #   This will be the thing that parses packets depending
         #   on their topic name and does the hard stuff!
@@ -257,16 +258,19 @@ def setupBroker(idict, cblk, conftype, listener=None):
 
     # Collect the activemq topics that are desired
     topics = []
-    if conftype is common.brokerCommandingTarget:
-        for each in idict:
+
+    for each in idict:
+        thisone = idict[each]
+        if isinstance(thisone, classes.brokerCommandingTarget):
             topics.append(idict[each].cmdtopic)
             topics.append(idict[each].replytopic)
-    elif conftype is common.snoopTarget:
-        for each in idict:
-            topics.append(idict[each].topics)
-
-        # Flatten the topic list (only good for 2D)
-        topics = [val for sub in topics for val in sub]
+        elif isinstance(thisone, classes.snoopTarget):
+            eachesTopics = idict[each].topics
+            # Attempt to deal with single vs. multi-topic possibilities
+            if isinstance(eachesTopics, list):
+                topics += eachesTopics
+            elif isinstance(eachesTopics, str):
+                topics.append(eachesTopics)
 
     # A final downselect to make sure we don't have any duplicates
     topics = list(set(topics))
