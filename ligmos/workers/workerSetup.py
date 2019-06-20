@@ -29,7 +29,7 @@ from .. import utils
 
 def toServeMan(procname, conffile, passfile, log,
                extraargs=None,
-               conftype=classes.baseTarget,
+               conftype=utils.classes.baseTarget,
                logfile=True, desc=None):
     """Main entry point, which also handles arguments.
 
