@@ -16,69 +16,37 @@ from __future__ import division, print_function, absolute_import
 from .common import nicerExit
 
 
-class deviceType():
-    """
-    """
-    def __init__(self):
-        self.hostname = None
-        self.port = None
-        self.type = None
-        self.tag = None
-        self.serialURL = None
-
-
-class commonParams():
-    """
-    """
-    def __init__(self):
-        self.brokertype = ''
-        self.brokerhost = ''
-        self.brokerport = None
-        self.brokeruser = ''
-        self.dbtype = None
-        self.dbhost = None
-        self.dbport = None
-        self.dbuser = ''
-        self.dbname = ''
-
-    def assignConf(self, conf, ctype):
-        """
-        A bit shoddy, but it works.  Alternative is to have separate classes
-        for database, broker, etc. and use the usual assignConf routine.
-        """
-        if ctype.lower() == 'broker':
-            akeys = ['brokertype', 'brokerhost', 'brokerport', 'brokeruser']
-        elif ctype.lower() == 'database':
-            akeys = ['dbtype', 'dbhost', 'dbport', 'dbuser', 'dbname']
-        else:
-            akeys = []
-
-        # This will loop over all the properties defined above!
-        for key in akeys:
-            try:
-                if key.lower() == 'dbtype':
-                    if conf[key].lower() == 'none':
-                        # SPECIAL handling to capture "None" -> None
-                        setattr(self, key, None)
-                    else:
-                        setattr(self, key, conf[key])
-                else:
-                    setattr(self, key, conf[key])
-            except KeyError as err:
-                nicerExit(err)
-
-
 class baseTarget(object):
     """
-    Empty class that gets inherited by everyone needing to add a password
-    associated with the host parameter or needing to add in a common block.
+    Empty class that gets inherited by basically everything since it contains
+    most/all the usual stuff you'd need to connect to a ... thing.
     """
     def __init__(self):
-        self.name = ''
-        self.host = ''
+        self.name = None
+        self.host = None
         self.port = 22
-        self.user = ''
+        self.user = None
+        self.pasw = None
+        self.type = None
         self.enabled = False
+
+
+class databaseQuery(object):
+    """
+    Subclasses...nothing! It's mostly standalone, though it's intended that
+    an instance describing the database connection gets shoved into
+    self.hookup here for actual usage.
+
+    Can be used to query or write to a database...?
+    """
+    def __init__(self):
+        self.hookup = None
+        self.dbname = None
+        self.tablename = None
+        self.fields = None
+        self.tagnanes = None
+        self.tagvals = None
+        self.rangehours = 24
 
 
 class brokerCommandingTarget(baseTarget):
@@ -89,8 +57,8 @@ class brokerCommandingTarget(baseTarget):
         # Gather up the properties from the base class
         super().__init__()
 
-        self.cmdtopic = ''
-        self.replytopic = ''
+        self.cmdtopic = None
+        self.replytopic = None
 
 
 class snoopTarget(baseTarget):
@@ -101,7 +69,7 @@ class snoopTarget(baseTarget):
         # Gather up the properties from the base class
         super().__init__()
 
-        self.topics = []
+        self.topics = None
 
 
 class deviceTarget(baseTarget):
@@ -114,7 +82,21 @@ class deviceTarget(baseTarget):
 
         # All of the devices will be parsed and put into this list, so
         #   you can figure out how many there are just by len(devices).
-        self.devices = []
+        self.devices = None
+
+
+class instrumentDeviceTarget(baseTarget):
+    """
+    Subclasses baseTarget class
+    """
+    def __init__(self):
+        # Gather up the properties from the base class
+        super().__init__()
+
+        self.tag = None
+        self.type = None
+        self.serialURL = None
+        self.brokertopic = None
 
 
 class dataTarget(baseTarget):
@@ -125,10 +107,10 @@ class dataTarget(baseTarget):
         # Gather up the properties from the base class
         super().__init__()
 
-        self.srcdir = ''
-        self.dirmask = ''
-        self.filemask = ''
-        self.destdir = ''
+        self.srcdir = None
+        self.dirmask = None
+        self.filemask = None
+        self.destdir = None
         self.engEnabled = False
 
         # These are updated/used elsewhere functionally
@@ -153,17 +135,8 @@ class hostTarget(baseTarget):
         # Gather up the properties from the base class
         super().__init__()
 
-        self.srcdir = ''
-        self.procmon = ''
-
-
-def addCommonBlock(base, common=None):
-    if common is not None:
-        base.common = common
-    else:
-        base.common = None
-
-    return base
+        self.srcdir = None
+        self.procmon = None
 
 
 def addPass(base, password=None, debug=False):
@@ -189,6 +162,6 @@ def addPass(base, password=None, debug=False):
         if debug is True:
             print("Password is empty!!")
     else:
-        base.passw = password
+        setattr(base, 'pasw', password)
 
     return base
