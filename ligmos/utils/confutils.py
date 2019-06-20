@@ -54,9 +54,48 @@ from __future__ import division, print_function, absolute_import
 #     return idict, comcfg
 
 
-def assignConf(obj, conf, backfill=False, debug=False):
+def assignPasses(conf, passes, debug=True):
     """
-    Given an arbitrary class (obj) and a parsed configuration file (conf),
+    Probably very, very, very insecure.
+
+    Checks to see if there is a 'user' property in the given config, and
+    then tries to get a 'password' property from the given passes.  If
+    the user is None, the check is skipped.  If the password doesn't exist,
+    the check is aborted.  In either of those cases, the resulting config
+    section will *lack* a password attribute completely.
+    """
+    # Get the big list 'o sections that we will check
+    csects = conf.sections()
+
+    for each in csects:
+        con = conf[each]
+        # See if we can find username for this instrument
+        try:
+            iuser = con['user']
+            # Quick and dirty typecheck
+            if iuser.lower() == 'none':
+                iuser = None
+        except KeyError:
+            iuser = None
+
+        # Now see if we have a password for this username
+        if iuser is not None:
+            try:
+                passw = passes[iuser]['password']
+            except KeyError:
+                if debug is True:
+                    print("Username %s has no password!" % (iuser))
+                passw = None
+
+            # Actually update the configuration section with this password
+            conf[each]['password'] = passw
+
+    return conf
+
+
+def assignConf(conf, obj, backfill=False, debug=False):
+    """
+    Given an arbitrary class reference and a parsed configuration file (conf),
     assign keys from the latter into parameters in the former.
 
     Assumes that ALL keys in the class are present in the configuration; if
@@ -67,8 +106,11 @@ def assignConf(obj, conf, backfill=False, debug=False):
     but not in the given class are *ignored* completely.  If True,
     they're added to the given class with a warning.
     """
-    # Get the list of parameters in the given class (obj)
-    oparams = list(obj.__dict__.keys())
+    # Make an instance of our given object/class
+    classy = obj()
+
+    # Get the list of parameters in the instance (classy) given class (obj)
+    oparams = list(classy.__dict__.keys())
 
     # Now do the same for the configuration object (conf)
     cparams = list(conf.keys())
@@ -78,7 +120,7 @@ def assignConf(obj, conf, backfill=False, debug=False):
     #   with a warning if backfill is True, otherwise they're ignored entirely
     keydiffs = list(set(cparams) - set(oparams))
 
-    for key in obj.__dict__:
+    for key in classy.__dict__:
         try:
             # Remember: key is from the input class here
             kval = conf[key]
@@ -87,15 +129,15 @@ def assignConf(obj, conf, backfill=False, debug=False):
             #   stuff happens to check for none/true/false
             nkval = valChecks(kval)
 
-            # Actually set the parameter (key) in the class (obj)
+            # Actually set the parameter (key) in the class (classy)
             #   to the value that we found/cleaned up (nkval)
-            setattr(obj, key, nkval)
+            setattr(classy, key, nkval)
         except KeyError:
             # This means that
             if debug is True:
                 print("Improper config; missing configuration key %s" % (key))
             # Just set it to None and move on with our lives
-            setattr(obj, key, None)
+            setattr(classy, key, None)
 
     if backfill is True:
         # If there are any, that is
@@ -103,9 +145,9 @@ def assignConf(obj, conf, backfill=False, debug=False):
             for orphan in keydiffs:
                 orphVal = valChecks(conf[orphan])
                 print("Setting orphan object key %s to %s" % (orphan, orphVal))
-                setattr(obj, orphan, orphVal)
+                setattr(classy, orphan, orphVal)
 
-    return obj
+    return classy
 
 
 def valChecks(kval):

@@ -16,7 +16,6 @@ from __future__ import division, print_function, absolute_import
 
 import configparser as conf
 
-from . import common
 from . import classes
 from . import confutils
 
@@ -37,10 +36,14 @@ def rawParser(confname):
     return config
 
 
-def parseConfig(confname, passname=None, debug=True,
+def parseConfig(conffile, confclass, passfile=None, debug=True,
                 searchCommon=True, enableCheck=True):
     """
     Parse the given .conf file.
+
+    if confclass is not None, the sections in conffile are attempted to
+    be put into the class referenced by confclass.  Note that this
+    should be a reference and *NOT* an instance.
 
     If searchCommon is true, it attempts to look for 'database-' or 'broker-'
     (or possibly other) tagged sections and assigns them to a
@@ -55,17 +58,21 @@ def parseConfig(confname, passname=None, debug=True,
 
     Returns a dict of sections and None OR a classes.commonParams instance.
     """
-    config = rawParser(confname)
+    config = rawParser(conffile)
 
     if config is None:
         # This now becomes the caller's problem to catch!
         return None, None
 
-    if passname is not None:
-        passwords = rawParser(passname)
+    if passfile is not None:
+        passwords = rawParser(passfile)
         if passwords is None:
             # Again, make it the caller's problem to watch/fix.
             return None, None
+        else:
+            # Search for commonality between the password and config
+            #   sections, and add passwords where they match
+            config = confutils.assignPasses(config, passwords)
 
     comcfg = None
     if searchCommon is True:
@@ -78,6 +85,8 @@ def parseConfig(confname, passname=None, debug=True,
     else:
         retconfig = dict(config)
 
+    # We do the debug output here because it's easier to just work on
+    #   all the given dicts rather than dance around the objects
     if debug is True:
         # Just for nice output lines
         sections = config.sections()
@@ -96,51 +105,13 @@ def parseConfig(confname, passname=None, debug=True,
             esections = ' '.join(retconfig.keys())
             print("%s\n" % esections)
 
-    return retconfig, comcfg
+    # Now make the config into a proper class of type confclass
+    finconfig = {}
+    for each in retconfig:
+        classed = confutils.assignConf(retconfig[each], confclass, debug=debug)
+        finconfig.update({each: classed})
 
-
-def parsePassFile(filename, idict, cblk=None, debug=False):
-    """
-    """
-    try:
-        config = conf.SafeConfigParser()
-        config.read_file(open(filename, 'r'))
-    except IOError as err:
-        print("WARNING: %s not found! Ignoring it and continuing..." %
-              (filename))
-        print(str(err))
-        return idict
-
-    for each in idict.keys():
-        # Get the username for this instrument
-        iuser = idict[each].user
-        # Now see if we have a password for this username
-        if iuser != '':
-            try:
-                passw = config[iuser]['pw']
-            except KeyError:
-                if debug is True:
-                    print("Username %s has no password!" % (iuser))
-                passw = None
-
-            idict[each] = classes.addPass(idict[each], passw)
-
-    # Since we're in here, check the possible 'common' stuff too.
-    #  TODO: Clean this up. It's pretty damn sloppy, since None is
-    #  getting in here as 'None' (i.e. not the right type)
-    if cblk is not None:
-        try:
-            bpw = config['common-broker']['pw']
-            setattr(cblk, 'brokerpass', bpw)
-        except KeyError:
-            setattr(cblk, 'brokerpass', None)
-        try:
-            dpw = config['common-database']['pw']
-            setattr(cblk, 'dbpass', dpw)
-        except KeyError:
-            setattr(cblk, 'dbpass', None)
-
-    return idict, cblk
+    return finconfig, comcfg
 
 
 def checkCommon(cfg):
@@ -163,8 +134,7 @@ def checkCommon(cfg):
         for each in csecs:
             # Use it to fill the common/core data structure. Since it's a
             #   class method it'll just fill up the class appropriately.
-            targObj = classes.baseTarget()
-            targObj = confutils.assignConf(targObj, cfg[each])
+            targObj = confutils.assignConf(cfg[each], classes.baseTarget)
 
             # Now purge the common section out so it doesn't get confused
             cfg.remove_section(each)

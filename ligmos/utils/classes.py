@@ -26,7 +26,7 @@ class baseTarget(object):
         self.host = None
         self.port = 22
         self.user = None
-        self.pasw = None
+        self.password = None
         self.type = None
         self.enabled = False
 
@@ -138,30 +138,6 @@ class hostTarget(baseTarget):
         self.srcdir = None
         self.procmon = None
 
-
-def addPass(base, password=None, debug=False):
-    """Add in password information from a separate file for ``user``.
-
-    This small function allows the breaking up of usernames from passwords
-    into separate .conf files, mainly for a little extra security when
-    posting this all to GitHub.
-
-    .. seealso::
-        ``passwords.conf-TEMPLATE`` in the examples directory.
-
-    Args:
-        password (conf (:class:`configparser.ConfigParser`, optional)
-            Configuration information parsed from a .conf file.
-            Defaults to None.  If password is not None, then a
-            ``password`` attribute is created if matching usernames
-            are found.
-    debug (:obj:`bool`, optional)
-        Bool to trigger additional debugging outputs. Defaults to False.
-    """
-    if password is None:
-        if debug is True:
-            print("Password is empty!!")
-    else:
-        setattr(base, 'pasw', password)
-
-    return base
+        # Is this legit? Should one delete attributes inherited from a base
+        #   that you actually don't really need?  Who knows!
+        delattr(self, 'type')
