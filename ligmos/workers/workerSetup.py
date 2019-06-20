@@ -25,7 +25,7 @@ import time
 import signal
 
 from . import defaultParser
-from ..utils import common, logs, pids, confutils, classes
+from ..utils import common, logs, pids, confparsers, classes
 
 
 def toServeMan(procname, conffile, passfile, log,
@@ -140,10 +140,10 @@ def toServeMan(procname, conffile, passfile, log,
         logs.setup_logging(logName=args.log, nLogs=args.nlogs)
 
     # Read in the configuration file and act upon it
-    #
-    # THIS IS BROKEN!
-    idict, cblk = confutils.parseConfPasses(args.config, args.passes,
-                                            conftype=conftype,
-                                            debug=args.debug)
+    idict, cblk = confparsers.parseConfig(args.config, conftype,
+                                          passfile=args.passes,
+                                          searchCommon=True,
+                                          enableCheck=True,
+                                          debug=args.debug)
 
     return idict, cblk, args, runner
