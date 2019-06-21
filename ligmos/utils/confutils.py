@@ -17,41 +17,33 @@ from __future__ import division, print_function, absolute_import
 # from .confparsers import parseConfFile, parsePassFile
 
 
-# def parseConfPasses(conffile, passfile, conftype, debug=True):
-#     """
-#     Given a configuration and password filename, as well as the name of
-#     the ligmos.utils.classes definition that they match, parse both and
-#     return an object that integrates the passwords.
+def assignComm(conf, comm):
+    """
+    THIS IS LIKELY JUST A HOT DAMN MESS STILL AND NEEDS TO BE ADAPTED IN
+    """
+    dbs = OrderedDict()
+    vqs = OrderedDict()
+    for sec in queries:
+        if sec.lower().startswith("database-") or\
+           sec.lower().startswith("broker-"):
+            baseTarg = assignConf(classes.baseTarget(), queries[sec])
+            dbs.update({sec: baseTarg})
+        elif sec.lower() != 'default':
+            # There's always a "DEFAULT" section after parsing so skip it
+            dbq = assignConf(classes.databaseQuery(), queries[sec])
+            # Setting this outside of __init__ is fine with me
+            #   since we're really just renaming for convienence elsewhere
+            #   (so I remember that I can ignore this in pylint)
+            dbq.key = sec
+            try:
+                dbkey = queries[sec]['db']
+                dbq.db = dbs[dbkey]
+            except AttributeError:
+                print("FATAL ERROR: database %s not specified!" % (dbkey))
+                dbq = None
+            vqs.update({sec: dbq})
 
-#     conftype should be a *reference* and not an *instance* of the class; it
-#     will be instantiated here and added to a dict, returned to the caller.
-#     """
-#     # Read in the configuration file and act upon it
-#     # config: dictionary of parsed config file
-#     # comcfg: common block from config file
-#     config, comcfg = parseConfFile(conffile,
-#                                    enableCheck=True,
-#                                    commonBlocks=True,
-#                                    debug=debug)
-
-#     idict = {}
-#     for each in config:
-#         print("Applying '%s' section of conf. file..." % (each))
-#         # Actually make an instance of the given configuration class,
-#         #   and then attempt to fill it
-#         inst = conftype()
-#         inst = assignConf(inst, conf=config[each], backfill=True)
-
-#         idict.update({inst.name: inst})
-
-#     # If there's a password file, associate that with the above.
-#     #   It includes the common block, which is why it's also a return value
-#     if passfile is not None:
-#         idict, comcfg = parsePassFile(passfile, idict,
-#                                       cblk=comcfg,
-#                                       debug=debug)
-
-#     return idict, comcfg
+    return vqs
 
 
 def assignPasses(conf, passes, debug=True):
