@@ -8,42 +8,22 @@
 #
 #  @author: rhamilton
 
-"""Value-added combination parsing functions.
-These helpers make it possible to avoid calling the raw parsers yourself.
+"""Manipulating already parsed configuration files
 """
 
 from __future__ import division, print_function, absolute_import
 
-# from .confparsers import parseConfFile, parsePassFile
-
 
 def assignComm(conf, comm):
     """
-    THIS IS LIKELY JUST A HOT DAMN MESS STILL AND NEEDS TO BE ADAPTED IN
-    """
-    dbs = OrderedDict()
-    vqs = OrderedDict()
-    for sec in queries:
-        if sec.lower().startswith("database-") or\
-           sec.lower().startswith("broker-"):
-            baseTarg = assignConf(classes.baseTarget(), queries[sec])
-            dbs.update({sec: baseTarg})
-        elif sec.lower() != 'default':
-            # There's always a "DEFAULT" section after parsing so skip it
-            dbq = assignConf(classes.databaseQuery(), queries[sec])
-            # Setting this outside of __init__ is fine with me
-            #   since we're really just renaming for convienence elsewhere
-            #   (so I remember that I can ignore this in pylint)
-            dbq.key = sec
-            try:
-                dbkey = queries[sec]['db']
-                dbq.db = dbs[dbkey]
-            except AttributeError:
-                print("FATAL ERROR: database %s not specified!" % (dbkey))
-                dbq = None
-            vqs.update({sec: dbq})
+    comm should be a dict of baseTarget objects
 
-    return vqs
+    conf should be a dict of objects of some ligmos.utils.classes class
+    """
+    for sec in conf.keys():
+        pass
+
+    return conf
 
 
 def assignPasses(conf, passes, debug=True):
