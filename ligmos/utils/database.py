@@ -27,14 +27,16 @@ class influxobj():
     Creates an InfluxDB database access object, specific to a database name.
 
     """
-    def __init__(self, dbase, connect=True,
+    def __init__(self, database=None, connect=True,
                  host='localhost', port=8086,
                  user='marty', pw='mcfly'):
         self.host = host
         self.port = port
         self.username = user
         self.password = pw
-        self.dbase = dbase
+        self.dbase = database
+
+        # Reminder; influxdb is the actual import, this makes sure it worked
         if connect is True and influxdb is not None:
             self.openDB()
         else:
@@ -42,22 +44,15 @@ class influxobj():
 
     def alterRetention(self, pname='Hold26w', duration='26w'):
         """
-        """
-        if influxdb is not None and self.client is not None:
-            rets = self.client.get_list_retention_policies()
-            retExists = [True for d in rets if d['name'] == pname]
+        DEPRECIATED
 
-            # It's technically a list because I used a comprehension ...
-            if retExists != []:
-                # Empty list means the named policy ('pname') didn't exist!
-                #   ... So create it
-                self.client.create_retention_policy(pname,
-                                                    duration,
-                                                    1,
-                                                    default=True)
-            else:
-                # Retention policy already exists so just move on.
-                pass
+        Changing retentions is not to be done so lightly, since you need
+        to remember to move the data from the previous one into the new one
+        as well.
+
+        Now it's just a noop, basically
+        """
+        pass
 
     def openDB(self):
         """
