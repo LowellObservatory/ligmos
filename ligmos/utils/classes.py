@@ -81,7 +81,7 @@ class sneakyTarget(snoopTarget):
 
         self.resourcemethod = None
         self.resourcelocation = None
-        self.resourcepor = None
+        self.resourceport = None
 
 
 class deviceTarget(baseTarget):
