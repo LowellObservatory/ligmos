@@ -28,7 +28,8 @@ def assignComm(conf, comm, confkey='connection'):
             ck = getattr(conf[sec], confkey)
 
             # Does comm contain ck?  Let's check!
-            cobj = getattr(comm, ck)
+            #   Remember - comm is a dict so we can't use getattr
+            cobj = comm[ck]
         except KeyError as err:
             print(str(err))
             ck = None
