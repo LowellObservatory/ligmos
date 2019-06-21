@@ -14,14 +14,28 @@
 from __future__ import division, print_function, absolute_import
 
 
-def assignComm(conf, comm):
+def assignComm(conf, comm, confkey='connection'):
     """
     comm should be a dict of baseTarget objects
 
     conf should be a dict of objects of some ligmos.utils.classes class
     """
     for sec in conf.keys():
-        pass
+        # Look for the specified key that tells us which comm section to
+        #   stuff into it for later use
+        try:
+            # Get the *value* of that attribute
+            ck = getattr(conf[sec], confkey)
+
+            # Does comm contain ck?  Let's check!
+            cobj = getattr(comm, ck)
+        except KeyError as err:
+            print(str(err))
+            ck = None
+            cobj = None
+
+        # Actually set the confkey to the thing we found in comm
+        setattr(conf[sec], confkey, cobj)
 
     return conf
 

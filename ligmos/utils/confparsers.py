@@ -147,7 +147,7 @@ def checkCommon(cfg, objtype=None):
             targObj = confutils.assignConf(cfg[each], objtype)
 
             # Now purge the common section out so it doesn't get confused
-            cfg.remove_section(each)
+            cfg.pop(each)
 
             # Now add it to our returned dictionary
             comms.update({each: targObj})
