@@ -14,6 +14,21 @@
 from __future__ import division, print_function, absolute_import
 
 
+class sneakyTarget(object):
+    """
+    Subclasses ... nothing!  Mostly a standalone affair.
+    """
+    def __init__(self):
+        self.name = None
+        self.broker = None
+        self.topics = None
+        self.resourcemethod = None
+        self.resourcelocation = None
+        self.resourceport = None
+        self.user = None
+        self.enabled = False
+
+
 class databaseQuery(object):
     """
     Subclasses...nothing! It's mostly standalone, though it's intended that
@@ -69,19 +84,6 @@ class snoopTarget(baseTarget):
 
         self.broker = None
         self.topics = None
-
-
-class sneakyTarget(snoopTarget):
-    """
-    Subclasses snoopTarget class
-    """
-    def __init__(self):
-        # Gather up the properties from the base class
-        super().__init__()
-
-        self.resourcemethod = None
-        self.resourcelocation = None
-        self.resourceport = None
 
 
 class deviceTarget(baseTarget):
