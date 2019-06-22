@@ -204,57 +204,55 @@ class amqHelper():
             print(info.format(self.host, topic, message))
 
 
-def setupBroker(idict, cblk, listener=None):
+def setupAMQBroker(cblk, topics, listener=None):
     """
-    idict should be a dict of classes, of type conftype
+    iobj should be a ligmos.utils.classes instance
     cblk should be an instance of ligmos.utils.classes.commonParams
     """
     # ActiveMQ connection checker
     conn = None
 
-    if cblk != {} and cblk.brokertype.lower() == "activemq":
-        # Register the listener class for this connection.
-        #   This will be the thing that parses packets depending
-        #   on their topic name and does the hard stuff!
-        # If you don't specify one, the default (print-only) one will be used.
-        if listener is None:
-            listener = ParrotSubscriber()
-
-    else:
-        # No other broker types are defined yet
-        pass
-
-    # Collect the activemq topics that are desired
-    topics = []
-
-    for each in idict:
-        thisone = idict[each]
-        if isinstance(thisone, classes.brokerCommandingTarget):
-            topics.append(idict[each].cmdtopic)
-            topics.append(idict[each].replytopic)
-        elif isinstance(thisone, classes.snoopTarget):
-            eachesTopics = idict[each].topics
-            # Attempt to deal with single vs. multi-topic possibilities
-            if isinstance(eachesTopics, list):
-                topics += eachesTopics
-            elif isinstance(eachesTopics, str):
-                topics.append(eachesTopics)
-
-    # A final downselect to make sure we don't have any duplicates
-    topics = list(set(topics))
+    # Register the listener class for this connection.
+    #   This will be the thing that parses packets depending
+    #   on their topic name and does the hard stuff!
+    # If you don't specify one, the default (print-only) one will be used.
+    if listener is None:
+        listener = ParrotSubscriber()
 
     # Establish connections and subscriptions w/our helper
     # TODO: Figure out how to fold in broker passwords
-    print("Connecting to %s" % (cblk.brokerhost))
-    conn = amqHelper(cblk.brokerhost,
+    print("Connecting to %s" % (cblk.host))
+    conn = amqHelper(cblk.host,
                      topics=topics,
-                     user=cblk.brokeruser,
-                     passw=cblk.brokerpass,
-                     port=cblk.brokerport,
+                     user=cblk.user,
+                     passw=cblk.password,
+                     port=cblk.port,
                      connect=False,
                      listener=listener)
 
     return conn, listener
+
+
+def gatherAMQTopics(iobj):
+    """
+    """
+    topics = []
+    if isinstance(iobj, classes.brokerCommandingTarget):
+        topics.append(iobj.cmdtopic)
+        topics.append(iobj.replytopic)
+    elif isinstance(iobj, classes.snoopTarget) or\
+         isinstance(iobj, classes.sneakyTarget):
+        eachesTopics = iobj.topics
+        # Attempt to deal with single vs. multi-topic possibilities
+        if isinstance(eachesTopics, list):
+            topics += eachesTopics
+        elif isinstance(eachesTopics, str):
+            topics.append(eachesTopics)
+
+    # A final downselect to make sure we don't have any duplicates
+    topics = list(set(topics))
+
+    return topics
 
 
 def checkTopic(tpc):
