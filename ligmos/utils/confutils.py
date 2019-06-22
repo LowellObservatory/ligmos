@@ -14,7 +14,7 @@
 from __future__ import division, print_function, absolute_import
 
 
-def assignComm(conf, comm, confkey='connection'):
+def assignComm(conf, comm, commkey='connection'):
     """
     comm should be a dict of baseTarget objects
 
@@ -25,7 +25,7 @@ def assignComm(conf, comm, confkey='connection'):
         #   stuff into it for later use
         try:
             # Get the *value* of that attribute
-            ck = getattr(conf[sec], confkey)
+            ck = getattr(conf[sec], commkey)
 
             # Does comm contain ck?  Let's check!
             #   Remember - comm is a dict so we can't use getattr
@@ -35,8 +35,8 @@ def assignComm(conf, comm, confkey='connection'):
             ck = None
             cobj = None
 
-        # Actually set the confkey to the thing we found in comm
-        setattr(conf[sec], confkey, cobj)
+        # Actually set the commkey to the thing we found in comm
+        setattr(conf[sec], commkey, cobj)
 
     return conf
 
