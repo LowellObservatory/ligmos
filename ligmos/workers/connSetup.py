@@ -17,7 +17,7 @@ from ..utils import amq
 from ..utils import database
 
 
-def establishAMQIDBConnections(comm, amqtopics):
+def connAMQ_IDB(comm, amqtopics, amqlistener=None):
     """
     Set up the actual connections, which we'll then give back to the actual
     objects for them to do stuff with afterwards.
