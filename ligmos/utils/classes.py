@@ -21,7 +21,7 @@ class sneakyTarget(object):
     def __init__(self):
         self.name = None
         self.broker = None
-        self.topics = None
+        self.pubtopic = None
         self.resourcemethod = None
         self.resourcelocation = None
         self.resourceport = None
