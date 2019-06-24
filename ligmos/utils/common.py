@@ -217,8 +217,20 @@ def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
     for inst in idict:
         iobj = idict[inst]
 
+        if db is not None:
+            # Get the correct database object for this particular inst
+            try:
+                dbtab = iobj.database
+                dbObj = db[dbtab]
+            except AttributeError:
+                print("Database tag not found for section %s!" % (inst))
+                dbObj = None
+            except KeyError:
+                print("Database tag %s not specified!" % (dbtab))
+                dbObj = None
+
         # Update all function arguments with new iobj
-        cactions = updateArguments(actions, iobj, args, baseYcmd, db=db)
+        cactions = updateArguments(actions, iobj, args, baseYcmd, db=dbObj)
 
         # Pre-fill our expected answers so we can see fails
         allanswers = [None]*len(cactions)
@@ -233,9 +245,6 @@ def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
 
             with malarms.Timeout(id_='InstLoop',
                                  seconds=alarmtime):
-                iobj = idict[inst]
-                time.sleep(3)
-
                 # This will run through each action in turn
                 for i, each in enumerate(cactions):
                     # If we need SSH, it's always the first
@@ -247,7 +256,7 @@ def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
                                                port=iobj.port,
                                                username=iobj.user,
                                                timeout=60,
-                                               password=iobj.passw,
+                                               password=iobj.password,
                                                connectOnInit=True)
                         each.args = [eSSH] + each.args
                     else:

@@ -35,7 +35,7 @@ class databaseQuery(object):
     an instance describing the database connection gets shoved into
     self.connection here for actual usage.
 
-    Can be used to query or write to a database...?
+    This isn't intended to be for writing to a database.
     """
     def __init__(self):
         self.connection = None
@@ -152,6 +152,7 @@ class hostTarget(baseTarget):
         self.srcdir = None
         self.procmon = None
         self.database = None
+        self.databasetable = None
 
         # Is this legit? Should one delete attributes inherited from a base
         #   that you actually don't really need?  Who knows!

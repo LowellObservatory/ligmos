@@ -70,7 +70,7 @@ class influxobj():
         else:
             print("InfluxDB-python not found or server not running!")
 
-    def writeToDB(self, vals, debug=False):
+    def writeToDB(self, vals, table=None, debug=False):
         """
         Given an opened InfluxDBClient, write stuff to the given dbname.
 
@@ -87,17 +87,22 @@ class influxobj():
                 if debug is True:
                     print("Trying to write_points")
 
-                # Create the database if it doesn't exist; under the hood,
-                #   influx is basically doing this:
-                #     CREATE DATABASE IF NOT EXISTS dbname
-                #   so it WILL fail if the user doesn't have WRITE access!
                 try:
-                    # self.client.create_database(self.dbase)
-                    res = self.client.write_points(vals)
+                    if table is None:
+                        res = self.client.write_points(vals)
+                    else:
+                        res = self.client.write_points(vals, database=table)
                 except InfluxDBClientError as err:
                     if err.code == 403:
                         print("Authentication error! %s" % (err.content))
                         # Clear the client to make other stuff break
+                        self.client = None
+                        res = False
+                    if err.code == 400:
+                        # This usually means a database table wasn't specified
+                        #   or there was a type mismatch. Either way,
+                        #   NO BUENO
+                        print(err.content)
                         self.client = None
                         res = False
             except RCE as err:
@@ -158,10 +163,10 @@ class influxobj():
         # Just a stub in case I can't remember...
         self.closeDB()
 
-    def singleCommit(self, packet, debug=False, close=True):
+    def singleCommit(self, packet, table=None, debug=False, close=True):
         if self.client is not None:
             self.closeDB()
         self.openDB()
-        self.writeToDB(packet, debug=debug)
+        self.writeToDB(packet, table=table, debug=debug)
         if close is True:
             self.closeDB()
