@@ -1,2 +1,3 @@
-from . import defaultParser
+from . import connSetup
 from . import workerSetup
+from . import defaultParser
