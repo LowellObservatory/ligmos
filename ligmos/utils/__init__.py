@@ -3,7 +3,6 @@ from . import amq
 from . import classes
 from . import common
 from . import confparsers
-from . import confutils
 from . import cpumem
 from . import database
 from . import dateutils

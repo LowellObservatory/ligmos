@@ -17,7 +17,7 @@ from __future__ import division, print_function, absolute_import
 import configparser as conf
 
 from . import classes
-from . import confutils
+from ..workers import confUtils as confutils
 
 
 def rawParser(confname):
