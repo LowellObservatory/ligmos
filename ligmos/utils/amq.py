@@ -209,8 +209,6 @@ class amqHelper():
 
 def setupAMQBroker(cblk, topics, listener=None):
     """
-    iobj should be a ligmos.utils.classes instance
-    cblk should be an instance of ligmos.utils.classes.commonParams
     """
     # ActiveMQ connection checker
     conn = None
@@ -276,8 +274,9 @@ def gatherTopics(iobj):
     if isinstance(iobj, classes.brokerCommandingTarget):
         topics.append(iobj.cmdtopic)
         topics.append(iobj.replytopic)
-    elif isinstance(iobj, classes.snoopTarget) or\
-         isinstance(iobj, classes.sneakyTarget):
+    elif isinstance(iobj, classes.sneakyTarget):
+        topics.append(iobj.pubtopic)
+    elif isinstance(iobj, classes.snoopTarget):
         eachesTopics = iobj.topics
         # Attempt to deal with single vs. multi-topic possibilities
         if isinstance(eachesTopics, list):
@@ -393,3 +392,13 @@ def schemaDicter():
                 print("Schema for topic %s not found!" % (schname))
 
     return sdict
+
+def disconnectAll(amqbrokers):
+    """
+    A helpful cleanup routine
+    """
+    for bconn in amqbrokers:
+        # From above, amqbrokers is a dict with values that are a list of
+        #   connection object, list of topics, listener object
+        connChecking = amqbrokers[bconn][0]
+        connChecking.disconnect()
