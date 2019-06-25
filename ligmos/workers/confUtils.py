@@ -68,7 +68,7 @@ def assignPasses(conf, passes, debug=True):
         except KeyError:
             if debug is True:
                 print("Username %s in section %s has no password!" %
-                        (iuser, each))
+                      (iuser, each))
             # This must be a string! Otherwise it'll throw a TypeError
             #   at you when you actually try to assign it to the section
             passw = 'None'
