@@ -14,6 +14,22 @@
 from __future__ import division, print_function, absolute_import
 
 
+class Webcam(object):
+    """
+    Class to contain all the important bits of webcam connection information
+    """
+    def __init__(self):
+        self.name = None
+        self.type = None
+        self.url = None
+        self.user = None
+        self.fmas = None
+        self.auth = None
+        self.odir = None
+        self.oname = None
+        self.enabled = False
+
+
 class sneakyTarget(object):
     """
     Subclasses ... nothing!  Mostly a standalone affair.
