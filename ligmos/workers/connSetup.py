@@ -17,13 +17,12 @@ from ..utils import amq
 from ..utils import database
 
 
-def connAMQ_IDB(comm, amqtopics, amqlistener=None):
+def connAMQ(comm, amqtopics, amqlistener=None):
     """
     Set up the actual connections, which we'll then give back to the actual
     objects for them to do stuff with afterwards.
     """
     amqbrokers = {}
-    influxdatabases = {}
 
     for commsection in comm:
         # Rename for easier access/passing
@@ -41,7 +40,27 @@ def connAMQ_IDB(comm, amqtopics, amqlistener=None):
             # Store this so we can check/use it later
             brokerbits = [conn, amqlistener]
             amqbrokers.update({commsection: brokerbits})
-        elif cobj.type.lower() == 'influxdb':
+        else:
+            # No other types are defined yet
+            pass
+
+    return amqbrokers
+
+
+def connIDB(comm):
+    """
+    Set up the actual connections, which we'll then give back to the actual
+    objects for them to do stuff with afterwards.
+    """
+    influxdatabases = {}
+
+    for commsection in comm:
+        # Rename for easier access/passing
+        cobj = comm[commsection]
+
+        # Now check the properties of this object to see if it's something we
+        #   actually regconize and then connect to
+        if cobj.type.lower() == 'influxdb':
             # Create an influxdb object that can be spread around to
             #   connect and commit packets when they're created.
             #   Leave it disconnected initially.
@@ -62,4 +81,4 @@ def connAMQ_IDB(comm, amqtopics, amqlistener=None):
             # No other types are defined yet
             pass
 
-    return amqbrokers, influxdatabases
+    return influxdatabases
