@@ -113,8 +113,12 @@ def parseConfig(conffile, confclass, passfile=None, debug=True,
     # Now make the config into a proper class of type confclass
     finconfig = {}
     for each in ncconfig:
-        classed = confutils.assignConf(ncconfig[each], confclass, debug=debug)
-        finconfig.update({each: classed})
+        # If enableCheck was false, there's a DEFAULT section still lingering
+        #   about and I hate it.  Check for that and skip it explicitly.
+        if each.lower() != 'default':
+            classed = confutils.assignConf(ncconfig[each], confclass,
+                                           debug=debug)
+            finconfig.update({each: classed})
 
     return finconfig, comcfg
 

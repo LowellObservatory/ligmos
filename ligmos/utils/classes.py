@@ -50,16 +50,16 @@ class databaseQuery(object):
     """
     Subclasses...nothing! It's mostly standalone, though it's intended that
     an instance describing the database connection gets shoved into
-    self.connection here for actual usage.
+    self.connection after this is created.
 
     This isn't intended to be for writing to a database.
     """
     def __init__(self):
-        self.connection = None
-        self.dbname = None
+        self.database = None
         self.tablename = None
         self.fields = None
-        self.tagnanes = None
+        self.fieldlabels = None
+        self.tagnames = None
         self.tagvals = None
         self.rangehours = 24
 
