@@ -14,8 +14,8 @@ import re
 import glob
 import fnmatch
 
-from os import listdir
-from os.path import join, isdir
+from os import walk, statvfs, remove, makedirs, listdir
+from os.path import basename, exists, expanduser, join, isdir
 
 import numpy as np
 
@@ -134,7 +134,7 @@ def checkOutDir(outdir, getList=True):
     """
     # Check if the directory exists, and if not, create it!
     try:
-        os.makedirs(outdir)
+        makedirs(outdir)
     except FileExistsError:
         pass
     except OSError as err:
@@ -149,7 +149,7 @@ def checkOutDir(outdir, getList=True):
     flist = None
     if getList is True:
         flist = sorted(glob.glob(outdir + "/*"))
-        flist = [os.path.basename(each) for each in flist]
+        flist = [basename(each) for each in flist]
 
     return flist
 
@@ -217,7 +217,7 @@ def deleteOldFiles(fdict):
         print("Deleting %s since it's too old (%.3f hr)" %
               (key, fdict[key]/60./60.))
         try:
-            os.remove(key)
+            remove(key)
         except OSError as err:
             # At least see what the issue was
             print(str(err))
