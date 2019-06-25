@@ -46,10 +46,8 @@ def assignPasses(conf, passes, debug=True):
     Probably very, very, very insecure.
 
     Checks to see if there is a 'user' property in the given config, and
-    then tries to get a 'password' property from the given passes.  If
-    the user is None, the check is skipped.  If the password doesn't exist,
-    the check is aborted.  In either of those cases, the resulting config
-    section will *lack* a password attribute completely.
+    then tries to get a 'password' property from the same section in
+    the given passes.
     """
     # Get the big list 'o sections that we will check
     csects = conf.sections()
@@ -65,19 +63,18 @@ def assignPasses(conf, passes, debug=True):
         except KeyError:
             iuser = None
 
-        # Now see if we have a password for this username
-        if iuser is not None:
-            try:
-                passw = passes[iuser]['password']
-            except KeyError:
-                if debug is True:
-                    print("Username %s has no password!" % (iuser))
-                # This must be a string! Otherwise it'll throw a TypeError
-                #   at you when you actually try to assign it to the section
-                passw = 'None'
+        try:
+            passw = passes[each]['password']
+        except KeyError:
+            if debug is True:
+                print("Username %s in section %s has no password!" %
+                        (iuser, each))
+            # This must be a string! Otherwise it'll throw a TypeError
+            #   at you when you actually try to assign it to the section
+            passw = 'None'
 
-            # Actually update the configuration section with this password
-            conf[each]['password'] = passw
+        # Actually update the configuration section with this password
+        conf[each]['password'] = passw
 
     return conf
 

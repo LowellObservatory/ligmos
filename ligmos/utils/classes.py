@@ -19,10 +19,10 @@ class Webcam(object):
     Class to contain all the important bits of webcam connection information
     """
     def __init__(self):
-        self.name = None
         self.type = None
         self.url = None
         self.user = None
+        self.password = None
         self.fmas = None
         self.auth = None
         self.odir = None
@@ -42,6 +42,7 @@ class sneakyTarget(object):
         self.resourcelocation = None
         self.resourceport = None
         self.user = None
+        self.password = None
         self.enabled = False
 
 
