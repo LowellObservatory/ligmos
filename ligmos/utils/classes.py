@@ -21,12 +21,12 @@ class Webcam(object):
     def __init__(self):
         self.type = None
         self.url = None
-        self.user = None
-        self.password = None
         self.fmas = None
         self.auth = None
         self.odir = None
         self.oname = None
+        self.user = None
+        self.password = None
         self.enabled = False
 
 
@@ -57,6 +57,7 @@ class databaseQuery(object):
     def __init__(self):
         self.database = None
         self.tablename = None
+        self.metricname = None
         self.fields = None
         self.fieldlabels = None
         self.tagnames = None
@@ -73,9 +74,9 @@ class baseTarget(object):
         self.name = None
         self.host = None
         self.port = 22
+        self.type = None
         self.user = None
         self.password = None
-        self.type = None
         self.enabled = False
 
 
