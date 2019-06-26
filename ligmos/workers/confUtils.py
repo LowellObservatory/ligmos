@@ -121,7 +121,7 @@ def assignConf(conf, obj, backfill=False, debug=False):
         except KeyError:
             # This means that
             if debug is True:
-                print("Improper config; missing configuration key %s" % (key))
+                print("Missing expected configuration key %s" % (key))
             # Just set it to None and move on with our lives
             setattr(classy, key, None)
 
