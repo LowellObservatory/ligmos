@@ -102,6 +102,8 @@ class snoopTarget(baseTarget):
 
         self.broker = None
         self.topics = None
+        self.database = None
+        self.tablename = None
 
 
 class deviceTarget(baseTarget):
@@ -170,7 +172,7 @@ class hostTarget(baseTarget):
         self.srcdir = None
         self.procmon = None
         self.database = None
-        self.databasetable = None
+        self.tablename = None
 
         # Is this legit? Should one delete attributes inherited from a base
         #   that you actually don't really need?  Who knows!

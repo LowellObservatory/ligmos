@@ -27,14 +27,14 @@ class influxobj():
     Creates an InfluxDB database access object, specific to a database name.
 
     """
-    def __init__(self, database=None, connect=True,
+    def __init__(self, tablename=None, connect=True,
                  host='localhost', port=8086,
                  user='marty', pw='mcfly'):
         self.host = host
         self.port = port
         self.username = user
         self.password = pw
-        self.dbase = database
+        self.tablename = tablename
 
         # Reminder; influxdb is the actual import, this makes sure it worked
         if connect is True and influxdb is not None:
@@ -62,10 +62,10 @@ class influxobj():
                 self.client = InfluxDBClient(self.host, self.port,
                                              username=self.username,
                                              password=self.password,
-                                             database=self.dbase)
+                                             database=self.tablename)
             except Exception as err:
                 self.client = None
-                print("Could not open database %s:\n%s" % (self.dbase,
+                print("Could not open database %s:\n%s" % (self.tablename,
                                                            str(err)))
         else:
             print("InfluxDB-python not found or server not running!")
@@ -134,18 +134,6 @@ class influxobj():
                 self.client.close()
             except Exception as err:
                 print(str(err))
-
-    def dropDB(self, imsure=False):
-        """
-        """
-        if self.client is not None:
-            if imsure is False:
-                print("You're not *really* sure! Doing nothing.")
-            else:
-                try:
-                    self.client.drop_database(self.dbase)
-                except Exception as err:
-                    print(str(err))
 
     def connect(self):
         # Just a stub in case I can't remember...

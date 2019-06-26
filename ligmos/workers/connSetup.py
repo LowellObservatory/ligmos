@@ -64,10 +64,10 @@ def connIDB(comm):
             # Create an influxdb object that can be spread around to
             #   connect and commit packets when they're created.
             #   Leave it disconnected initially.
-            idb = database.influxobj(database=None,
-                                     host=cobj.host,
+            idb = database.influxobj(host=cobj.host,
                                      port=cobj.port,
                                      user=cobj.user,
+                                     tablename=None,
                                      pw=cobj.password,
                                      connect=False)
 
