@@ -36,18 +36,23 @@ def parseArguments(conf=None, prog=None, passes=None, log=None, descr=None):
         parser.add_argument('-c', '--config', metavar='/path/to/file.conf',
                             type=str,
                             help='File for configuration information',
-                            default='./programname.conf', nargs='?')
+                            default='./config/programname.conf', nargs='?')
     else:
         parser.add_argument('-c', '--config', metavar='/path/to/file.conf',
                             type=str,
                             help='File for configuration information',
                             default=conf, nargs='?')
 
-    if passes is not None:
+    if passes is None:
         parser.add_argument('-p', '--passes', metavar='/path/to/file.conf',
                             type=str,
                             help='File for instrument password information',
-                            default='./passwords.conf', nargs='?')
+                            default='./config/passwords.conf', nargs='?')
+    else:
+        parser.add_argument('-p', '--passes', metavar='/path/to/file.conf',
+                            type=str,
+                            help='File for instrument password information',
+                            default=passes, nargs='?')
 
     if log is None:
         parser.add_argument('-l', '--log', metavar='/path/to/file.log',
