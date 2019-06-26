@@ -22,10 +22,13 @@ import xmltodict as xmld
 import xmlschema as xmls
 import pkg_resources as pkgr
 
-from . import common
+from . import classes
 
 
 class silentSubscriber(stomp.listener.ConnectionListener):
+    """
+    Silent, but deadly (if you don't realize it is fully silent)
+    """
     def __init__(self):
         pass
 
@@ -204,53 +207,123 @@ class amqHelper():
             print(info.format(self.host, topic, message))
 
 
-def setupBroker(idict, cblk, conftype, listener=None):
+def setupAMQBroker(cblk, topics, listener=None):
     """
     """
     # ActiveMQ connection checker
     conn = None
 
-    if cblk.brokertype is not None and \
-       cblk.brokertype.lower() == "activemq":
-        # Register the listener class for this connection.
-        #   This will be the thing that parses packets depending
-        #   on their topic name and does the hard stuff!
-        # If you don't specify one, the default (print-only) one will be used.
-        if listener is None:
-            listener = ParrotSubscriber()
-
-    else:
-        # No other broker types are defined yet
-        pass
-
-    # Collect the activemq topics that are desired
-    topics = []
-    if conftype is common.brokerCommandingTarget:
-        for each in idict:
-            topics.append(idict[each].cmdtopic)
-            topics.append(idict[each].replytopic)
-    elif conftype is common.snoopTarget:
-        for each in idict:
-            topics.append(idict[each].topics)
-
-        # Flatten the topic list (only good for 2D)
-        topics = [val for sub in topics for val in sub]
-
-    # A final downselect to make sure we don't have any duplicates
-    topics = list(set(topics))
+    # Register the listener class for this connection.
+    #   This will be the thing that parses packets depending
+    #   on their topic name and does the hard stuff!
+    # If you don't specify one, the default (print-only) one will be used.
+    if listener is None:
+        listener = ParrotSubscriber()
 
     # Establish connections and subscriptions w/our helper
     # TODO: Figure out how to fold in broker passwords
-    print("Connecting to %s" % (cblk.brokerhost))
-    conn = amqHelper(cblk.brokerhost,
+    print("Connecting to %s" % (cblk.host))
+    conn = amqHelper(cblk.host,
                      topics=topics,
-                     user=cblk.brokeruser,
-                     passw=cblk.brokerpass,
-                     port=cblk.brokerport,
+                     user=cblk.user,
+                     passw=cblk.password,
+                     port=cblk.port,
                      connect=False,
                      listener=listener)
 
     return conn, listener
+
+
+def checkConnections(amqbrokers, subscribe=True):
+    """
+    This is intended to be inside of some loop structure.
+    It's primarily used for checking whether the connection to the ActiveMQ
+    broker is still valid, and, if it was killed (set to None) because the
+    heartbeat failed, attempt to both reconnect and resubscribe to the
+    topics.
+    """
+    for bconn in amqbrokers:
+        # From above, amqbrokers is a dict with values that are a list of
+        #   connection object, list of topics, listener object
+        connChecking = amqbrokers[bconn][0]
+        thisListener = amqbrokers[bconn][1]
+        if connChecking.conn is None:
+            print("No connection at all! Retrying...")
+            # The topics were already stuffed into the connChecking object,
+            #   but it's nice to remember that we're subscribing to them
+            connChecking.connect(listener=thisListener, subscribe=subscribe)
+        elif connChecking.conn.transport.connected is False:
+            print("Connection died! Reestablishing...")
+            connChecking.connect(listener=thisListener, subscribe=subscribe)
+        else:
+            print("Connection still valid")
+
+        # Make sure we save any connection changes and give it back
+        amqbrokers[bconn] = [connChecking, thisListener]
+
+    return amqbrokers
+
+
+def gatherTopics(iobj):
+    """
+    The actual workhorse function that checks the actual topics, which
+    can be in different attributes depending on the exact type of object
+    that we're dealing with (e.g. brokerCommandingTarget vs. snoopTarget)
+    """
+    topics = []
+    if isinstance(iobj, classes.brokerCommandingTarget):
+        topics.append(iobj.cmdtopic)
+        topics.append(iobj.replytopic)
+    elif isinstance(iobj, classes.sneakyTarget):
+        topics.append(iobj.pubtopic)
+    elif isinstance(iobj, classes.snoopTarget):
+        eachesTopics = iobj.topics
+        # Attempt to deal with single vs. multi-topic possibilities
+        if isinstance(eachesTopics, list):
+            topics += eachesTopics
+        elif isinstance(eachesTopics, str):
+            topics.append(eachesTopics)
+
+    # A final downselect to make sure we don't have any duplicates
+    topics = list(set(topics))
+
+    return topics
+
+
+def getAllTopics(config, comm):
+    """
+    Given a parsed configuration and common set of stuff, search thru
+    the former looking for any/all ActiveMQ broker topics and return them
+    to the caller, organized by broker tag. This makes our
+    connection/reconnection/subscription logic waaaaayy easier
+    """
+    amqtopics = {}
+    for sect in config:
+        csObj = config[sect]
+        try:
+            brokerTag = csObj.broker
+            brokertype = comm[brokerTag].type
+        except AttributeError:
+            # If we end up in here, we're completely hoopajooped so give up
+            break
+
+        if brokertype.lower() == 'activemq':
+            # Gather up broker stuff
+            try:
+                # First see if we have anything previously gathered, to make
+                #   sure we don't accidentally clobber anything
+                alltopics = amqtopics[brokerTag]
+            except KeyError:
+                alltopics = []
+
+            # Get the topics; it's guaranteed to be a list
+            thesetopics = gatherTopics(csObj)
+            alltopics += thesetopics
+
+            # list(set()) to quickly take care of any dupes
+            amqtopics.update({brokerTag: list(set(alltopics))})
+
+    return amqtopics
 
 
 def checkTopic(tpc):
@@ -319,3 +392,13 @@ def schemaDicter():
                 print("Schema for topic %s not found!" % (schname))
 
     return sdict
+
+def disconnectAll(amqbrokers):
+    """
+    A helpful cleanup routine
+    """
+    for bconn in amqbrokers:
+        # From above, amqbrokers is a dict with values that are a list of
+        #   connection object, list of topics, listener object
+        connChecking = amqbrokers[bconn][0]
+        connChecking.disconnect()

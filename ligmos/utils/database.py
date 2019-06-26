@@ -27,14 +27,16 @@ class influxobj():
     Creates an InfluxDB database access object, specific to a database name.
 
     """
-    def __init__(self, dbase, connect=True,
+    def __init__(self, tablename=None, connect=True,
                  host='localhost', port=8086,
                  user='marty', pw='mcfly'):
         self.host = host
         self.port = port
         self.username = user
         self.password = pw
-        self.dbase = dbase
+        self.tablename = tablename
+
+        # Reminder; influxdb is the actual import, this makes sure it worked
         if connect is True and influxdb is not None:
             self.openDB()
         else:
@@ -42,22 +44,15 @@ class influxobj():
 
     def alterRetention(self, pname='Hold26w', duration='26w'):
         """
-        """
-        if influxdb is not None and self.client is not None:
-            rets = self.client.get_list_retention_policies()
-            retExists = [True for d in rets if d['name'] == pname]
+        DEPRECIATED
 
-            # It's technically a list because I used a comprehension ...
-            if retExists != []:
-                # Empty list means the named policy ('pname') didn't exist!
-                #   ... So create it
-                self.client.create_retention_policy(pname,
-                                                    duration,
-                                                    1,
-                                                    default=True)
-            else:
-                # Retention policy already exists so just move on.
-                pass
+        Changing retentions is not to be done so lightly, since you need
+        to remember to move the data from the previous one into the new one
+        as well.
+
+        Now it's just a noop, basically
+        """
+        pass
 
     def openDB(self):
         """
@@ -67,15 +62,15 @@ class influxobj():
                 self.client = InfluxDBClient(self.host, self.port,
                                              username=self.username,
                                              password=self.password,
-                                             database=self.dbase)
+                                             database=self.tablename)
             except Exception as err:
                 self.client = None
-                print("Could not open database %s:\n%s" % (self.dbase,
+                print("Could not open database %s:\n%s" % (self.tablename,
                                                            str(err)))
         else:
             print("InfluxDB-python not found or server not running!")
 
-    def writeToDB(self, vals, debug=False):
+    def writeToDB(self, vals, table=None, debug=False):
         """
         Given an opened InfluxDBClient, write stuff to the given dbname.
 
@@ -92,17 +87,22 @@ class influxobj():
                 if debug is True:
                     print("Trying to write_points")
 
-                # Create the database if it doesn't exist; under the hood,
-                #   influx is basically doing this:
-                #     CREATE DATABASE IF NOT EXISTS dbname
-                #   so it WILL fail if the user doesn't have WRITE access!
                 try:
-                    # self.client.create_database(self.dbase)
-                    res = self.client.write_points(vals)
+                    if table is None:
+                        res = self.client.write_points(vals)
+                    else:
+                        res = self.client.write_points(vals, database=table)
                 except InfluxDBClientError as err:
                     if err.code == 403:
                         print("Authentication error! %s" % (err.content))
                         # Clear the client to make other stuff break
+                        self.client = None
+                        res = False
+                    if err.code == 400:
+                        # This usually means a database table wasn't specified
+                        #   or there was a type mismatch. Either way,
+                        #   NO BUENO
+                        print(err.content)
                         self.client = None
                         res = False
             except RCE as err:
@@ -135,18 +135,6 @@ class influxobj():
             except Exception as err:
                 print(str(err))
 
-    def dropDB(self, imsure=False):
-        """
-        """
-        if self.client is not None:
-            if imsure is False:
-                print("You're not *really* sure! Doing nothing.")
-            else:
-                try:
-                    self.client.drop_database(self.dbase)
-                except Exception as err:
-                    print(str(err))
-
     def connect(self):
         # Just a stub in case I can't remember...
         self.openDB()
@@ -163,10 +151,10 @@ class influxobj():
         # Just a stub in case I can't remember...
         self.closeDB()
 
-    def singleCommit(self, packet, debug=False, close=True):
+    def singleCommit(self, packet, table=None, debug=False, close=True):
         if self.client is not None:
             self.closeDB()
         self.openDB()
-        self.writeToDB(packet, debug=debug)
+        self.writeToDB(packet, table=table, debug=debug)
         if close is True:
             self.closeDB()

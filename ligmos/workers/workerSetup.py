@@ -24,13 +24,13 @@ import os
 import time
 import signal
 
-from .. import utils
 from . import defaultParser
+from ..utils import common, logs, pids, confparsers, classes
 
 
 def toServeMan(procname, conffile, passfile, log,
                extraargs=None,
-               conftype=utils.common.baseTarget,
+               conftype=classes.baseTarget,
                logfile=True, desc=None):
     """Main entry point, which also handles arguments.
 
@@ -69,7 +69,7 @@ def toServeMan(procname, conffile, passfile, log,
     killSleep = 30
 
     # Setup termination signals
-    runner = utils.common.HowtoStopNicely()
+    runner = common.HowtoStopNicely()
 
     # Setup argument parsing *before* logging so help messages go to stdout
     #   NOTE: This function sets up the default values when given no args!
@@ -87,7 +87,7 @@ def toServeMan(procname, conffile, passfile, log,
     # Actually parse the things
     args = parser.parse_args()
 
-    pid = utils.pids.check_if_running(pname=procname)
+    pid = pids.check_if_running(pname=procname)
 
     # Slightly ugly logic
     if pid != -1:
@@ -100,25 +100,25 @@ def toServeMan(procname, conffile, passfile, log,
                 except Exception as err:
                     print("Process not killed; why?")
                     # Returning STDOUT and STDERR to the console/whatever
-                    utils.common.nicerExit(err)
+                    common.nicerExit(err)
             else:
                 try:
                     os.kill(pid, signal.SIGKILL)
                 except Exception as err:
                     print("Process not killed; why?")
                     # Returning STDOUT and STDERR to the console/whatever
-                    utils.common.nicerExit(err)
+                    common.nicerExit(err)
 
             # If the SIGTERM took, then continue onwards. If we're killing,
             #   then we quit immediately. If we're replacing, then continue.
             if args.kill is True:
                 print("Sent SIGTERM to PID %d" % (pid))
                 # Returning STDOUT and STDERR to the console/whatever
-                utils.common.nicerExit()
+                common.nicerExit()
             elif args.kill9 is True:
                 print("Sent SIGKILL to PID %d" % (pid))
                 # Returning STDOUT and STDERR to the console/whatever
-                utils.common.nicerExit()
+                common.nicerExit()
             else:
                 print("LOOK AT ME I'M THE ALIEN COOK NOW")
                 print("%d second pause to allow the other process to exit." %
@@ -127,27 +127,23 @@ def toServeMan(procname, conffile, passfile, log,
         else:
             # If we're not killing or replacing, just exit.
             #   But return STDOUT and STDERR to be safe
-            utils.common.nicerExit()
+            common.nicerExit()
     else:
         if args.kill is True:
             print("No %s process to kill!" % (procname))
             print("Seach for it manually:")
             print("ps -ef | grep -i '%s'" % (procname))
-            utils.common.nicerExit()
+            common.nicerExit()
 
     if logfile is True:
         # Setup logging (optional arguments shown for clarity)
-        utils.logs.setup_logging(logName=args.log, nLogs=args.nlogs)
+        logs.setup_logging(logName=args.log, nLogs=args.nlogs)
 
     # Read in the configuration file and act upon it
-    idict, cblk = utils.confparsers.getActiveConfiguration(args.config,
-                                                           conftype=conftype,
-                                                           debug=args.debug)
-
-    # If there's a password file, associate that with the above
-    if passfile is not None:
-        idict, cblk = utils.confparsers.parsePassConf(args.passes, idict,
-                                                      cblk=cblk,
-                                                      debug=args.debug)
+    idict, cblk = confparsers.parseConfig(args.config, conftype,
+                                          passfile=args.passes,
+                                          searchCommon=True,
+                                          enableCheck=True,
+                                          debug=args.debug)
 
     return idict, cblk, args, runner
