@@ -14,6 +14,24 @@
 from __future__ import division, print_function, absolute_import
 
 
+class instrumentDeviceTarget(object):
+    """
+    Standalone!
+    """
+    def __init__(self):
+        self.instrument = None
+        self.broker = None
+        self.brokertopic = None
+        self.database = None
+        self.tablename = None
+        self.devhost = None
+        self.devport = None
+        self.devtype = None
+        self.devbrokertopic = None
+        self.pollperiod = None
+        self.enabled = False
+
+
 class Webcam(object):
     """
     Class to contain all the important bits of webcam connection information
@@ -107,36 +125,11 @@ class snoopTarget(baseTarget):
         self.tablename = None
 
 
-class deviceTarget(baseTarget):
-    """
-    Subclasses baseTarget class
-    """
-    def __init__(self):
-        # Gather up the properties from the base class
-        super().__init__()
-
-        # All of the devices will be parsed and put into this list, so
-        #   you can figure out how many there are just by len(devices).
-        self.devices = None
-
-
-class instrumentDeviceTarget(baseTarget):
-    """
-    Subclasses baseTarget class
-    """
-    def __init__(self):
-        # Gather up the properties from the base class
-        super().__init__()
-
-        self.tag = None
-        self.type = None
-        self.serialURL = None
-        self.brokertopic = None
-
-
 class dataTarget(baseTarget):
     """
     Subclasses baseTarget class
+
+    Primarily for Wadsworth the DataServant, who buttles data.
     """
     def __init__(self):
         # Gather up the properties from the base class
