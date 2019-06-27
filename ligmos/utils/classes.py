@@ -88,6 +88,7 @@ class brokerCommandingTarget(baseTarget):
         # Gather up the properties from the base class
         super().__init__()
 
+        self.broker = None
         self.cmdtopic = None
         self.replytopic = None
 
