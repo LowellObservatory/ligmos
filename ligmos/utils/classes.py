@@ -20,6 +20,7 @@ class instrumentDeviceTarget(object):
     """
     def __init__(self):
         self.instrument = None
+        self.extratag = None
         self.broker = None
         self.brokertopic = None
         self.database = None
