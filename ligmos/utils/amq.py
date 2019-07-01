@@ -272,8 +272,17 @@ def gatherTopics(iobj):
     """
     topics = []
     if isinstance(iobj, classes.brokerCommandingTarget):
-        topics.append(iobj.cmdtopic)
-        topics.append(iobj.replytopic)
+        # This is optional so check first. We don't actually need the
+        #   iobj.cmdtopic because that's a producer topic, and
+        #   we only really care about consumer topics
+        if iobj.replytopic is not None:
+            topics.append(iobj.replytopic)
+    elif isinstance(iobj, classes.instrumentDeviceTarget):
+        # This is optional so check first. We don't actually need the
+        #   iobj.devbrokercmd topic because that's a producer topic, and
+        #   we only really care about consumer topics
+        if iobj.devbrokerreply is not None:
+            topics.append(iobj.devbrokerreply)
     elif isinstance(iobj, classes.sneakyTarget):
         topics.append(iobj.pubtopic)
     elif isinstance(iobj, classes.snoopTarget):
@@ -317,6 +326,23 @@ def getAllTopics(config, comm):
                 alltopics = []
 
             # Get the topics; it's guaranteed to be a list
+            thesetopics = gatherTopics(csObj)
+            alltopics += thesetopics
+
+            # list(set()) to quickly take care of any dupes
+            amqtopics.update({brokerTag: list(set(alltopics))})
+
+    # Now we need to check for any queue topics, and grab those
+    for sect in comm:
+        csObj = comm[sect]
+        try:
+            brokerTag = csObj.broker
+            commtype = csObj.type
+        except AttributeError:
+            # If we end up in here, we're completely hoopajooped so give up
+            break
+
+        if commtype.lower() == 'queue':
             thesetopics = gatherTopics(csObj)
             alltopics += thesetopics
 

@@ -14,6 +14,18 @@
 from __future__ import division, print_function, absolute_import
 
 
+class brokerCommandingTarget(object):
+    """
+    Subclasses nothing!
+    """
+    def __init__(self):
+        self.type = None
+        self.broker = None
+        self.cmdtopic = None
+        self.replytopic = None
+        self.enabled = False
+
+
 class instrumentDeviceTarget(object):
     """
     Standalone!
@@ -29,8 +41,7 @@ class instrumentDeviceTarget(object):
         self.devport = None
         self.devtype = None
         self.devbrokercmd = None
-        self.devbrokerrsp = None
-        self.pollperiod = None
+        self.devbrokerreply = None
         self.enabled = False
 
 
@@ -98,19 +109,6 @@ class baseTarget(object):
         self.user = None
         self.password = None
         self.enabled = False
-
-
-class brokerCommandingTarget(baseTarget):
-    """
-    Subclasses baseTarget class
-    """
-    def __init__(self):
-        # Gather up the properties from the base class
-        super().__init__()
-
-        self.broker = None
-        self.cmdtopic = None
-        self.replytopic = None
 
 
 class snoopTarget(baseTarget):

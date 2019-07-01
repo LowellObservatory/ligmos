@@ -123,25 +123,30 @@ def parseConfig(conffile, confclass, passfile=None, debug=True,
     return finconfig, comcfg
 
 
-def checkCommon(cfg, objtype=None):
+def checkCommon(cfg):
     """
     Expects that cfg is a dict of configparser sections, which are then
-    assigned to an instance of type objtype.
+    assigned to an instance of an appropriate type for that section.
+
+    database- and broker- are of type classes.baseTarget
+    queue is of type classes.brokerCommandingTarget
     """
     comms = {}
-
-    if objtype is None:
-        objtype = classes.baseTarget
 
     # Things that will trigger us
     #   We keep the delimiter separate from the tags because it's easier
     #   to assemble the returned dictionary that way!
-    commonTags = ['database-', 'broker-']
+    commonTags = ['database-', 'broker-', 'queue-']
 
     # First get the list of all sections
     sects = cfg.keys()
 
     for tag in commonTags:
+        if tag in ['database-', 'broker-']:
+            objtype = classes.baseTarget
+        elif tag in ['queue-']:
+            objtype = classes.brokerCommandingTarget
+
         # See if any start with our current tag, and if so, grab their names
         csecs = [s for s in sects if s.lower().startswith(tag)]
 
