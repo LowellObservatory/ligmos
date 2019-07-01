@@ -28,7 +28,8 @@ class instrumentDeviceTarget(object):
         self.devhost = None
         self.devport = None
         self.devtype = None
-        self.devbrokertopic = None
+        self.devbrokercmd = None
+        self.devbrokerrsp = None
         self.pollperiod = None
         self.enabled = False
 
