@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MrFreezeCommunique>
-    <Command>
-        <Instrument>NIHTS</Instrument>
-        <Device>sunpowergen2</Device>
-        <Tag>BenchCooler</Tag>
-        <Command>coldtip</Command>
-        <Value></Value>
-    </Command>
+    <request>
+        <instrument>NIHTS</instrument>
+        <device>sunpowergen2</device>
+        <tag>BenchCooler</tag>
+        <command>coldtip</command>
+        <argument></argument>
+    </request>
 </MrFreezeCommunique>

@@ -3,14 +3,14 @@
     <xsd:element name="MrFreezeCommunique">
         <xsd:complexType mixed="true">
             <xsd:sequence>
-                <xsd:element name="Command" minOccurs="0">
+                <xsd:element name="request" minOccurs="0">
                     <xsd:complexType mixed="true">
                         <xsd:sequence>
-                            <xsd:element name="Instrument" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="Device" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="Tag" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="Command" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="Value" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="instrument" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="device" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="tag" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="command" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="argument" minOccurs="0" type="xsd:normalizedString"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
