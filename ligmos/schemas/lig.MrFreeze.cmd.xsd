@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:element name="MrFreezeCommand">
+    <xsd:element name="MrFreezeCommunique">
         <xsd:complexType mixed="true">
             <xsd:sequence>
-                <xsd:element name="LMISunpowerSetpoint" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Command" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="Instrument" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="Device" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="Tag" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="Command" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="Value" minOccurs="0" type="xsd:normalizedString"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
