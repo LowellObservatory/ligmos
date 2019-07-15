@@ -186,20 +186,43 @@ def checkEnabled(conf, enableKey='enabled'):
     return enset
 
 
-def regroupConfig(config, groupKey='instrument'):
+def getterMcGetterface(obj, key, lower=True):
+    try:
+        kval = getattr(obj, key)
+        if lower is True:
+            kval = kval.lower()
+    except AttributeError:
+        kval = None
+
+    return kval
+
+
+def regroupConfig(config, groupKey='instrument', ekeys=None):
     """
     Reorganize the given (parsed) configuration to be a dict organized by
-    the given groupKey
+    the given groupKey.
+
+    If ekeys is not None, and if [hasattr(config[csect], key) for key in ekeys]
+    is True, they will be appended (in order, delimited by '_') onto the
+    groupKey to form the final grouping key in the returned dict.
     """
     # Reorganize the configuration to be per-instrument
     perInst = {}
     for csect in config:
-        try:
-            inst = getattr(config[csect], groupKey)
-            inst = inst.lower()
-            print(inst, csect)
-        except AttributeError:
-            inst = None
+        inst = getterMcGetterface(config[csect], groupKey)
+        if inst is not None and ekeys is not None:
+            if isinstance(ekeys, list):
+                keytags = None
+                for key in ekeys:
+                    exval = getterMcGetterface(config[csect], key)
+                    if exval is not None:
+                        if keytags is None:
+                            keytags = exval
+                        else:
+                            keytags = "%s_%s" % (keytags, exval)
+            else:
+                # Default/fallback in case we didn't have any extra tags
+                keytags = inst
 
         if inst is not None:
             # Does this instrument already exist in our final dict?
@@ -208,7 +231,8 @@ def regroupConfig(config, groupKey='instrument'):
                 iDevices = perInst[inst]
             else:
                 iDevices = {}
-            iDevices.update({csect: config[csect]})
+
+            iDevices.update({keytags: config[csect]})
             perInst.update({inst: iDevices})
 
     return perInst
