@@ -31,7 +31,7 @@ from ..utils import common, logs, pids, confparsers, classes
 def toServeMan(procname, conffile, passfile, log,
                extraargs=None,
                conftype=classes.baseTarget,
-               logfile=True, desc=None):
+               logfile=True, enableCheck=True, desc=None):
     """Main entry point, which also handles arguments.
 
     ... it's - it's a cookbook!
@@ -143,7 +143,7 @@ def toServeMan(procname, conffile, passfile, log,
     idict, cblk = confparsers.parseConfig(args.config, conftype,
                                           passfile=args.passes,
                                           searchCommon=True,
-                                          enableCheck=True,
+                                          enableCheck=enableCheck,
                                           debug=args.debug)
 
     return idict, cblk, args, runner
