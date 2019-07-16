@@ -273,14 +273,12 @@ def gatherTopics(iobj):
     topics = []
     if isinstance(iobj, classes.brokerCommandingTarget):
         # This is optional so check first. We don't actually need the
-        #   iobj.cmdtopic because that's a producer topic, and
-        #   we only really care about consumer topics
-        if iobj.replytopic is not None:
-            topics.append(iobj.replytopic)
+        #   iobj.cmdtopic is a producer topic, and is where the
+        #   commands will be coming in from.
+        if iobj.cmdtopic is not None:
+            topics.append(iobj.cmdtopic)
     elif isinstance(iobj, classes.instrumentDeviceTarget):
-        # This is optional so check first. We don't actually need the
-        #   iobj.devbrokercmd topic because that's a producer topic, and
-        #   we only really care about consumer topics
+        # This is optional so check first.
         if iobj.devbrokerreply is not None:
             topics.append(iobj.devbrokerreply)
     elif isinstance(iobj, classes.sneakyTarget):
@@ -313,8 +311,10 @@ def getAllTopics(config, comm):
             brokerTag = csObj.broker
             brokertype = comm[brokerTag].type
         except AttributeError:
-            # If we end up in here, we're completely hoopajooped so give up
-            break
+            # If we end up in here, that means that it wasn't actually
+            #   a broker section so just skip it
+            brokerTag = ''
+            brokertype = ''
 
         if brokertype.lower() == 'activemq':
             # Gather up broker stuff
@@ -339,8 +339,9 @@ def getAllTopics(config, comm):
             brokerTag = csObj.broker
             commtype = csObj.type
         except AttributeError:
-            # If we end up in here, we're completely hoopajooped so give up
-            break
+            # If we end up in here, it wasn't a broker section so skip it
+            brokerTag = ''
+            commtype = ''
 
         if commtype.lower() == 'queue':
             thesetopics = gatherTopics(csObj)
