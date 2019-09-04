@@ -37,8 +37,8 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
     """
     Default subscriber that will at least print out stuff
     """
-    def __init__(self):
-        pass
+    def __init__(self, dictify=True):
+        self.dictify = dictify
 
     # Subclassing stomp.listener.ConnectionListener
     def on_message(self, headers, body):
@@ -55,11 +55,13 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
 
         if badMsg is False:
             try:
-                xml = xmld.parse(body)
-                # If we want to have the XML as a string:
-                # res = {tname: [headers, dumpPacket(xml)]}
-                # If we want to have the XML as an object:
-                res = {tname: [headers, xml]}
+                if self.dictify is True:
+                    xml = xmld.parse(body)
+                    res = {tname: [headers, xml]}
+                else:
+                    # If we want to have the XML as a string:
+                    res = {tname: [headers, body]}
+
             except xmld.expat.ExpatError:
                 # This means that XML wasn't found, so it's just a string
                 #   packet with little/no structure. Attach the sub name
@@ -419,6 +421,7 @@ def schemaDicter():
                 print("Schema for topic %s not found!" % (schname))
 
     return sdict
+
 
 def disconnectAll(amqbrokers):
     """
