@@ -82,7 +82,10 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
             print("Header: %s" % (headers))
             print("Body: %s" % (body))
         else:
-            print(res)
+            if self.dictify is True:
+                print(res)
+            else:
+                print(body)
 
 
 class amqHelper():
