@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="ProbeTelemetry">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="TimeStamp" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="ProbeState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="RawX" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="RawY" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="ProbeFocus" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="ProbeFilterPosition" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ProbeFilterName" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

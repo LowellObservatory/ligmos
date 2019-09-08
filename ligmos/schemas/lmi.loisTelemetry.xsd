@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="LMITelemetry">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="TimeStamp" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="Wheel1FilterPosition" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="Wheel1FilterName" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Wheel1Detent" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Wheel2FilterPosition" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="Wheel2FilterName" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Wheel2Detent" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

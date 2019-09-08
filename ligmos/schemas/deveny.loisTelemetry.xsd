@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="DevenyTelemetry">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="TimeStamp" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="Lamp1Name" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Lamp1State" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="Lamp2Name" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Lamp2State" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="Lamp3Name" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Lamp3State" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="Lamp4Name" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Lamp4State" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="SlitWidthMM" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="SlitWidthASEC" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="GratingTilt" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="CollimatorFocus" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Grating" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="RearFilter" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

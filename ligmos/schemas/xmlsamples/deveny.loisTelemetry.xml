@@ -1,0 +1,17 @@
+<DevenyTelemetry>
+  <TimeStamp>1567818273</TimeStamp>
+  <Lamp1Name>Cd</Lamp1Name>
+  <Lamp1State>false</Lamp1State>
+  <Lamp2Name>Ar</Lamp2Name>
+  <Lamp2State>false</Lamp2State>
+  <Lamp3Name>Ne</Lamp3Name>
+  <Lamp3State>false</Lamp3State>
+  <Lamp4Name>Hg</Lamp4Name>
+  <Lamp4State>false</Lamp4State>
+  <SlitWidthMM>0.4589975495119717</SlitWidthMM>
+  <SlitWidthASEC>2.999984039836568</SlitWidthASEC>
+  <GratingTilt>16.49753691641969</GratingTilt>
+  <CollimatorFocus>13.500044549192925</CollimatorFocus>
+  <Grating>UNKNOWN</Grating>
+  <RearFilter>UNKNOWN</RearFilter>
+</DevenyTelemetry>

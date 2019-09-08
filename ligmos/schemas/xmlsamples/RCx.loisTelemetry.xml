@@ -1,0 +1,9 @@
+<ProbeTelemetry>
+  <TimeStamp>1567890112</TimeStamp>
+  <ProbeState>GDR</ProbeState>
+  <RawX>0.0</RawX>
+  <RawY>0.0</RawY>
+  <ProbeFocus>0.0</ProbeFocus>
+  <ProbeFilterPosition>1</ProbeFilterPosition>
+  <ProbeFilterName>OPEN</ProbeFilterName>
+</ProbeTelemetry>
