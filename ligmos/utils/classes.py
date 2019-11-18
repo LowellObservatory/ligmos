@@ -42,6 +42,7 @@ class instrumentDeviceTarget(object):
         self.devtype = None
         self.devbrokercmd = None
         self.devbrokerreply = None
+        self.queryinterval = None
         self.enabled = False
 
 
