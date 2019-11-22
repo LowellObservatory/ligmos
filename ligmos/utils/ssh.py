@@ -141,6 +141,25 @@ class SSHWrapper():
                 print("File transfer took too long!")
                 return False
 
+    def putFile(self, lfile, rfile, timeout=120.):
+        """
+        From the Paramiko SFTP docs:
+
+        Note that the filename should be included.
+        Only specifying a directory may result in an error.
+        """
+        try:
+            with multialarm.Timeout(id_="SFTPXfer", seconds=timeout):
+                if self.sftp is not None:
+                    # Transfer the file from the local location to the remote
+                    self.sftp.put(lfile, rfile)
+                    return True
+        except multialarm.TimeoutError as err:
+            if err.id_ == "SFTPXfer":
+                self.sftp = None
+                print("File transfer took too long!")
+                return False
+
     def sendCommand(self, command, debug=False):
         """
         """
