@@ -269,7 +269,7 @@ def checkConnections(amqbrokers, subscribe=True):
     return amqbrokers
 
 
-def gatherTopics(iobj):
+def gatherTopics(iobj, queuerole=None):
     """
     The actual workhorse function that checks the actual topics, which
     can be in different attributes depending on the exact type of object
@@ -277,11 +277,19 @@ def gatherTopics(iobj):
     """
     topics = []
     if isinstance(iobj, classes.brokerCommandingTarget):
-        # This is optional so check first. We don't actually need the
-        #   iobj.cmdtopic is a producer topic, and is where the
+        # This is optional so check first. We don't actually need
+        #   iobj.cmdtopic since it's a producer topic, and is where the
         #   commands will be coming in from.
-        if iobj.cmdtopic is not None:
-            topics.append(iobj.cmdtopic)
+        if queuerole is None:
+            print("ERROR! Must supply a queue role (master or slave)")
+        else:
+            if queuerole.lower() == 'slave':
+                if iobj.replytopic is not None:
+                    topics.append(iobj.replytopic)
+            elif queuerole.lower() == 'master':
+                if iobj.cmdtopic is not None:
+                    topics.append(iobj.cmdtopic)
+
     elif isinstance(iobj, classes.instrumentDeviceTarget):
         # This is optional so check first.
         if iobj.devbrokerreply is not None:
@@ -302,7 +310,7 @@ def gatherTopics(iobj):
     return topics
 
 
-def getAllTopics(config, comm):
+def getAllTopics(config, comm, queuerole=None):
     """
     Given a parsed configuration and common set of stuff, search thru
     the former looking for any/all ActiveMQ broker topics and return them
@@ -331,7 +339,7 @@ def getAllTopics(config, comm):
                 alltopics = []
 
             # Get the topics; it's guaranteed to be a list
-            thesetopics = gatherTopics(csObj)
+            thesetopics = gatherTopics(csObj, queuerole=queuerole)
             alltopics += thesetopics
 
             # list(set()) to quickly take care of any dupes
@@ -349,7 +357,7 @@ def getAllTopics(config, comm):
             commtype = ''
 
         if commtype.lower() == 'queue':
-            thesetopics = gatherTopics(csObj)
+            thesetopics = gatherTopics(csObj, queuerole=queuerole)
             alltopics += thesetopics
 
             # list(set()) to quickly take care of any dupes
