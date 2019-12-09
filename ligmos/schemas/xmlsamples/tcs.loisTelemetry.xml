@@ -1,0 +1,31 @@
+<TCSTelemetry>
+  <TimeStamp>1575788399</TimeStamp>
+  <TCSLST>04:41:18.100</TCSLST>
+  <TCSUTC>2019-12-08T06:59:59.893Z</TCSUTC>
+  <DemandRa>19:49:13.610</DemandRa>
+  <DemandDec>+34:39:14.20</DemandDec>
+  <CurrentHourAngle>00:00:07</CurrentHourAngle>
+  <TCSCurrentZenithDistance>0.00</TCSCurrentZenithDistance>
+  <TCSCurrentAzimuth>110.00</TCSCurrentAzimuth>
+  <TCSCurrentElev>90.00</TCSCurrentElev>
+  <MountGuideMode>NoTrack</MountGuideMode>
+  <ScienceTargetName>unspecified</ScienceTargetName>
+  <m1CoverState>Open</m1CoverState>
+  <MountDomeAzimuthDifference>UNKNOWN</MountDomeAzimuthDifference>
+  <DomeOccultationWarning>false</DomeOccultationWarning>
+  <CurrentParAngle>14.33</CurrentParAngle>
+  <TCSCurrentRotatorPA>0.00</TCSCurrentRotatorPA>
+  <TCSCurrentRotatorIAA>4.95</TCSCurrentRotatorIAA>
+  <TCSCurrentRotatorIPA>0.00</TCSCurrentRotatorIPA>
+  <RotatorFrame>Target</RotatorFrame>
+  <TargetFrame>FK5</TargetFrame>
+  <equinox>2000.0</equinox>
+  <TCSState>ENABLED</TCSState>
+  <TCSHealth>BAD</TCSHealth>
+  <TCSHeartBeat>31823</TCSHeartBeat>
+  <TCSAccessMode>Operator</TCSAccessMode>
+  <InPosition>false</InPosition>
+  <MountTemperature>6.1697875660259</MountTemperature>
+  <CLSLowBankState>UNKNOWN</CLSLowBankState>
+  <DSSPositionStatus>UNKNOWN</DSSPositionStatus>
+</TCSTelemetry>

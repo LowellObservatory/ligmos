@@ -1,0 +1,13 @@
+<InstrumentCubeTelemetry>
+  <TimeStamp>1575788399</TimeStamp>
+  <InstrumentCoverState>CLOSED</InstrumentCoverState>
+  <InstrumentCoverPosition>0.3932653179287765</InstrumentCoverPosition>
+  <FMAState>HOME</FMAState>
+  <FMAPosition>0.0</FMAPosition>
+  <FMBState>HOME</FMBState>
+  <FMBPosition>0.0</FMBPosition>
+  <FMCState>HOME</FMCState>
+  <FMCPosition>0.0</FMCPosition>
+  <FMDState>HOME</FMDState>
+  <FMDPosition>0.0</FMDPosition>
+</InstrumentCubeTelemetry>

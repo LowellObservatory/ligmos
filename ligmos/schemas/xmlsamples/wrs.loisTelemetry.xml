@@ -1,0 +1,9 @@
+<WRSTelemetry>
+  <TimeStamp>1575788366</TimeStamp>
+  <AirTemp>5.2</AirTemp>
+  <BarometricPressure>1021.0</BarometricPressure>
+  <DewPoint>4.6</DewPoint>
+  <RelativeHumidity>96.0</RelativeHumidity>
+  <WindDirection>306.0</WindDirection>
+  <WindSpeed>6.1</WindSpeed>
+</WRSTelemetry>
