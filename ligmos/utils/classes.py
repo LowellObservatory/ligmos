@@ -14,6 +14,22 @@
 from __future__ import division, print_function, absolute_import
 
 
+class snmpTarget(object):
+    """
+    """
+    def __init__(self):
+        self.host = None
+        self.database = None
+        self.databasetable = None
+        self.devicetype = None
+        self.miblocation = None
+        self.snmpversion = 1
+        self.snmpport = 161
+        self.snmpcommunity = 'public'
+        self.snmpendpoints = []
+        self.enabled = False
+
+
 class brokerCommandingTarget(object):
     """
     Subclasses nothing!

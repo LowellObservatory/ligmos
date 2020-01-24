@@ -197,7 +197,7 @@ def getterMcGetterface(obj, key, lower=True):
     return kval
 
 
-def regroupConfig(config, groupKey='instrument', ekeys=None):
+def regroupConfig(config, groupKey='instrument', ekeys=None, delim="_"):
     """
     Reorganize the given (parsed) configuration to be a dict organized by
     the given groupKey.
@@ -219,7 +219,7 @@ def regroupConfig(config, groupKey='instrument', ekeys=None):
                         if keytags is None:
                             keytags = exval
                         else:
-                            keytags = "%s_%s" % (keytags, exval)
+                            keytags = "%s%s%s" % (keytags, delim, exval)
             else:
                 # Default/fallback in case we didn't have any extra tags
                 keytags = inst
