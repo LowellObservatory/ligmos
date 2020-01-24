@@ -47,6 +47,8 @@ def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags=None,
             # Assume that it's right
             # nsts = int(ts)
             pass
+        else:
+            packet.update({'time': ts})
         # packet.update({'time': nsts})
 
         if not isinstance(fields, dict):

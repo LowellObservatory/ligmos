@@ -70,7 +70,7 @@ class influxobj():
         else:
             print("InfluxDB-python not found or server not running!")
 
-    def writeToDB(self, vals, table=None, debug=False):
+    def writeToDB(self, vals, table=None, timeprec='s', debug=False):
         """
         Given an opened InfluxDBClient, write stuff to the given dbname.
 
@@ -89,9 +89,11 @@ class influxobj():
 
                 try:
                     if table is None:
-                        res = self.client.write_points(vals)
+                        res = self.client.write_points(vals,
+                                                       time_precision=timeprec)
                     else:
-                        res = self.client.write_points(vals, database=table)
+                        res = self.client.write_points(vals, database=table,
+                                                       time_precision=timeprec)
                 except InfluxDBClientError as err:
                     if err.code == 403:
                         print("Authentication error! %s" % (err.content))
@@ -151,10 +153,11 @@ class influxobj():
         # Just a stub in case I can't remember...
         self.closeDB()
 
-    def singleCommit(self, packet, table=None, debug=False, close=True):
+    def singleCommit(self, packet, table=None, timeprec='s',
+                     debug=False, close=True):
         if self.client is not None:
             self.closeDB()
         self.openDB()
-        self.writeToDB(packet, table=table, debug=debug)
+        self.writeToDB(packet, table=table, timeprec=timeprec, debug=debug)
         if close is True:
             self.closeDB()
