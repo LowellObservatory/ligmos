@@ -43,13 +43,13 @@ def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags=None,
             #     that is what influxdb-python looks for to autoconvert)
             # nsts = int(ts.timestamp() * 1e3)
             pass
-        elif isinstance(ts, int) or isinstance(ts, float):
-            # Assume that it's right
-            # nsts = int(ts)
-            pass
+        elif isinstance(ts, float):
+            print("ERROR! Timestamp can not be a float because dumb.")
+            sys.exit(-1)
         else:
+            # Also assume that it's right. But this is probably the
+            #   weakest link of all of these
             packet.update({'time': ts})
-        # packet.update({'time': nsts})
 
         if not isinstance(fields, dict):
             print("ERROR! fields must be of type dict.")
