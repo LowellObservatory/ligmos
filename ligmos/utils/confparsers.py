@@ -178,7 +178,7 @@ def checkEnabled(conf, enableKey='enabled'):
     for sect in conf.sections():
         en = False
         try:
-            en = conf[sect].getboolean(key)
+            en = conf[sect].getboolean(enableKey)
             if en is True:
                 enset.update({sect: conf[sect]})
         except KeyError:
