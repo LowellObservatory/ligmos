@@ -423,6 +423,24 @@ def schemaDicter():
         else:
             print("%s is a potential schema! Looking at it." % (schname))
 
+            # Try to peel off a version tag, if there is one. It needs to be a
+            #   very specific format!
+            # broker.topic.name.vX-Y-Z.xsd
+            schparts = schname.split(".")
+            # if it starts with "v" AND also has underscores, it's probably
+            #   a tag.  It's dumb but it works for now. Could be improved.
+            if schparts[-1].startswith("v"):
+                if "_" in schparts[-1]:
+                    vtag = schparts[-1]
+                    origtag = schname[:-len(vtag)+1]
+                    # Some more transformations to clean it up to what should
+                    #   be in the packets themselves
+                    vtag = vtag.replace("_", ".")
+            else:
+                origtag = schname
+                vtag = None
+            print(origtag, vtag)
+
             try:
                 # Define the schema we'll use to convert datatypes
                 sf = pkgr.resource_filename('ligmos', spath)
