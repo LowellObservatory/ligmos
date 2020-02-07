@@ -60,10 +60,10 @@
                                 </xsd:complexType>
                             </xsd:element>
                             <xsd:element name="airmass" minOccurs="0" type="xsd:decimal"/>
-                            <xsd:element name="currentTimeToObservable_min" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="currentTimeToUnobservable_min" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="timeToRotLimit_min" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="timeToAzLimit_min" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="currentTimeToObservable_min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="currentTimeToUnobservable_min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="timeToRotLimit_min" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="timeToAzLimit_min" minOccurs="0" type="xsd:decimal"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
