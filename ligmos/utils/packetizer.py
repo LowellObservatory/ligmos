@@ -46,6 +46,9 @@ def makeInfluxPacket(meas='', ts=dt.datetime.utcnow(), tags=None,
         elif isinstance(ts, float):
             print("ERROR! Timestamp can not be a float because dumb.")
             sys.exit(-1)
+        elif ts is None:
+            # If we don't specify a timestamp, don't even put it in the packet
+            pass
         else:
             # Also assume that it's right. But this is probably the
             #   weakest link of all of these
