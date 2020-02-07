@@ -432,7 +432,7 @@ def schemaDicter():
             if schparts[-1].startswith("v"):
                 if "_" in schparts[-1]:
                     vtag = schparts[-1]
-                    origtag = schname[:-len(vtag)+1]
+                    origtag = schname[:-len(vtag)-1]
                     # Some more transformations to clean it up to what should
                     #   be in the packets themselves
                     vtag = vtag.replace("_", ".")
@@ -445,14 +445,19 @@ def schemaDicter():
                 # Define the schema we'll use to convert datatypes
                 sf = pkgr.resource_filename('ligmos', spath)
                 schema = xmls.XMLSchema(sf)
-                # Make sure if we have a version tag, we don't overwrite
-                #   something else. See if there is an existing entry first.
-                if origtag in sdict.keys():
-                    existingEntry = sdict[origtag]
-                    if isinstance(existingEntry, xmls.XMLSchema):
-                        print(existingEntry)
-
-                sdict.update({schname: schema})
+                # Deal with our multi-version case
+                if vtag is not None:
+                    versionedSchema = {vtag: schema}
+                    # Make sure that if we have a version tag, we don't
+                    #   clobber something else already stored
+                    if origtag in sdict.keys():
+                        existingEntry = sdict[origtag]
+                        existingEntry.update(versionedSchema)
+                        sdict.update({origtag: existingEntry})
+                    else:
+                        sdict.update({origtag: versionedSchema})
+                else:
+                    sdict.update({origtag: schema})
             except xmls.XMLSchemaURLError:
                 print("Schema for topic %s not found!" % (schname))
 
