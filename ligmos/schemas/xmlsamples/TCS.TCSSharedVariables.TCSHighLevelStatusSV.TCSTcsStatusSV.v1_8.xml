@@ -1,86 +1,86 @@
 <tcsTCSStatus>
   <tcsVersion>V1.8</tcsVersion>
-  <accessMode>Operator</accessMode>
-  <azCurrentWrap>-1</azCurrentWrap>
-  <heartbeat>60</heartbeat>
-  <inPositionIsTrue>false</inPositionIsTrue>
-  <m1CoverState>Closed</m1CoverState>
-  <mountGuideMode>NoTrack</mountGuideMode>
+  <accessMode>Engineer</accessMode>
+  <azCurrentWrap>1</azCurrentWrap>
+  <heartbeat>21507</heartbeat>
+  <inPositionIsTrue>true</inPositionIsTrue>
+  <m1CoverState>Open</m1CoverState>
+  <mountGuideMode>OpenLoop</mountGuideMode>
   <rotCurrentWrap>1</rotCurrentWrap>
   <tcsHealth>GOOD</tcsHealth>
-  <tcsState>STANDBY</tcsState>
+  <tcsState>ENABLED</tcsState>
   <currentTimes>
     <lst>
-      <hours>21</hours>
-      <minutesTime>39</minutesTime>
-      <secondsTime>3.8</secondsTime>
+      <hours>8</hours>
+      <minutesTime>20</minutesTime>
+      <secondsTime>3.3</secondsTime>
     </lst>
-    <time>2020-02-02T20:14:47.847+00:00</time>
+    <time>2020-02-07T06:38:18.605+00:00</time>
   </currentTimes>
   <limits>
     <moonProximity>
-      <distance_deg>-1</distance_deg>
+      <distance_deg>22.976666467185</distance_deg>
       <proximityFlag>false</proximityFlag>
     </moonProximity>
     <sunProximity>
-      <distance_deg>-1</distance_deg>
+      <distance_deg>152.36115212839</distance_deg>
       <proximityFlag>false</proximityFlag>
     </sunProximity>
     <zenith>
-      <currentZD_deg>89.99</currentZD_deg>
+      <currentZD_deg>35.172851</currentZD_deg>
       <elZenithLimit_deg>89.3</elZenithLimit_deg>
       <inBlindSpotIsTrue>false</inBlindSpotIsTrue>
       <timeToBlindSpot_min>-1</timeToBlindSpot_min>
       <timeToBlindSpotExit_min>-1</timeToBlindSpotExit_min>
     </zenith>
-    <airmass>13.37481353442</airmass>
-    <currentTimeToObservable_min>132</currentTimeToObservable_min>
-    <currentTimeToUnobservable_min>-1</currentTimeToUnobservable_min>
+    <airmass>1.222781692504</airmass>
+    <currentTimeToObservable_min>-1</currentTimeToObservable_min>
+    <currentTimeToUnobservable_min>305</currentTimeToUnobservable_min>
     <timeToRotLimit_min>-1</timeToRotLimit_min>
     <timeToAzLimit_min>-1</timeToAzLimit_min>
   </limits>
   <pointingPositions>
     <azElError>
-      <azError>0</azError>
-      <elError>0</elError>
+      <azError>-0.0396</azError>
+      <elError>0.8676</elError>
     </azElError>
     <currentAzEl>
       <azimuth>
-        <degreesArc>0</degreesArc>
-        <minutesArc>0</minutesArc>
-        <secondsArc>36</secondsArc>
+        <degreesArc>193</degreesArc>
+        <minutesArc>43</minutesArc>
+        <secondsArc>32.4</secondsArc>
       </azimuth>
       <elevation>
-        <degreesAlt>0</degreesAlt>
-        <minutesArc>0</minutesArc>
-        <secondsArc>36</secondsArc>
+        <degreesAlt>54</degreesAlt>
+        <minutesArc>49</minutesArc>
+        <secondsArc>37.7</secondsArc>
       </elevation>
     </currentAzEl>
     <currentHA>
-      <hours>12</hours>
-      <minutesTime>2</minutesTime>
-      <secondsTime>14.18</secondsTime>
+      <hours>0</hours>
+      <minutesTime>32</minutesTime>
+      <secondsTime>10.74</secondsTime>
     </currentHA>
     <currentRADec>
       <declination>
-        <degreesDec>55</degreesDec>
-        <minutesArc>28</minutesArc>
-        <secondsArc>59.4</secondsArc>
+        <degreesDec>0</degreesDec>
+        <minutesArc>20</minutesArc>
+        <secondsArc>49.6</secondsArc>
       </declination>
       <equinoxPrefix>J</equinoxPrefix>
       <equinoxYear>2000</equinoxYear>
       <frame>FK5</frame>
       <ra>
-        <hours>9</hours>
-        <minutesTime>35</minutesTime>
-        <secondsTime>20.29</secondsTime>
+        <hours>7</hours>
+        <minutesTime>46</minutesTime>
+        <secondsTime>48.26</secondsTime>
       </ra>
     </currentRADec>
-    <currentParAngle>-0.45941126906235</currentParAngle>
+    <currentParAngle>11.504871461107</currentParAngle>
     <currentRotatorPositions>
-      <rotPA>0</rotPA>
-      <iaa>185.2</iaa>
-      <rotIPA>0</rotIPA>
+      <rotPA>96.308609</rotPA>
+      <iaa>0</iaa>
+      <rotIPA>96.3</rotIPA>
     </currentRotatorPositions>
     <difftrackStatus>
       <dAz_ArcsPS>0</dAz_ArcsPS>
@@ -89,40 +89,40 @@
       <dDec_ArcsPS>0</dDec_ArcsPS>
     </difftrackStatus>
     <objectPA>
-      <EqPA>-0</EqPA>
-      <AzPA>-0.45941126906235</AzPA>
+      <EqPA>95.173057948228</EqPA>
+      <AzPA>276.3</AzPA>
     </objectPA>
     <demandAzEl>
       <azimuth>
-        <degreesArc>0</degreesArc>
-        <minutesArc>0</minutesArc>
-        <secondsArc>36</secondsArc>
+        <degreesArc>193</degreesArc>
+        <minutesArc>43</minutesArc>
+        <secondsArc>33.54</secondsArc>
       </azimuth>
       <elevation>
-        <degreesAlt>0</degreesAlt>
-        <minutesArc>0</minutesArc>
-        <secondsArc>36</secondsArc>
+        <degreesAlt>54</degreesAlt>
+        <minutesArc>49</minutesArc>
+        <secondsArc>38.68</secondsArc>
       </elevation>
     </demandAzEl>
     <demandRADec>
       <declination>
-        <degreesDec>55</degreesDec>
-        <minutesArc>4</minutesArc>
-        <secondsArc>49.1</secondsArc>
+        <degreesDec>0</degreesDec>
+        <minutesArc>20</minutesArc>
+        <secondsArc>50.6</secondsArc>
       </declination>
       <equinoxPrefix>J</equinoxPrefix>
       <equinoxYear>2000</equinoxYear>
       <frame>FK5</frame>
       <ra>
-        <hours>9</hours>
-        <minutesTime>34</minutesTime>
-        <secondsTime>26.82</secondsTime>
+        <hours>7</hours>
+        <minutesTime>46</minutesTime>
+        <secondsTime>48.23</secondsTime>
       </ra>
     </demandRADec>
     <demandRotatorPositions>
-      <rotPA>355.568126</rotPA>
+      <rotPA>96.308575</rotPA>
     </demandRotatorPositions>
-    <targetName>unspecified</targetName>
+    <targetName>UCAC4-452-038794</targetName>
   </pointingPositions>
   <OffsetStatus>
     <offsetType>SIMPLE</offsetType>
@@ -132,8 +132,8 @@
     <handsetOff2>0</handsetOff2>
   </OffsetStatus>
   <axesTrackMode>All</axesTrackMode>
-  <inPositionAzIsTrue>false</inPositionAzIsTrue>
-  <inPositionElIsTrue>false</inPositionElIsTrue>
-  <inPositionRotIsTrue>false</inPositionRotIsTrue>
-  <externalTargetCfgCmdPreviewIsTrue>true</externalTargetCfgCmdPreviewIsTrue>
+  <inPositionAzIsTrue>true</inPositionAzIsTrue>
+  <inPositionElIsTrue>true</inPositionElIsTrue>
+  <inPositionRotIsTrue>true</inPositionRotIsTrue>
+  <externalTargetCfgCmdPreviewIsTrue>false</externalTargetCfgCmdPreviewIsTrue>
 </tcsTCSStatus>
