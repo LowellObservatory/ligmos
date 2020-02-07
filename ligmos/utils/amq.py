@@ -445,6 +445,13 @@ def schemaDicter():
                 # Define the schema we'll use to convert datatypes
                 sf = pkgr.resource_filename('ligmos', spath)
                 schema = xmls.XMLSchema(sf)
+                # Make sure if we have a version tag, we don't overwrite
+                #   something else. See if there is an existing entry first.
+                if origtag in sdict.keys():
+                    existingEntry = sdict[origtag]
+                    if isinstance(existingEntry, xmls.XMLSchema):
+                        print(existingEntry)
+
                 sdict.update({schname: schema})
             except xmls.XMLSchemaURLError:
                 print("Schema for topic %s not found!" % (schname))
