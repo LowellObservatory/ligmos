@@ -124,7 +124,7 @@
                                             </xsd:complexType>
                                         </xsd:element>
                                         <xsd:element name="equinoxPrefix" minOccurs="0" type="xsd:normalizedString"/>
-                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="frame" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="ra" minOccurs="0">
                                             <xsd:complexType mixed="true">
@@ -143,7 +143,7 @@
                                 <xsd:complexType mixed="true">
                                     <xsd:sequence>
                                         <xsd:element name="rotPA" minOccurs="0" type="xsd:decimal"/>
-                                        <xsd:element name="iaa" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="iaa" minOccurs="0" type="xsd:decimal"/>
                                         <xsd:element name="rotIPA" minOccurs="0" type="xsd:decimal"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
@@ -151,10 +151,10 @@
                             <xsd:element name="difftrackStatus" minOccurs="0">
                                 <xsd:complexType mixed="true">
                                     <xsd:sequence>
-                                        <xsd:element name="dAz_ArcsPS" minOccurs="0" type="xsd:int"/>
-                                        <xsd:element name="dEl_ArcsPS" minOccurs="0" type="xsd:int"/>
-                                        <xsd:element name="dRA_ArcsPS" minOccurs="0" type="xsd:int"/>
-                                        <xsd:element name="dDec_ArcsPS" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="dAz_ArcsPS" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="dEl_ArcsPS" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="dRA_ArcsPS" minOccurs="0" type="xsd:decimal"/>
+                                        <xsd:element name="dDec_ArcsPS" minOccurs="0" type="xsd:decimal"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -203,7 +203,7 @@
                                             </xsd:complexType>
                                         </xsd:element>
                                         <xsd:element name="equinoxPrefix" minOccurs="0" type="xsd:normalizedString"/>
-                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:int"/>
+                                        <xsd:element name="equinoxYear" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="frame" minOccurs="0" type="xsd:normalizedString"/>
                                         <xsd:element name="ra" minOccurs="0">
                                             <xsd:complexType mixed="true">
