@@ -232,10 +232,10 @@
                     <xsd:complexType mixed="true">
                         <xsd:sequence>
                             <xsd:element name="offsetType" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="userOff1" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="userOff2" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="handsetOff1" minOccurs="0" type="xsd:int"/>
-                            <xsd:element name="handsetOff2" minOccurs="0" type="xsd:int"/>
+                            <xsd:element name="userOff1" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="userOff2" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="handsetOff1" minOccurs="0" type="xsd:decimal"/>
+                            <xsd:element name="handsetOff2" minOccurs="0" type="xsd:decimal"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
