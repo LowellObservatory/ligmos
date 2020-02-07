@@ -439,7 +439,6 @@ def schemaDicter():
             else:
                 origtag = schname
                 vtag = None
-            print(origtag, vtag)
 
             try:
                 # Define the schema we'll use to convert datatypes
@@ -447,6 +446,7 @@ def schemaDicter():
                 schema = xmls.XMLSchema(sf)
                 # Deal with our multi-version case
                 if vtag is not None:
+                    print("Storing %s %s" % (origtag, vtag))
                     versionedSchema = {vtag: schema}
                     # Make sure that if we have a version tag, we don't
                     #   clobber something else already stored
