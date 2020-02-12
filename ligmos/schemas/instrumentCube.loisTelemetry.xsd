@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="InstrumentCubeTelemetry">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="TimeStamp" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="InstrumentCoverState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="InstrumentCoverPosition" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="FMAState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="FMAPosition" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="FMBState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="FMBPosition" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="FMCState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="FMCPosition" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="FMDState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="FMDPosition" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
