@@ -10,7 +10,7 @@
 
 """brokerConnection
 
-Simple example to show how to connecto to an ActiveMQ broker with stomp.py,
+Simple example to show how to connect to an ActiveMQ broker with stomp.py,
 and use the heartbeat to tell if your connection is broken or not.
 """
 
