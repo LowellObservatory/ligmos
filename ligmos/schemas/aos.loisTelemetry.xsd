@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="AOSTelemetry">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="TimeStamp" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="FocusOffset" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
