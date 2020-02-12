@@ -24,12 +24,14 @@ from ligmos import utils
 if __name__ == "__main__":
     default_host = 'yourBrokerHostHere'
     bigsleep = 30
-
     topics = ['aTopic', 'anotherTopic']
 
     print("Setting up listener...")
+    # This is a default listener, that will just literally print (to STDOUT)
+    #   all messages on all subscribed topics
     listener = utils.amq.ParrotSubscriber(dictify=False)
 
+    # Use the ligmos ActiveMQ helper function
     conn = utils.amq.amqHelper(default_host,
                                topics,
                                user=None,
@@ -44,16 +46,17 @@ if __name__ == "__main__":
 
     # All LIG codes are run in docker containers so infinite loops are the norm
     while runner.halt is False:
-        # Double check that the connection is still up
+        # All of these are possibilities of heartbeat failure or success
         #   NOTE: conn.connect() handles ConnectionError exceptions
         if conn.conn is None:
             print("No connection!  Attempting to connect ...")
             conn.connect(listener=listener)
         elif conn.conn.transport.connected is False:
-            # Added the "first" flag to take care of a double sub. bug
             print("Connection died! Reestablishing ...")
             conn.connect(listener=listener)
         else:
+            # You can do other stuff in here, if needed, since this means
+            #   that the connection to the broker is A-OK.
             print("Connection still valid")
 
         # Consider taking a big nap
