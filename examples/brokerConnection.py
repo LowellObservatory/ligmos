@@ -22,14 +22,10 @@ from ligmos import utils
 
 
 if __name__ == "__main__":
-    default_host = 'joe.lowell.edu'
+    default_host = 'yourBrokerHostHere'
     bigsleep = 30
 
-    topics = ['AOS.AOSSubDataSV.AbsoluteFocusOffset',
-              'AOS.AOSSubDataSV.RelativeFocusOffset',
-              'AOS.AOSSubDataSV.ClearFocusOffset',
-              'lmi.loisTelemetry',
-              'TCS.TCSSharedVariables.TCSHighLevelStatusSV.TCSTcsStatusSV']
+    topics = ['aTopic', 'anotherTopic']
 
     print("Setting up listener...")
     listener = utils.amq.ParrotSubscriber(dictify=False)
