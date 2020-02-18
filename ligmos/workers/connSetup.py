@@ -64,10 +64,16 @@ def connIDB(comm):
             # Create an influxdb object that can be spread around to
             #   connect and commit packets when they're created.
             #   Leave it disconnected initially.
+            # Check to see if we've stuffed in a table name to use
+            if hasattr(cobj, 'tablename') is True:
+                tbl = cobj.tablename
+            else:
+                tbl = None
+
             idb = database.influxobj(host=cobj.host,
                                      port=cobj.port,
                                      user=cobj.user,
-                                     tablename=None,
+                                     tablename=tbl,
                                      pw=cobj.password,
                                      connect=False)
 
