@@ -124,7 +124,7 @@ class influxobj():
                     print(vals)
                     print("Unparsable error condition from Influx :(")
             if res is False:
-                print("INFLUXDB ERROR")
+                print("INFLUXDB ERROR. Check above for more details :(")
         else:
             print("Error: InfluxDBClient not connected!")
 

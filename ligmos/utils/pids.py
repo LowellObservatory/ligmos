@@ -32,6 +32,11 @@ def check_if_running(pname='wadsworth', debug=False):
     pid = []
     found = []
     running_pid = -1
+
+    if debug is True:
+        this_pid = os.getpid()
+        print("I am running as PID: %d" % (this_pid))
+
     for loc in locs:
         try:
             tfile = loc + '/' + pname.lower() + '.pid'

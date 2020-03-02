@@ -121,7 +121,7 @@ def toServeMan(procname, conffile, passfile, log,
                 common.nicerExit()
             else:
                 print("LOOK AT ME I'M THE ALIEN COOK NOW")
-                print("%d second pause to allow the other process to exit." %
+                print("%d sec. pause to allow the other process to exit." %
                       (killSleep))
                 time.sleep(killSleep)
         else:
