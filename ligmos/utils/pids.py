@@ -10,6 +10,7 @@
 
 from __future__ import division, print_function, absolute_import
 
+import os
 import tempfile
 
 import psutil
@@ -89,8 +90,10 @@ def check_if_running(pname='wadsworth', debug=False):
                                                                        each))
                                 running_pid = each
             else:
-                print("Stale PID %d found, PidFile manager will deal with it" %
-                      (pid[i]))
-#                remove_pid_file(pid[i])
+                print("Stale PID %d found. Removing it." % (pid[i]))
+                try:
+                    os.remove(pid[i])
+                except OSError:
+                    print("File %s was unremovable!" % (pid[i]))
 
     return running_pid

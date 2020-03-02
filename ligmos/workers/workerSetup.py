@@ -73,6 +73,8 @@ def toServeMan(procname, conffile, passfile, log,
 
     # Setup argument parsing *before* logging so help messages go to stdout
     #   NOTE: This function sets up the default values when given no args!
+    #
+    #   REMOVE SOON.
     #   Also check for kill/fratracide options so we can send SIGTERM to the
     #   other processes before trying to start a new one
     #   (which PidFile would block)
@@ -87,53 +89,55 @@ def toServeMan(procname, conffile, passfile, log,
     # Actually parse the things
     args = parser.parse_args()
 
-    pid = pids.check_if_running(pname=procname)
+    # Overly complicated nonsense, will be removed soon.
+    #   If we got in here, that means that PidFile's checks already worked
+    # pid = pids.check_if_running(pname=procname)
 
-    # Slightly ugly logic
-    if pid != -1:
-        if (args.fratricide is True) or (args.kill is True) or\
-           (args.kill9 is True):
-            if args.kill9 is False:
-                print("Sending SIGTERM to %d" % (pid))
-                try:
-                    os.kill(pid, signal.SIGTERM)
-                except Exception as err:
-                    print("Process not killed; why?")
-                    # Returning STDOUT and STDERR to the console/whatever
-                    common.nicerExit(err)
-            else:
-                try:
-                    os.kill(pid, signal.SIGKILL)
-                except Exception as err:
-                    print("Process not killed; why?")
-                    # Returning STDOUT and STDERR to the console/whatever
-                    common.nicerExit(err)
+    # # Slightly ugly logic
+    # if pid != -1:
+    #     if (args.fratricide is True) or (args.kill is True) or\
+    #        (args.kill9 is True):
+    #         if args.kill9 is False:
+    #             print("Sending SIGTERM to %d" % (pid))
+    #             try:
+    #                 os.kill(pid, signal.SIGTERM)
+    #             except Exception as err:
+    #                 print("Process not killed; why?")
+    #                 # Returning STDOUT and STDERR to the console/whatever
+    #                 common.nicerExit(err)
+    #         else:
+    #             try:
+    #                 os.kill(pid, signal.SIGKILL)
+    #             except Exception as err:
+    #                 print("Process not killed; why?")
+    #                 # Returning STDOUT and STDERR to the console/whatever
+    #                 common.nicerExit(err)
 
-            # If the SIGTERM took, then continue onwards. If we're killing,
-            #   then we quit immediately. If we're replacing, then continue.
-            if args.kill is True:
-                print("Sent SIGTERM to PID %d" % (pid))
-                # Returning STDOUT and STDERR to the console/whatever
-                common.nicerExit()
-            elif args.kill9 is True:
-                print("Sent SIGKILL to PID %d" % (pid))
-                # Returning STDOUT and STDERR to the console/whatever
-                common.nicerExit()
-            else:
-                print("LOOK AT ME I'M THE ALIEN COOK NOW")
-                print("%d sec. pause to allow the other process to exit." %
-                      (killSleep))
-                time.sleep(killSleep)
-        else:
-            # If we're not killing or replacing, just exit.
-            #   But return STDOUT and STDERR to be safe
-            common.nicerExit()
-    else:
-        if args.kill is True:
-            print("No %s process to kill!" % (procname))
-            print("Seach for it manually:")
-            print("ps -ef | grep -i '%s'" % (procname))
-            common.nicerExit()
+    #         # If the SIGTERM took, then continue onwards. If we're killing,
+    #         #   then we quit immediately. If we're replacing, then continue.
+    #         if args.kill is True:
+    #             print("Sent SIGTERM to PID %d" % (pid))
+    #             # Returning STDOUT and STDERR to the console/whatever
+    #             common.nicerExit()
+    #         elif args.kill9 is True:
+    #             print("Sent SIGKILL to PID %d" % (pid))
+    #             # Returning STDOUT and STDERR to the console/whatever
+    #             common.nicerExit()
+    #         else:
+    #             print("LOOK AT ME I'M THE ALIEN COOK NOW")
+    #             print("%d sec. pause to allow the other process to exit." %
+    #                   (killSleep))
+    #             time.sleep(killSleep)
+    #     else:
+    #         # If we're not killing or replacing, just exit.
+    #         #   But return STDOUT and STDERR to be safe
+    #         common.nicerExit()
+    # else:
+    #     if args.kill is True:
+    #         print("No %s process to kill!" % (procname))
+    #         print("Seach for it manually:")
+    #         print("ps -ef | grep -i '%s'" % (procname))
+    #         common.nicerExit()
 
     if logfile is True:
         # Setup logging (optional arguments shown for clarity)
