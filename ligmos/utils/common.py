@@ -281,6 +281,10 @@ def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
                     #  a timeout intended for the whole
                     #  instrument actionset or just itself
                     if estop is True or runner.halt is True:
+                        print("An emergency halt has been requested")
+                        print("estop:", estop)
+                        print("runner.halt", runner.halt)
+                        print("issuing 'break'")
                         break
                     else:
                         time.sleep(each.timedelay)
@@ -288,6 +292,7 @@ def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
             # Check to see if someone asked us to quit
             if runner.halt is True:
                 print("Quit inner instrument loop")
+                print("issuing 'break'")
                 break
             else:
                 # Time to sleep between instruments
