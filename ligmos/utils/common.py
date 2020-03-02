@@ -267,7 +267,8 @@ def instLooper(idict, runner, args, actions, updateArguments, baseYcmd,
 
                     # Perform the action
                     ans, estop = instAction(each, outertime=startt)
-                    print(ans)
+                    print("ans:", ans)
+                    print("estop:", estop)
 
                     # If it actually worked, close the connection
                     if eSSH is not None:
