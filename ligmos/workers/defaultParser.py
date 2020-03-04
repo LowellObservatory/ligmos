@@ -18,7 +18,7 @@ from __future__ import division, print_function, absolute_import
 import argparse as argp
 
 
-def parseArguments(conf=None, prog=None, passes=None, log=None, descr=None):
+def parseArguments(conf=None, passes=None, log=None, descr=None):
     """Setup command line arguments that everyone will use.
     """
     fclass = argp.ArgumentDefaultsHelpFormatter
@@ -29,8 +29,7 @@ def parseArguments(conf=None, prog=None, passes=None, log=None, descr=None):
         description = descr
 
     parser = argp.ArgumentParser(description=description,
-                                 formatter_class=fclass,
-                                 prog=prog)
+                                 formatter_class=fclass)
 
     if conf is None:
         parser.add_argument('-c', '--config', metavar='/path/to/file.conf',

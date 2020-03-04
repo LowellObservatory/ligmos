@@ -75,7 +75,7 @@ def toServeMan(conffile, passfile, log,
     #   ALSO NOTE: If you give a custom one, it needs (at a minimum):
     #       log, nlogs, config, passes
     parser = defaultParser.parseArguments(conf=conffile, passes=passfile,
-                                          prog=procname, log=log, descr=desc)
+                                          log=log, descr=desc)
 
     if extraargs is not None:
         parser = extraargs(parser)
