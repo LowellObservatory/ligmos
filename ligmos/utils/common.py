@@ -163,14 +163,13 @@ def nicerExit(err=None):
 
 def printPreamble(p, idict):
     # Helps to put context on when things are stopped/started/restarted
-    print("Current PID: %d" % (p.pid))
-    print("PID %d recorded at %s now starting..." % (p.pid, p.filename))
+    print("Current PID: %d" % (p))
 
     # Preamble/contextual messages before we really start
     print("Beginning to monitor the following hosts:")
     print("%s\n" % (' '.join(idict.keys())))
     print("Starting the infinite loop.")
-    print("Kill PID %d to stop it." % (p.pid))
+    print("Kill PID %d to stop it." % (p))
 
 
 def instAction(each, outertime=None):

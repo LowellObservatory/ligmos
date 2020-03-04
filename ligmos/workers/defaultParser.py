@@ -65,21 +65,6 @@ def parseArguments(conf=None, prog=None, passes=None, log=None, descr=None):
                             help='File for logging of messages',
                             default=log, nargs='?')
 
-    parser.add_argument('-k', '--kill', action='store_true',
-                        help='Kill an already running instance',
-                        default=False)
-
-    parser.add_argument('-k9', '--kill9', action='store_true',
-                        help='Kill -9 an already running instance',
-                        default=False)
-
-    # Note: Need to specify dest= here since there are multiple long options
-    #   (and I prefer the fun option name in the code)
-    lhtext = 'Kill another instance, then take its place'
-    parser.add_argument('-r', '--restart', '--fratricide', action='store_true',
-                        help=lhtext, dest='fratricide',
-                        default=False)
-
     parser.add_argument('-n', '--nlogs', type=int,
                         help='Number of previous logs to keep after rotation',
                         default=30, nargs=1)
