@@ -20,12 +20,8 @@ kill/restart the process.
 
 from __future__ import division, print_function, absolute_import
 
-import os
-import time
-import signal
-
 from . import defaultParser
-from ..utils import common, logs, pids, confparsers, classes
+from ..utils import common, logs, confparsers, classes
 
 
 def toServeMan(conffile, passfile, log,
@@ -61,11 +57,6 @@ def toServeMan(conffile, passfile, log,
             Class containing logic to catch ``SIGHUP``, ``SIGINT``, and
             ``SIGTERM``.  Note that ``SIGKILL`` is uncatchable.
     """
-    # Time to wait after a process is murdered before starting up again.
-    #   Might be over-precautionary, but it gives time for the previous process
-    #   to write whatever to the log and then close the file nicely.
-    killSleep = 30
-
     # Setup termination signals
     runner = common.HowtoStopNicely()
 
