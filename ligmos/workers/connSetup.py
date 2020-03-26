@@ -30,7 +30,7 @@ def connAMQ(comm, amqtopics, amqlistener=None):
 
         # Now check the properties of this object to see if it's something we
         #   actually regconize and then connect to
-        if cobj.type.startswith('activemq'):
+        if cobj.type.lower().startswith('activemq'):
             # We get brokerlistener back as a return just in case it was
             #   None initially, in which case amq.setupBroker would give one
             conn, amqlistener = amq.setupAMQBroker(cobj,
