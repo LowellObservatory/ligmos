@@ -91,13 +91,15 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
 class amqHelper():
     def __init__(self, default_host, topics=None,
                  user=None, passw=None, port=61613,
-                 baseid=8675309, connect=True, listener=None):
+                 baseid=8675309, connect=True, listener=None,
+                 stompver=None):
         self.host = default_host
         self.port = port
         self.topics = topics
         self.baseid = baseid
         self.user = user
         self.password = passw
+        self.stompver = stompver
 
         # Setting up a default endpoint so we at least always see the
         #   messages on the subscribed topics. If you want a silent
@@ -127,10 +129,20 @@ class amqHelper():
 
         try:
             print("Connecting to %s" % (self.host))
-            self.conn = stomp.Connection([(self.host, self.port)],
-                                         auto_decode=False,
-                                         heartbeats=(4000, 4000),
-                                         heart_beat_receive_scale=2.0)
+            if self.stompver == 10:
+                self.conn = stomp.Connection10([(self.host, self.port)],
+                                               auto_decode=False)
+            elif self.stompver == 11:
+                self.conn = stomp.Connection11([(self.host, self.port)],
+                                               auto_decode=False,
+                                               heartbeats=(4000, 4000),
+                                               heart_beat_receive_scale=2.0)
+            else:
+                self.conn = stomp.Connection([(self.host, self.port)],
+                                             auto_decode=False,
+                                             heartbeats=(4000, 4000),
+                                             heart_beat_receive_scale=2.0)
+
             # Note that self.conn is now type stomp.connect.StompConnectionXX
             #   where XX is either 10, 11, or 12 indicating STOMP version
             if listener is not None:
@@ -233,6 +245,18 @@ def setupAMQBroker(cblk, topics, listener=None):
     if listener is None:
         listener = ParrotSubscriber()
 
+    # Check to see if we have any specific ActiveMQ version hints
+    btype = cblk.type
+    bver = btype.strip().split("_")
+    if len(bver) > 1:
+        try:
+            bver = int(bver[-1])
+        except ValueError:
+            print("Unknown ActiveMQ/STOMP version hint!")
+            print("%s" % (btype))
+    else:
+        bver = None
+
     # Establish connections and subscriptions w/our helper
     # TODO: Figure out how to fold in broker passwords
     print("Connecting to %s" % (cblk.host))
@@ -242,7 +266,8 @@ def setupAMQBroker(cblk, topics, listener=None):
                      passw=cblk.password,
                      port=cblk.port,
                      connect=False,
-                     listener=listener)
+                     listener=listener,
+                     stompver=bver)
 
     return conn, listener
 
@@ -337,7 +362,7 @@ def getAllTopics(config, comm, queuerole=None):
             brokerTag = ''
             brokertype = ''
 
-        if brokertype.lower() == 'activemq':
+        if brokertype.lower().startswith('activemq'):
             # Gather up broker stuff
             try:
                 # First see if we have anything previously gathered, to make
