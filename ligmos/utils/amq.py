@@ -140,7 +140,15 @@ class amqHelper():
                 print("WARNING! No listener defined! Nothing will occur!")
 
             # For STOMP.py versions >= 4.1.20, .start() does nothing.
-            self.conn.start()
+            # First check what StompConnection type we have;
+            #   StompConnection11 has no start() method, for example,
+            #   and can still be found out in the wild (for NASA42)
+            try:
+                self.conn.start()
+            except AttributeError as e:
+                print(str(e))
+                print("Old broker version?")
+
             self.conn.connect()
             print("Connection established. Hooray!")
 
