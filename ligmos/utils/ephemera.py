@@ -99,8 +99,8 @@ class solarsystemAngles():
         """
         """
         self.sun.compute(self.site)
-        self.sun_alt = self.sun.alt
-        self.sun_dms = np.degrees(ephem.degrees(self.sun_alt))
+        self.sun_alt = np.degrees(self.sun.alt)
+        self.sun_dms = "%s" % self.sun.alt
         self.sunrise = self.sun.rise_time.datetime()
         self.nextsunrise = self.site.next_rising(self.sun).datetime()
         self.sunset = self.sun.set_time.datetime()
@@ -110,6 +110,6 @@ class solarsystemAngles():
         """
         """
         self.moon.compute(self.site)
-        self.moon_alt = self.moon.alt
-        self.moon_dms = np.degrees(ephem.degrees(self.moon_alt))
+        self.moon_alt = np.degrees(self.moon.alt)
+        self.moon_dms = "%s" % self.moon.alt
         self.moonphase = self.moon.moon_phase
