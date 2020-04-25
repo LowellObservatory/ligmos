@@ -302,7 +302,7 @@ def getResultsDataFrame(query, debug=False):
         #   doesn't barf due to missing methods, too.  Lil' bit hackish.
         print("Query returned no results!")
 
-        then = dt.datetime.strptime("1984-04-15T02:00", "%Y-%m-%dT%H:%M")
+        then = dt.datetime.strptime("1983-04-15T02:00", "%Y-%m-%dT%H:%M")
         then = then.replace(tzinfo=pytz.UTC)
 
         betterResults = pd.DataFrame()
