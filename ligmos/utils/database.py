@@ -247,6 +247,9 @@ def getResultsDataFrame(query, debug=False):
     """
     Attempts to distinguish queries that have results grouped by a tag
     vs. those which are just of multiple fields. May be buggy still.
+
+    Handles no exceptions; take care of them yourself at call time,
+    or submit pull requests to ligmos!
     """
     querystr = queryConstructor(query, debug=debug)
 
