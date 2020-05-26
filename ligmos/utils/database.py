@@ -268,6 +268,11 @@ def getResultsDataFrame(query, debug=False):
     # Get the names of the expected columns
     expectedCols = query.fieldlabels
 
+    # Quick fix for now; for single-value queries, the expectedCols
+    #   will get shredded into individual letters! Don't do that.
+    if isinstance(expectedCols, str):
+        expectedCols = [expectedCols]
+
     if results != {}:
         # If all went well, results.keys() should be the same as
         #   query.metricname; if I do this right I can hopefully
