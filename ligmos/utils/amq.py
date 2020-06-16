@@ -85,7 +85,7 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
             if self.dictify is True:
                 print(res)
             else:
-                print(body)
+                print(headers['timestamp'], body)
 
 
 class amqHelper():
