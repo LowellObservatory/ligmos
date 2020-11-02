@@ -429,9 +429,32 @@ def checkSchema(topicname):
         sf = pkgr.resource_filename('ligmos', sn)
         schema = xmls.XMLSchema(sf)
         return schema
-    except xmls.XMLSchemaURLError:
+    except xmls.exceptions.XMLSchemaException:
         print("Schema for topic %s not found!" % (topicname))
         return None
+
+
+def checkSample(topicname):
+    """
+    """
+    # Put together the expected schema name
+    sn = 'schemas/xmlsamples/' + topicname + '.xml'
+    try:
+        # Define the schema we'll use to convert datatypes. If it doesn't
+        #   exist, catch the exception and return 'None' to show that
+        #   the schema didn't exist where it was expected
+        sf = pkgr.resource_filename('ligmos', sn)
+        xmlstr = ""
+        with open(sf, 'r') as f:
+            xmlstr = f.readlines()
+
+        return xmlstr
+    except xmls.exceptions.XMLSchemaException:
+        print("Sample for topic %s not found!" % (topicname))
+        return ""
+    except (IOError, OSError) as err:
+        print("Sample for topic %s not found!" % (topicname))
+        return ""
 
 
 def schemaDicter():
