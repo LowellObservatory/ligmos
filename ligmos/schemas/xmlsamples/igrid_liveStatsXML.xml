@@ -1,0 +1,23 @@
+<attributes>
+<attribute id="chan1rms">487.7</attribute>
+<attribute id="chan1pctnom">101.6</attribute>
+<attribute id="chan2rms">481.3</attribute>
+<attribute id="chan2pctnom">100.3</attribute>
+<attribute id="chan3rms">482.8</attribute>
+<attribute id="chan3pctnom">100.6</attribute>
+<attribute id="frequency">60.0</attribute>
+<attribute id="eventDetectorState">Enabled</attribute>
+<attribute id="fllstats">100</attribute>
+<attribute id="battState">Idle</attribute>
+<attribute id="wallClockTime">11/02/20 21:27:06 GMT</attribute>
+<attribute id="lastSuccessfulIGridConnectTime">11/02/20 19:02:20 GMT</attribute>
+<attribute id="connectMethod">Ethernet</attribute>
+<attribute id="pppState">Not Connected</attribute>
+<attribute id="connectPhoneNumber"></attribute>
+<attribute id="lastCommResult">Success</attribute>
+<attribute id="connectDuration">0m 15s</attribute>
+<attribute id="connectBytes">8019 / 3080</attribute>
+<attribute id="modemConnectDetails">N.A</attribute>
+<attribute id="connectDetailsHeader">Previous Connection Details</attribute>
+<attribute id="connectStatus">SUCCESS</attribute>
+</attributes>
