@@ -491,8 +491,14 @@ def schemaDicter():
                         sdict.update({origtag: versionedSchema})
                 else:
                     sdict.update({origtag: schema})
-            except xmls.XMLSchemaURLError:
-                print("Schema for topic %s not found!" % (schname))
+            except xmls.exceptions.XMLSchemaException as err:
+                print("xmlschema error!")
+                print(str(err))
+                print("Schema for topic %s has been abandoned!" % (schname))
+            except xmls.etree.ParseError as err:
+                print("xmlschema error!")
+                print(str(err))
+                print("Schema for topic %s has been abandoned!" % (schname))
 
     return sdict
 
