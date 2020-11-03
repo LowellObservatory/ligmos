@@ -16,15 +16,8 @@ Further description.
 from __future__ import division, print_function, absolute_import
 
 import xmltodict as xmld
-import pkg_resources as pkgr
 
 from ligmos import utils
-
-
-def function1():
-    """
-    """
-    pass
 
 
 if __name__ == "__main__":
@@ -48,9 +41,26 @@ if __name__ == "__main__":
         # If we have a schema, try that too
         try:
             if schema is not None:
-                schemed = schema.to_dict(sample, decimal_type=float,
-                                         validation='lax')
-                print(schemed)
+                good = schema.is_valid(sample)
+                if good is True:
+                    xmlp = schema.to_dict(sample, decimal_type=float,
+                                          validation='lax')
+                    # I HATE THIS
+                    if isinstance(xmlp, tuple):
+                        xmlp = xmlp[0]
+
+                    # Back to normal.
+                    keys = xmlp.keys()
+
+                    fields = {}
+                    # Store each key:value pairing
+                    print("Storing keys")
+                    print(keys)
+                    for each in keys:
+                        val = xmlp[each]
+                        fields.update({each: val})
+                else:
+                    print("Failed validation against the schema!")
         except Exception as err:
             print(str(err))
 
