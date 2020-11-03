@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldtiSense>
+  <chan1rms>487.7</chan1rms>
+  <chan1pctnom>101.6</chan1pctnom>
+  <chan2rms>483.7</chan2rms>
+  <chan2pctnom>100.8</chan2pctnom>
+  <chan3rms>488.6</chan3rms>
+  <chan3pctnom>101.8</chan3pctnom>
+  <frequency>60.0</frequency>
+  <eventDetectorState>Enabled</eventDetectorState>
+  <fllstats>100</fllstats>
+  <battState>Idle</battState>
+  <wallClockTime>11/03/20 06:04:53 GMT</wallClockTime>
+  <lastSuccessfulIGridConnectTime>11/03/20 05:42:17 GMT</lastSuccessfulIGridConnectTime>
+  <connectMethod>Ethernet</connectMethod>
+  <pppState>Not Connected</pppState>
+  <connectPhoneNumber></connectPhoneNumber>
+  <lastCommResult>Success</lastCommResult>
+  <connectDuration>0m 17s</connectDuration>
+  <connectBytes>8020 / 3079</connectBytes>
+  <modemConnectDetails>N.A</modemConnectDetails>
+  <connectDetailsHeader>Previous Connection Details</connectDetailsHeader>
+  <connectStatus>SUCCESS</connectStatus>
+</ldtiSense>
