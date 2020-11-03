@@ -21,7 +21,7 @@ from ligmos import utils
 
 
 if __name__ == "__main__":
-    name = "igrid_liveStatsXML"
+    name = "lig.sitepower.isense"
 
     schema = utils.amq.checkSchema(name)
     sample = utils.amq.checkSample(name)
@@ -59,6 +59,8 @@ if __name__ == "__main__":
                     for each in keys:
                         val = xmlp[each]
                         fields.update({each: val})
+
+                    print(fields)
                 else:
                     print("Failed validation against the schema!")
         except Exception as err:

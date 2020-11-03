@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="ldtiSense">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="chan1rms" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="chan1pctnom" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="chan2rms" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="chan2pctnom" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="chan3rms" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="chan3pctnom" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="frequency" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="eventDetectorState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="fllstats" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="battState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="wallClockTime" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lastSuccessfulIGridConnectTime" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="connectMethod" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="pppState" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="connectPhoneNumber" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lastCommResult" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="connectDuration" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="connectBytes" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="modemConnectDetails" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="connectDetailsHeader" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="connectStatus" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
