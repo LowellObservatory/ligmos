@@ -429,8 +429,12 @@ def checkSchema(topicname):
         sf = pkgr.resource_filename('ligmos', sn)
         schema = xmls.XMLSchema(sf)
         return schema
-    except xmls.exceptions.XMLSchemaException:
-        print("Schema for topic %s not found!" % (topicname))
+    except xmls.exceptions.XMLSchemaException as err:
+        print("Problem with schema for topic %s!" % (topicname))
+        print(str(err))
+        return None
+    except OSError as err:
+        print("Schema %s not found!" % (sf))
         return None
 
 
@@ -446,7 +450,7 @@ def checkSample(topicname):
         sf = pkgr.resource_filename('ligmos', sn)
         xmlstr = ""
         with open(sf, 'r') as f:
-            xmlstr = f.readlines()
+            xmlstr = f.read()
 
         return xmlstr
     except xmls.exceptions.XMLSchemaException:
