@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="AndersonMesaWeather">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="mtSampTime" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="mtStartOfDay" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="mtTemp1" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtWindChill" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtHeatIndex" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtDewPoint" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtDegreeDay" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtDensityAltitude" minOccurs="0" type="xsd:dateTime"/>
+                <xsd:element name="mtAvgTempToday" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtWetBulbGlobeTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtSaturatedVaporPressure" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtVaporPressure" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtDryAirPressure" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtDryAirDensity" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtAbsoluteHumidity" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtAirDensityRatio" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mtAdjustedAltitude" minOccurs="0" type="xsd:dateTime"/>
+                <xsd:element name="mtSAECorrectionFactor" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtWetAirDensity" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtWetBulbTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRelHumidity" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mtWindSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRawWindDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mtAdjWindDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mt3SecRollAvgWindSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mt3SecRollAvgWindDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mt2MinRollAvgWindSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mt2MinRollAvgWindDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mt10MinRollAvgWindSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mt10MinRollAvgWindDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mt60MinWindGustDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mt60MinWindGustSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mt60MinWindGustTime" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="mt10MinWindGustDir" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="mt10MinWindGustSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mt10MinWindGustTime" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="mtRainToday" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRainThisWeek" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRainThisMonth" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRainThisYear" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRainRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRainLastHr" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtPrecipType" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtRawBaromPress" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="mtAdjBaromPress" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
