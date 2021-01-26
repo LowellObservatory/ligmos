@@ -1,0 +1,49 @@
+<AndersonMesaWeather>
+    <mtSampTime>2021/01/26 23:37:07</mtSampTime>
+    <mtTemp1>21.5</mtTemp1>
+    <mtWindChill>17.2</mtWindChill>
+    <mtHeatIndex>21.0</mtHeatIndex>
+    <mtDewPoint>17.4</mtDewPoint>
+    <mtDegreeDay>43.2</mtDegreeDay>
+    <mtDensityAltitude>6493</mtDensityAltitude>
+    <mtAvgTempToday>19.5</mtAvgTempToday>
+    <mtWetBulbGlobeTemp>35.5</mtWetBulbGlobeTemp>
+    <mtSaturatedVaporPressure>0.12</mtSaturatedVaporPressure>
+    <mtVaporPressure>0.10</mtVaporPressure>
+    <mtDryAirPressure>22.80</mtDryAirPressure>
+    <mtDryAirDensity>0.0629</mtDryAirDensity>
+    <mtAbsoluteHumidity>0.0002</mtAbsoluteHumidity>
+    <mtAirDensityRatio>1</mtAirDensityRatio>
+    <mtAdjustedAltitude>5820</mtAdjustedAltitude>
+    <mtSAECorrectionFactor>1.213699</mtSAECorrectionFactor>
+    <mtWetAirDensity>0.0630</mtWetAirDensity>
+    <mtWetBulbTemp>22.0</mtWetBulbTemp>
+    <mtRelHumidity>84</mtRelHumidity>
+    <mtWindSpeed>5.2</mtWindSpeed>
+    <mtRawWindDir>228</mtRawWindDir>
+    <mtAdjWindDir>228</mtAdjWindDir>
+    <mt3SecRollAvgWindSpeed>5.2</mt3SecRollAvgWindSpeed>
+    <mt3SecRollAvgWindDir>228</mt3SecRollAvgWindDir>
+    <mt2MinRollAvgWindSpeed>5.2</mt2MinRollAvgWindSpeed>
+    <mt2MinRollAvgWindDir>236</mt2MinRollAvgWindDir>
+    <mt10MinRollAvgWindSpeed>4.8</mt10MinRollAvgWindSpeed>
+    <mt10MinRollAvgWindDir>215</mt10MinRollAvgWindDir>
+    <mt60MinRollAvgWindSpeed>4.7</mt60MinRollAvgWindSpeed>
+    <mt60MinRollAvgWindDir>222</mt60MinRollAvgWindDir>
+    <mt60MinWindGustDir>288</mt60MinWindGustDir>
+    <mt60MinWindGustSpeed>15.2</mt60MinWindGustSpeed>
+    <mt60MinWindGustTime>2021/01/26 22:54:23</mt60MinWindGustTime>
+    <mt10MinWindGustDir>162</mt10MinWindGustDir>
+    <mt10MinWindGustSpeed>12.1</mt10MinWindGustSpeed>
+    <mt10MinWindGustTime>2021/01/26 23:33:15</mt10MinWindGustTime>
+    <mtRainToday>0.5356</mtRainToday>
+    <mtRainThisWeek>1.6532</mtRainThisWeek>
+    <mtRainThisMonth>2.7031</mtRainThisMonth>
+    <mtRainThisYear>2.7031</mtRainThisYear>
+    <mtRainRate>0.0047</mtRainRate>
+    <mtRainLastHr>0.0028</mtRainLastHr>
+    <mtPrecipType>70.000000</mtPrecipType>
+    <mtRawBaromPress>22.90</mtRawBaromPress>
+    <mtAdjBaromPress>30.14</mtAdjBaromPress>
+    <mtPressureTendency>1</mtPressureTendency>
+</AndersonMesaWeather>
