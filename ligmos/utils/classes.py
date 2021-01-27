@@ -140,6 +140,7 @@ class snoopTarget(baseTarget):
         self.topics = None
         self.database = None
         self.tablename = None
+        self.listenertype = None
 
 
 class dataTarget(baseTarget):
