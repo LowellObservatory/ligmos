@@ -54,9 +54,9 @@ def getDirListing(loc, window=2, oldest=7300, dirmask="[0-9]{8}.*",
         print(validdirs)
 
     # Make a list of dirs in which their parsed date < than param. window
-    if comptype is 'newer':
+    if comptype.lower() == 'newer':
         recentmod = [it for it in validdirs if dstuff.dateDiff(it) < window]
-    elif comptype is 'older':
+    elif comptype.lower() == 'older':
         recentmod = [it for it in validdirs if dstuff.dateDiff(it) >= window]
         # One final round of this to allow downselecting of files
         #   older than window but less than oldest
