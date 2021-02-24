@@ -136,7 +136,7 @@ def checkCommon(cfg):
     # Things that will trigger us
     #   We keep the delimiter separate from the tags because it's easier
     #   to assemble the returned dictionary that way!
-    commonTags = ['database-', 'broker-', 'queue-']
+    commonTags = ['database-', 'broker-', 'queue-', 'online-']
 
     # First get the list of all sections
     sects = cfg.keys()
@@ -146,6 +146,8 @@ def checkCommon(cfg):
             objtype = classes.baseTarget
         elif tag in ['queue-']:
             objtype = classes.brokerCommandingTarget
+        elif tag in ['online-']:
+            objtype = classes.onlineTarget
 
         # See if any start with our current tag, and if so, grab their names
         csecs = [s for s in sects if s.lower().startswith(tag)]
@@ -183,7 +185,6 @@ def checkEnabled(conf, enableKey='enabled'):
                 enset.update({sect: conf[sect]})
         except KeyError:
             pass
-
 
     return enset
 

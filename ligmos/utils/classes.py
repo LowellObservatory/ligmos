@@ -14,6 +14,19 @@
 from __future__ import division, print_function, absolute_import
 
 
+class onlineTarget(object):
+    """
+    Class to contain the info needed to push data/info to an online
+    service through some sort of API (like WeatherUnderground)
+    """
+    def __init__(self):
+        self.type = None
+        self.apiloc = None
+        self.id = None
+        self.key = None
+        self.apikey = None
+
+
 class snmpTarget(object):
     """
     """
@@ -89,6 +102,7 @@ class sneakyTarget(object):
         self.resourcemethod = None
         self.resourcelocation = None
         self.resourceport = None
+        self.onlinepush = None
         self.user = None
         self.password = None
         self.enabled = False
