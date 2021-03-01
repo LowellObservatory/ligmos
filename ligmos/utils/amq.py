@@ -314,12 +314,12 @@ def gatherTopics(iobj, queuerole=None):
         #   iobj.cmdtopic since it's a producer topic, and is where the
         #   commands will be coming in from.
         if queuerole is None:
-            print("ERROR! Must supply a queue role (master or slave)")
+            print("ERROR! Must supply a queue role (server or cilent)")
         else:
-            if queuerole.lower() == 'slave':
+            if queuerole.lower() == 'client':
                 if iobj.replytopic is not None:
                     topics.append(iobj.replytopic)
-            elif queuerole.lower() == 'master':
+            elif queuerole.lower() == 'server':
                 if iobj.cmdtopic is not None:
                     topics.append(iobj.cmdtopic)
 
