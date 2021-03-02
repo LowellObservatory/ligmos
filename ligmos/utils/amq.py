@@ -275,6 +275,34 @@ def setupAMQBroker(cblk, topics, listener=None):
     return conn, listener
 
 
+def checkSingleConnection(broker, subscribe=True):
+    """
+    This is intended to be inside of some loop structure.
+    It's primarily used for checking whether the connection to the ActiveMQ
+    broker is still valid, and, if it was killed (set to None) because the
+    heartbeat failed, attempt to both reconnect and resubscribe to the
+    topics.
+    """
+    connChecking = broker[0]
+    thisListener = broker[1]
+
+    if connChecking.conn is None:
+        print("No connection at all! Retrying...")
+        # The topics were already stuffed into the connChecking object,
+        #   but it's nice to remember that we're subscribing to them
+        connChecking.connect(listener=thisListener, subscribe=subscribe)
+    elif connChecking.conn.transport.connected is False:
+        print("Connection died! Reestablishing...")
+        connChecking.connect(listener=thisListener, subscribe=subscribe)
+    else:
+        print("Connection still valid")
+
+    # Make sure we save any connection changes and give it back
+    broker = [connChecking, thisListener]
+
+    return broker
+
+
 def checkConnections(amqbrokers, subscribe=True):
     """
     This is intended to be inside of some loop structure.

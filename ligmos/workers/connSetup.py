@@ -17,10 +17,35 @@ from ..utils import amq
 from ..utils import database
 
 
+def connAMQ_simple(comm, topics, listener=None):
+    """
+    Set up the actual connections, which we'll then give back to the actual
+    objects for them to do stuff with afterwards.
+    """
+    # Now check the properties of this object to see if it's something we
+    #   actually regconize and then connect to
+    if comm.type.lower().startswith('activemq'):
+        # We get brokerlistener back as a return just in case it was
+        #   None initially, in which case amq.setupBroker would give one
+        conn, amqlistener = amq.setupAMQBroker(comm, topics, listener=listener)
+
+        # Store this so we can check/use it later
+        bkr = [conn, amqlistener]
+    else:
+        # No other types are defined yet
+        bkr = None
+
+    return bkr
+
+
 def connAMQ(comm, amqtopics, amqlistener=None):
     """
     Set up the actual connections, which we'll then give back to the actual
     objects for them to do stuff with afterwards.
+
+    Assumes that you're subscribing to many topics specified in
+    different configuration sections in comm; if that's not the case, use
+    connAMQ_simple() instead!
     """
     amqbrokers = {}
 
