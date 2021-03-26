@@ -86,6 +86,7 @@ class Webcam(object):
         self.auth = None
         self.odir = None
         self.oname = None
+        self.thumbsize = (400, 200)
         self.user = None
         self.password = None
         self.enabled = False

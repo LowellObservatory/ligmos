@@ -14,6 +14,7 @@ import re
 import glob
 import fnmatch
 
+from shutil import rmtree
 from os import walk, statvfs, remove, makedirs, listdir
 from os.path import basename, exists, expanduser, join, isdir
 
@@ -218,6 +219,21 @@ def deleteOldFiles(fdict):
               (key, fdict[key]/60./60.))
         try:
             remove(key)
+        except OSError as err:
+            # At least see what the issue was
+            print(str(err))
+
+
+def deleteOldDirectories(fdict):
+    """
+    fdict should be a dictionary whose key is the filename and the
+    value is that filename's determined age (in seconds)
+    """
+    for key in fdict:
+        print("Deleting %s since it's too old (%.3f hr)" %
+              (key, fdict[key]/60./60.))
+        try:
+            rmtree(key)
         except OSError as err:
             # At least see what the issue was
             print(str(err))
