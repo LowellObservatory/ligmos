@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MHClark_BaseStation>
+    <ts>1618435105000</ts>
+    <timestampdt>2021-04-14 14:18:25-07:00</timestampdt>
+    <temp>19.7</temp>
+    <hum>21.0</hum>
+    <dew>-3.2</dew>
+    <press>774.8</press>
+    <seapress>1004.7</seapress>
+    <fc>0.0</fc>
+    <lowbat>0.0</lowbat>
+</MHClark_BaseStation>

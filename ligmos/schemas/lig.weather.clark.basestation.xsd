@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="MHClark_BaseStation">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="ts" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="timestampdt" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="temp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="hum" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="dew" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="press" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="seapress" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="fc" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="lowbat" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
