@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MHClark_OutdoorStation>
-    <influx_ts>1618435089000</influx_ts>
+    <influx_ts_s>1618435089</influx_ts_s>
     <timestampdt>2021-04-14 14:18:09-07:00</timestampdt>
     <temp>13.9</temp>
     <hum>21.0</hum>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MHClark_RainGauge>
-    <influx_ts>1618435085000</influx_ts>
+    <influx_ts_s>1618435085</influx_ts_s>
     <timestampdt>2021-04-14 14:18:05-07:00</timestampdt>
     <rate>0.0</rate>
     <total>177.0</total>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MHClark_BaseStation>
-    <influx_ts>1618435105000</influx_ts>
+    <influx_ts_s>1618435105</influx_ts_s>
     <timestampdt>2021-04-14 14:18:25-07:00</timestampdt>
     <temp>19.7</temp>
     <hum>21.0</hum>
