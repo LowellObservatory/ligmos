@@ -100,6 +100,7 @@ class sneakyTarget(object):
         self.name = None
         self.broker = None
         self.pubtopic = None
+        self.devicetype = None
         self.resourcemethod = None
         self.resourcelocation = None
         self.resourceport = None
