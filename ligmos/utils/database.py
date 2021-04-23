@@ -107,6 +107,9 @@ class influxobj():
                     else:
                         res = self.client.write_points(vals, database=table,
                                                        time_precision=timeprec)
+
+                    # Clear the alarm if we made it through this far
+                    influxPostTimeout.clearAlarm()
                 except InfluxDBClientError as err:
                     if err.code == 403:
                         print("Authentication error! %s" % (err.content))
