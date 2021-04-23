@@ -98,7 +98,7 @@ class influxobj():
                 influxPostTimeout = alarms.alarming()
                 influxPostTimeout.setAlarm(timeout=10)
                 if debug is True:
-                    print("Trying to write_points")
+                    print("Trying to write_points...")
 
                 try:
                     if table is None:
@@ -109,6 +109,7 @@ class influxobj():
                                                        time_precision=timeprec)
 
                     # Clear the alarm if we made it through this far
+                    print("Success!")
                     influxPostTimeout.clearAlarm()
                 except InfluxDBClientError as err:
                     if err.code == 403:
