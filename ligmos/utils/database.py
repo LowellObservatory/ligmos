@@ -95,8 +95,8 @@ class influxobj():
         if self.client is not None:
             res = False
             try:
-                influxPostTimeout = alarms.alarming()
-                influxPostTimeout.setAlarm(timeout=10)
+                # influxPostTimeout = alarms.alarming()
+                # influxPostTimeout.setAlarm(timeout=10)
                 if debug is True:
                     print("Trying to write_points...")
 
@@ -110,7 +110,7 @@ class influxobj():
 
                     # Clear the alarm if we made it through this far
                     print("Success!")
-                    influxPostTimeout.clearAlarm()
+                    # influxPostTimeout.clearAlarm()
                 except InfluxDBClientError as err:
                     if err.code == 403:
                         print("Authentication error! %s" % (err.content))
@@ -145,7 +145,7 @@ class influxobj():
                     print("Unparsable error condition from Influx :(")
             except TimeoutError as err:
                 print("InfluxDB post timed out!")
-                influxPostTimeout.clearAlarm()
+                # influxPostTimeout.clearAlarm()
 
             if res is False:
                 print("INFLUXDB ERROR. Check above for more details :(")
