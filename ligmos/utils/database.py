@@ -27,6 +27,8 @@ try:
 except (ImportError, ModuleNotFoundError) as err:
     influxdb = None
 
+from . import alarms
+
 
 class influxobj():
     """
@@ -58,7 +60,7 @@ class influxobj():
 
         Now it's just a noop, basically
         """
-        pass
+        print("alterRetention is DEPRECIATED!  Doing nothing.")
 
     def openDB(self):
         """
@@ -68,8 +70,11 @@ class influxobj():
                 self.client = InfluxDBClient(self.host, self.port,
                                              username=self.username,
                                              password=self.password,
-                                             database=self.tablename)
+                                             database=self.tablename,
+                                             timeout=5.)
             except Exception as err:
+                # TODO: Catch the right exceptions here.  Probably timeout
+                #   and one other (OSError?)
                 self.client = None
                 print("Could not open database %s:\n%s" % (self.tablename,
                                                            str(err)))
@@ -90,6 +95,8 @@ class influxobj():
         if self.client is not None:
             res = False
             try:
+                influxPostTimeout = alarms.alarming()
+                influxPostTimeout.setAlarm(timeout=10)
                 if debug is True:
                     print("Trying to write_points")
 
@@ -125,10 +132,17 @@ class influxobj():
                     print(econd['error'])
                     print(vals)
                 except Exception as errp:
+                    # TODO: Catch the right exception here. I honestly forget
+                    #   the logic/intent, for future subdividing down into
+                    #   other errors?  Might be able to ditch this.
                     print(str(err))
                     print(str(errp))
                     print(vals)
                     print("Unparsable error condition from Influx :(")
+            except TimeoutError as err:
+                print("InfluxDB post timed out!")
+                influxPostTimeout.clearAlarm()
+
             if res is False:
                 print("INFLUXDB ERROR. Check above for more details :(")
         else:
