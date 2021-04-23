@@ -120,6 +120,8 @@ class alarming(object):
 
         .. seealso:: :func:`setAlarm`
         """
+        if handler is None:
+            handler = raiseTimeout
         setAlarm(handler=handler, timeout=timeout, debug=debug)
 
     def clearAlarm(self):
