@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:element name="MHClark_BaseStation">
+    <xsd:element name="MHClarkWeather_BaseStation">
         <xsd:complexType mixed="true">
             <xsd:sequence>
                 <xsd:element name="influx_ts_s" minOccurs="0" type="xsd:long"/>

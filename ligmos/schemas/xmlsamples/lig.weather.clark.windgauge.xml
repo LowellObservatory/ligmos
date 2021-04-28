@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MHClark_WindGauge>
+<MHClarkWeather_WindGauge>
     <influx_ts_s>1618435113</influx_ts_s>
     <timestampdt>2021-04-14 14:18:33-07:00</timestampdt>
     <dir>205.0</dir>
@@ -7,4 +7,4 @@
     <wind>6.7</wind>
     <chill>12.0</chill>
     <lowbat>0.0</lowbat>
-</MHClark_WindGauge>
+</MHClarkWeather_WindGauge>

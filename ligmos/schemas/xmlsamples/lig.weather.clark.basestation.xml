@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MHClark_BaseStation>
+<MHClarkWeather_BaseStation>
     <influx_ts_s>1618435105</influx_ts_s>
     <timestampdt>2021-04-14 14:18:25-07:00</timestampdt>
     <temp>19.7</temp>
@@ -9,4 +9,4 @@
     <seapress>1004.7</seapress>
     <fc>0.0</fc>
     <lowbat>0.0</lowbat>
-</MHClark_BaseStation>
+</MHClarkWeather_BaseStation>

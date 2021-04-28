@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BoltwoodCloudSensorII>
-	<datetime>2021-04-27 23:16:23.460000+00:00</datetime>
+	<datetime>2021-04-28T14:56:22.860000</datetime>
+	<influx_ts_s>1619621782.86</influx_ts_s>
 	<tempUnits>Celsius</tempUnits>
 	<windUnits>km/hr</windUnits>
-	<skyTemp>-18.0</skyTemp>
-	<ambientTemp>8.8</ambientTemp>
-	<enclosureTemp>20.8</enclosureTemp>
-	<windSpeed>3.1</windSpeed>
-	<relativeHumidity>53.0</relativeHumidity>
-	<dewpoint>-0.3</dewpoint>
+	<skyTemp>-24.9</skyTemp>
+	<ambientTemp>19.6</ambientTemp>
+	<enclosureTemp>29.3</enclosureTemp>
+	<windSpeed>4.1</windSpeed>
+	<relativeHumidity>29.0</relativeHumidity>
+	<dewpoint>1.0</dewpoint>
 	<heaterPercentage>0.0</heaterPercentage>
 	<rainFlag>dry</rainFlag>
 	<moistureFlag>dry</moistureFlag>
