@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="BoltwoodCloudSensorII">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="datetime" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="tempUnits" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="windUnits" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="skyTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="ambientTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="enclosureTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="windSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="relativeHumidity" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="dewpoint" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="heaterPercentage" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="rainFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="moistureFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="secondsSinceRead" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="cloudFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="windFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lightFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="closureSuggestion" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
