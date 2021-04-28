@@ -4,6 +4,7 @@
         <xsd:complexType mixed="true">
             <xsd:sequence>
                 <xsd:element name="datetime" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="influx_ts_s" minOccurs="0" type="xsd:long"/>
                 <xsd:element name="tempUnits" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="windUnits" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="skyTemp" minOccurs="0" type="xsd:decimal"/>
