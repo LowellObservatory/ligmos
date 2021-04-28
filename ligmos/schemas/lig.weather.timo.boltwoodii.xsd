@@ -3,7 +3,7 @@
     <xsd:element name="BoltwoodCloudSensorII">
         <xsd:complexType mixed="true">
             <xsd:sequence>
-                <xsd:element name="datetime" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="timestampdt" minOccurs="0" type="xsd:string"/>
                 <xsd:element name="influx_ts_ms" minOccurs="0" type="xsd:long"/>
                 <xsd:element name="tempUnits" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="windUnits" minOccurs="0" type="xsd:normalizedString"/>
