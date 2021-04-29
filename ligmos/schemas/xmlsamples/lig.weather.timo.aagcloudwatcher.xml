@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AAGCloudWatcher>
+	<timestampdt>2021-04-27 16:16:10-07:00</timestampdt>
+	<influx_ts_s>1619565370</influx_ts_s>
+	<CloudCondition>Clear</CloudCondition>
+	<RainCondition>Dry</RainCondition>
+	<BrightnessCondition>VeryLight</BrightnessCondition>
+	<CloudValue>6.0</CloudValue>
+	<CloudSensorTemperature>46.9</CloudSensorTemperature>
+	<RainValue>4608.0</RainValue>
+	<BrightnessValue>2.0</BrightnessValue>
+	<AmbientTemperature>46.9</AmbientTemperature>
+	<RainHeatingPercentage>10.0</RainHeatingPercentage>
+	<RainSensorTemperature>55.4</RainSensorTemperature>
+	<SwitchStatus>Opened</SwitchStatus>
+	<ReadCycle>2.606</ReadCycle>
+	<TimeoutErrors>0.0</TimeoutErrors>
+	<SafeStatus>Safe</SafeStatus>
+	<WindCondition>Calm</WindCondition>
+	<WindValue>0.0</WindValue>
+</AAGCloudWatcher>

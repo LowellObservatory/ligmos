@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="AAGCloudWatcher">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="timestampdt" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="influx_ts_s" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="CloudCondition" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="RainCondition" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="BrightnessCondition" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="CloudValue" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="CloudSensorTemperature" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="RainValue" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="BrightnessValue" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="AmbientTemperature" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="RainHeatingPercentage" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="RainSensorTemperature" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="SwitchStatus" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="ReadCycle" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="TimeoutErrors" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="SafeStatus" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="WindCondition" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="WindValue" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
