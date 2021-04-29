@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BoltwoodCloudSensorII>
-	<timestampdt>2021-04-28 15:10:23.810000</dattimestampdtetime>
-	<influx_ts_ms>1619622623810</influx_ts_ms>
+	<timestampdt>2021-04-27 16:16:23.460000-07:00</timestampdt>
+	<influx_ts_ms>1619565383460</influx_ts_ms>
 	<tempUnits>Celsius</tempUnits>
 	<windUnits>km/hr</windUnits>
-	<skyTemp>-33.6</skyTemp>
-	<ambientTemp>19.1</ambientTemp>
-	<enclosureTemp>28.9</enclosureTemp>
-	<windSpeed>4.3</windSpeed>
-	<relativeHumidity>28.0</relativeHumidity>
-	<dewpoint>0.4</dewpoint>
+	<relSkyTemp>-18.0</relSkyTemp>
+	<skyTemp>-9.2</skyTemp>
+	<ambientTemp>8.8</ambientTemp>
+	<enclosureTemp>20.8</enclosureTemp>
+	<windSpeed>3.1</windSpeed>
+	<relativeHumidity>53.0</relativeHumidity>
+	<dewpoint>-0.3</dewpoint>
 	<heaterPercentage>0.0</heaterPercentage>
+	<rainFlagRaw>1</rainFlagRaw>
 	<rainFlag>dry</rainFlag>
+	<moistureFlagRaw>0</moistureFlagRaw>
 	<moistureFlag>dry</moistureFlag>
 	<secondsSinceRead>2</secondsSinceRead>
-	<cloudFlag>clear</cloudFlag>
+	<cloudFlagRaw>2</cloudFlagRaw>
+	<cloudFlag>cloudy</cloudFlag>
+	<windFlagRaw>1</windFlagRaw>
 	<windFlag>calm</windFlag>
+	<lightFlagRaw>3</lightFlagRaw>
 	<lightFlag>verylight</lightFlag>
+	<closureFlagRaw>1</closureFlagRaw>
 	<closureSuggestion>close</closureSuggestion>
 </BoltwoodCloudSensorII>

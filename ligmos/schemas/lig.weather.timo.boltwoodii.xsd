@@ -7,6 +7,7 @@
                 <xsd:element name="influx_ts_ms" minOccurs="0" type="xsd:long"/>
                 <xsd:element name="tempUnits" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="windUnits" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="relSkyTemp" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="skyTemp" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="ambientTemp" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="enclosureTemp" minOccurs="0" type="xsd:decimal"/>
@@ -14,12 +15,18 @@
                 <xsd:element name="relativeHumidity" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="dewpoint" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="heaterPercentage" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="rainFlagRaw" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="rainFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="moistureFlagRaw" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="moistureFlag" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="secondsSinceRead" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="cloudFlagRaw" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="cloudFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="windFlagRaw" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="windFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lightFlagRaw" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="lightFlag" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="closureFlagRaw" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="closureSuggestion" minOccurs="0" type="xsd:normalizedString"/>
             </xsd:sequence>
         </xsd:complexType>
