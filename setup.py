@@ -130,7 +130,7 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=['psutil',
-                      'numpy',
+                      'numpy>=1.20',
                       'influxdb',
                       'xxhash',
                       'serviceping',
@@ -138,7 +138,8 @@ setup(
                       'xmltodict',
                       'stomp.py',
                       'xmlschema',
-                      'pandas'],
+                      'pandas',
+                      'pyserial'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
