@@ -140,6 +140,7 @@ class baseTarget(object):
         self.port = 22
         self.type = None
         self.user = None
+        self.protocol = None
         self.password = None
         self.enabled = False
 

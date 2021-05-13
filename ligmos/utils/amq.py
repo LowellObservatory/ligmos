@@ -92,14 +92,14 @@ class amqHelper():
     def __init__(self, default_host, topics=None,
                  user=None, passw=None, port=61613,
                  baseid=8675309, connect=True, listener=None,
-                 stompver=None):
+                 protocol=None):
         self.host = default_host
         self.port = port
         self.topics = topics
         self.baseid = baseid
         self.user = user
         self.password = passw
-        self.stompver = stompver
+        self.protocol = protocol
 
         # Setting up a default endpoint so we at least always see the
         #   messages on the subscribed topics. If you want a silent
@@ -129,10 +129,10 @@ class amqHelper():
 
         try:
             print("Connecting to %s" % (self.host))
-            if self.stompver == 10:
+            if self.protocol.lower() == 'stomp10':
                 self.conn = stomp.Connection10([(self.host, self.port)],
                                                auto_decode=False)
-            elif self.stompver == 11:
+            elif self.protocol.lower() == 'stomp11':
                 self.conn = stomp.Connection11([(self.host, self.port)],
                                                auto_decode=False,
                                                heartbeats=(4000, 4000),
