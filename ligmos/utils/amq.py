@@ -270,6 +270,10 @@ def setupAMQBroker(cblk, topics, listener=None):
                 print("%s" % (btype))
         else:
             bver = None
+    else:
+        # Assume whatever was in the common block was what we wanted
+        #   This should all be cleaned up, someday...
+        bver = cblk.protocol
 
     # Establish connections and subscriptions w/our helper
     # TODO: Figure out how to fold in broker passwords
