@@ -258,6 +258,13 @@ def setupAMQBroker(cblk, topics, listener=None):
         if len(bver) > 1:
             try:
                 bver = int(bver[-1])
+                if bver == 10:
+                    bver = 'stomp10'
+                elif bver == 11:
+                    bver = 'stomp11'
+                else:
+                    print("Unknown version! %d" % (bver))
+                    bver = None
             except ValueError:
                 print("Unknown ActiveMQ/STOMP version hint!")
                 print("%s" % (btype))
