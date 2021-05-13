@@ -249,6 +249,8 @@ def setupAMQBroker(cblk, topics, listener=None):
         listener = ParrotSubscriber()
 
     # Check to see if we have any specific ActiveMQ version hints
+    #   NOTE: I forgot I did this, but it's handled better by the
+    #         'protocol' config option added to the baseTarget class
     btype = cblk.type
     bver = btype.strip().split("_")
     if len(bver) > 1:
@@ -270,7 +272,7 @@ def setupAMQBroker(cblk, topics, listener=None):
                      port=cblk.port,
                      connect=False,
                      listener=listener,
-                     stompver=bver)
+                     protocol=bver)
 
     return conn, listener
 
