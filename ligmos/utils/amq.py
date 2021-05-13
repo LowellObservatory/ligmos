@@ -252,15 +252,17 @@ def setupAMQBroker(cblk, topics, listener=None):
     #   NOTE: I forgot I did this, but it's handled better by the
     #         'protocol' config option added to the baseTarget class
     btype = cblk.type
-    bver = btype.strip().split("_")
-    if len(bver) > 1:
-        try:
-            bver = int(bver[-1])
-        except ValueError:
-            print("Unknown ActiveMQ/STOMP version hint!")
-            print("%s" % (btype))
-    else:
-        bver = None
+    if cblk.protocol is None:
+        # Check for this old hint
+        bver = btype.strip().split("_")
+        if len(bver) > 1:
+            try:
+                bver = int(bver[-1])
+            except ValueError:
+                print("Unknown ActiveMQ/STOMP version hint!")
+                print("%s" % (btype))
+        else:
+            bver = None
 
     # Establish connections and subscriptions w/our helper
     # TODO: Figure out how to fold in broker passwords
