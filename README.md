@@ -3,8 +3,6 @@
 You'll definitely need:
 - python 3.6 or greater.
 
-Yes, really.  Python3.5 will fail because of the serviceping dependency!  Tough.
-
 You'll also probably need:
 - libffi-dev
 - libssl-dev
