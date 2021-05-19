@@ -17,11 +17,11 @@
                 <xsd:element name="speed" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="deinterlace" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="atod" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="pix-time" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="exp-time" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="dark-time" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="pix-time" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="exp-time" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="dark-time" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="exp-multi" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="exp-timeusecs" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="exp-timeusecs" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="num-exp" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="row" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="col" minOccurs="0" type="xsd:int"/>
@@ -54,20 +54,20 @@
                 <xsd:element name="object" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="comment1" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="comment2" minOccurs="0" type="xsd:normalizedString"/>
-                <xsd:element name="start-time" minOccurs="0" type="xsd:time"/>
-                <xsd:element name="end-time" minOccurs="0" type="xsd:time"/>
-                <xsd:element name="ut-date" minOccurs="0" type="xsd:date"/>
-                <xsd:element name="lst-obs" minOccurs="0" type="xsd:time"/>
+                <xsd:element name="start-time" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="end-time" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="ut-date" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lst-obs" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="cam-identity" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="amplifier" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="cam-file" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="camtemp" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="coldhead" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="settemp" minOccurs="0" type="xsd:decimal"/>
-                <xsd:element name="pix-size" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="pix-size" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="pix-scale" minOccurs="0" type="xsd:decimal"/>
-                <xsd:element name="rowtime" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="idlefrac" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="rowtime" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="idlefrac" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="exp-num" minOccurs="0" type="xsd:int"/>
             </xsd:sequence>
         </xsd:complexType>
