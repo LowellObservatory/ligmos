@@ -27,8 +27,8 @@
                 <xsd:element name="dome-flat" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="frameno" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="dashnum" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="disk-total" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="disk-avail" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="disk-total" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="disk-avail" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="lois-tclcmd" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="lois-tclresults" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="loui-broker" minOccurs="0" type="xsd:normalizedString"/>
