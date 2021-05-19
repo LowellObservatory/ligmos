@@ -9,7 +9,7 @@
                 <xsd:element name="altitude" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="longitude" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="latitude" minOccurs="0" type="xsd:decimal"/>
-                <xsd:element name="scale" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="scale" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="ra" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="obsra" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="ra-rate" minOccurs="0" type="xsd:decimal"/>
