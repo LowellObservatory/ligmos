@@ -12,7 +12,7 @@
                 <xsd:element name="instmod" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="dispmod" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="path" minOccurs="0" type="xsd:normalizedString"/>
-                <xsd:element name="filename" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="filename" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="analysison" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="fitson" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="telext" minOccurs="0" type="xsd:int"/>

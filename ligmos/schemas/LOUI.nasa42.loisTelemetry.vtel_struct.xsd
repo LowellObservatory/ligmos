@@ -16,8 +16,8 @@
                 <xsd:element name="ra-slew" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="dec" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="obsdec" minOccurs="0" type="xsd:normalizedString"/>
-                <xsd:element name="dec-rate" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="dec-slew" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="dec-rate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="dec-slew" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="telobj" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="lst" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="ha" minOccurs="0" type="xsd:normalizedString"/>
