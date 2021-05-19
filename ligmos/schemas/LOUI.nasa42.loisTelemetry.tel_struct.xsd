@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="tel_struct">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="tel-id" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="telname" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="observatory" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="altitude" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="longitude" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="latitude" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="scale" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ra" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="obsra" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="ra-rate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="ra-slew" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="dec" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="obsdec" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="dec-rate" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="dec-slew" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="telobj" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lst" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="ha" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="epoch" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="date" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="zd" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="ut" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="airmass" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="dome" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="domestat" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="focus" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="filtpos" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="lock-mode" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="tracking" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="rotangle" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

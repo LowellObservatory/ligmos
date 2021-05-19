@@ -1,0 +1,32 @@
+<tel_struct>
+    <tel-id>0</tel-id>
+    <telname>hall</telname>
+    <observatory>Lowell Observatory</observatory>
+    <altitude>2206m</altitude>
+    <longitude>-111.53553</longitude>
+    <latitude>35.09675</latitude>
+    <scale>2458</scale>
+    <ra>07:20:40.0</ra>
+    <obsra></obsra>
+    <ra-rate>0</ra-rate>
+    <ra-slew>0</ra-slew>
+    <dec>+69:36:30</dec>
+    <obsdec></obsdec>
+    <dec-rate>0</dec-rate>
+    <dec-slew>0</dec-slew>
+    <telobj></telobj>
+    <lst>11:23:30</lst>
+    <ha>04:02:50</ha>
+    <epoch>2000.00</epoch>
+    <date>05/14/21</date>
+    <zd>  0</zd>
+    <ut> 03:21:15</ut>
+    <airmass>1.47</airmass>
+    <dome>000 </dome>
+    <domestat>0</domestat>
+    <focus>-14460</focus>
+    <filtpos>2</filtpos>
+    <lock-mode></lock-mode>
+    <tracking>0</tracking>
+    <rotangle></rotangle>
+</tel_struct>

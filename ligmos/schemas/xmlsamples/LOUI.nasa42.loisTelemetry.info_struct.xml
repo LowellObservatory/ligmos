@@ -1,0 +1,36 @@
+<info_struct>
+    <observers>TPolakis</observers>
+    <obsaffil>Lowell Observatory</obsaffil>
+    <loisvers>5.0.RC1</loisvers>
+    <ccdmod>nasa42</ccdmod>
+    <irmod>none</irmod>
+    <telmod>hall</telmod>
+    <instmod>none</instmod>
+    <dispmod>xpa</dispmod>
+    <path>/hall/data42/20210514</path>
+    <filename>20210514</filename>
+    <analysison>1</analysison>
+    <fitson>1</fitson>
+    <telext>0</telext>
+    <ccdext>0</ccdext>
+    <instext>0</instext>
+    <telew>0</telew>
+    <imageno>51</imageno>
+    <split-num>1</split-num>
+    <store>1</store>
+    <test>0</test>
+    <focus>0</focus>
+    <dome-flat>1</dome-flat>
+    <frameno>0</frameno>
+    <dashnum>0</dashnum>
+    <disk-total>197012528</disk-total>
+    <disk-avail>86000448</disk-avail>
+    <lois-tclcmd>gettemp</lois-tclcmd>
+    <lois-tclresults></lois-tclresults>
+    <loui-broker>tcp://localhost:61616?wireFormat=openwire&amp;transport.useAsyncSend=true</loui-broker>
+    <sysname>SunOS</sysname>
+    <nodename>nasa42</nodename>
+    <release>5.10</release>
+    <version>Generic_118833-36</version>
+    <machine>sun4u</machine>
+</info_struct>

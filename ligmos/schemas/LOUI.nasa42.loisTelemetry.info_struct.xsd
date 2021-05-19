@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="info_struct">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="observers" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="obsaffil" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="loisvers" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="ccdmod" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="irmod" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="telmod" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="instmod" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="dispmod" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="path" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="filename" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="analysison" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="fitson" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="telext" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ccdext" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="instext" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="telew" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="imageno" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="split-num" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="store" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="test" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="focus" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="dome-flat" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="frameno" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="dashnum" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="disk-total" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="disk-avail" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="lois-tclcmd" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="lois-tclresults" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="loui-broker" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="sysname" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="nodename" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="release" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="version" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="machine" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
