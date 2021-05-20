@@ -32,7 +32,7 @@
                 <xsd:element name="filtpos" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="lock-mode" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="tracking" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="rotangle" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="rotangle" minOccurs="0" type="xsd:normalizedString"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
