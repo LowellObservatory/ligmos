@@ -26,7 +26,7 @@
                 <xsd:element name="zd" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="ut" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="airmass" minOccurs="0" type="xsd:decimal"/>
-                <xsd:element name="dome" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="dome" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="domestat" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="focus" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="filtpos" minOccurs="0" type="xsd:int"/>
