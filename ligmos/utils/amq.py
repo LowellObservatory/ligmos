@@ -130,7 +130,7 @@ class amqHelper():
         try:
             print("Connecting to %s" % (self.host))
             if self.protocol is None:
-                self.protocol='stompLatest'
+                self.protocol = 'stompLatest'
 
             if self.protocol.lower() == 'stomp10':
                 self.conn = stomp.Connection10([(self.host, self.port)],
