@@ -135,13 +135,13 @@ class amqHelper():
             elif self.protocol.lower() == 'stomp11':
                 self.conn = stomp.Connection11([(self.host, self.port)],
                                                auto_decode=False,
-                                               heartbeats=(4000, 4000),
-                                               heart_beat_receive_scale=2.0)
+                                               heartbeats=(10000, 10000),
+                                               heart_beat_receive_scale=3.0)
             else:
                 self.conn = stomp.Connection([(self.host, self.port)],
                                              auto_decode=False,
-                                             heartbeats=(4000, 4000),
-                                             heart_beat_receive_scale=2.0)
+                                             heartbeats=(10000, 10000),
+                                             heart_beat_receive_scale=3.0)
 
             # Note that self.conn is now type stomp.connect.StompConnectionXX
             #   where XX is either 10, 11, or 12 indicating STOMP version
