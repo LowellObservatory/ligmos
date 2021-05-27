@@ -21,10 +21,11 @@ from ligmos import utils
 
 
 if __name__ == "__main__":
-    name = "lig.sitepower.isense"
+    name = "LOUI.nasa42.loisTelemetry"
 
     schema = utils.amq.checkSchema(name)
-    sample = utils.amq.checkSample(name)
+    # sample = utils.amq.checkSample(name)
+    sample = """Lois Telemetry Initialized"""
 
     if sample != "":
         print("Sample XML for %s:" % (name))
@@ -62,6 +63,7 @@ if __name__ == "__main__":
 
                     print(fields)
                 else:
+                    failedParts = schema.validate(sample)
                     print("Failed validation against the schema!")
         except Exception as err:
             print(str(err))
