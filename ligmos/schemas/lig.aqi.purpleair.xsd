@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="PurpleAir_PA-II">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="SensorId" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="DateTime" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Geo" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="Mem" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="memfrag" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="memfb" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="memcs" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="Id" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="lat" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="lon" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Adc" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="loggingrate" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="place" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="version" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="uptime" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="rssi" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="period" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="httpsuccess" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="httpsends" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="hardwareversion" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="hardwarediscovered" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="current_temp_f" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="current_humidity" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="current_dewpoint_f" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="pressure" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p25aqic_b" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="pm2.5_aqi_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="pm1_0_cf_1_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_0_3_um_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm2_5_cf_1_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_0_5_um_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm10_0_cf_1_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_1_0_um_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm1_0_atm_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_2_5_um_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm2_5_atm_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_5_0_um_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm10_0_atm_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_10_0_um_b" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p25aqic" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="pm2.5_aqi" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="pm1_0_cf_1" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_0_3_um" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm2_5_cf_1" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_0_5_um" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm10_0_cf_1" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_1_0_um" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm1_0_atm" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_2_5_um" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm2_5_atm" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_5_0_um" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm10_0_atm" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="p_10_0_um" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pa_latency" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="response" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="response_date" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="latency" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key1_response" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key1_response_date" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="key1_count" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ts_latency" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key2_response" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key2_response_date" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="key2_count" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ts_s_latency" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key1_response_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key1_response_date_b" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="key1_count_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ts_latency_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key2_response_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="key2_response_date_b" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="key2_count_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ts_s_latency_b" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="wlstate" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="status_0" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_1" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_2" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_3" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_4" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_5" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_6" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_7" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_8" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="status_9" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="ssid" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="queryTS" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
