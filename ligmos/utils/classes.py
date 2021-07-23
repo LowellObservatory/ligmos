@@ -89,6 +89,8 @@ class Webcam(object):
         self.thumbsize = (400, 200)
         self.user = None
         self.password = None
+        self.extracopy = None
+        self.extracopy_prefix = None
         self.enabled = False
 
 
