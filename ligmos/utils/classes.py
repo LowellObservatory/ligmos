@@ -91,8 +91,8 @@ class Webcam(object):
         self.password = None
         self.extracopy = None
         self.extracopy_prefix = None
-        self.archive = False
-        self.archiveDays = 30
+        self.archive = True
+        self.archiveDays = 7
         self.enabled = False
 
 
