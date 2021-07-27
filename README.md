@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5a1444a2a46a45e2940837fa301d7fd1)](https://www.codacy.com/app/astrobokonon/ligmos?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LowellObservatory/ligmos&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/300ef9d970c44328bde4d1c0a0d68a74)](https://www.codacy.com/gh/LowellObservatory/ligmos/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LowellObservatory/ligmos&amp;utm_campaign=Badge_Grade)
 
 You'll definitely need:
 - python 3.6 or greater.
