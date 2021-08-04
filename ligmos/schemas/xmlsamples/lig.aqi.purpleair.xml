@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PurpleAirSensor>
 	<SensorId>ec:fa:xx:xx:xx:xx</SensorId>
-	<deviceType>purpleair_pa-ii</deviceType>
 	<Geo>PurpleAir-4317</Geo>
-	<Mem>19312</Mem>
+	<Mem>14928</Mem>
 	<memfrag>21</memfrag>
-	<memfb>16320</memfb>
+	<memfb>11744</memfb>
 	<memcs>1000</memcs>
-	<Id>480</Id>
+	<Id>2203</Id>
 	<lat>35.203701</lat>
 	<lon>-111.665398</lon>
 	<Adc>0.05</Adc>
 	<loggingrate>15</loggingrate>
 	<place>outside</place>
 	<version>6.01</version>
-	<uptime>20699</uptime>
-	<rssi>-75</rssi>
+	<uptime>76573</uptime>
+	<rssi>-71</rssi>
 	<period>120</period>
-	<httpsuccess>1037</httpsuccess>
-	<httpsends>1038</httpsends>
+	<httpsuccess>3844</httpsuccess>
+	<httpsends>3845</httpsends>
 	<hardwareversion>2.0</hardwareversion>
 	<hardwarediscovered>2.0+BME280+PMSX003-B+PMSX003-A</hardwarediscovered>
-	<current_temp_f>74</current_temp_f>
-	<current_humidity>26</current_humidity>
-	<current_dewpoint_f>37</current_dewpoint_f>
-	<pressure>786.73</pressure>
-	<p25aqic_b>rgb(255,253,0)</p25aqic_b>
-	<pm2.5_aqi_b>63</pm2.5_aqi_b>
-	<pm1_0_cf_1_b>11.22</pm1_0_cf_1_b>
-	<p_0_3_um_b>2181.86</p_0_3_um_b>
-	<pm2_5_cf_1_b>17.63</pm2_5_cf_1_b>
-	<p_0_5_um_b>612.08</p_0_5_um_b>
-	<pm10_0_cf_1_b>19.31</pm10_0_cf_1_b>
-	<p_1_0_um_b>115.75</p_1_0_um_b>
-	<pm1_0_atm_b>11.22</pm1_0_atm_b>
-	<p_2_5_um_b>9.22</p_2_5_um_b>
-	<pm2_5_atm_b>17.63</pm2_5_atm_b>
-	<p_5_0_um_b>2.49</p_5_0_um_b>
-	<pm10_0_atm_b>19.31</pm10_0_atm_b>
+	<current_temp_f>94</current_temp_f>
+	<current_humidity>14</current_humidity>
+	<current_dewpoint_f>38</current_dewpoint_f>
+	<pressure>786.98</pressure>
+	<p25aqic_b>rgb(255,235,0)</p25aqic_b>
+	<pm2.5_aqi_b>77</pm2.5_aqi_b>
+	<pm1_0_cf_1_b>15.91</pm1_0_cf_1_b>
+	<p_0_3_um_b>2971.14</p_0_3_um_b>
+	<pm2_5_cf_1_b>24.43</pm2_5_cf_1_b>
+	<p_0_5_um_b>828.21</p_0_5_um_b>
+	<pm10_0_cf_1_b>25.71</pm10_0_cf_1_b>
+	<p_1_0_um_b>166.64</p_1_0_um_b>
+	<pm1_0_atm_b>15.91</pm1_0_atm_b>
+	<p_2_5_um_b>7.55</p_2_5_um_b>
+	<pm2_5_atm_b>24.43</pm2_5_atm_b>
+	<p_5_0_um_b>1.36</p_5_0_um_b>
+	<pm10_0_atm_b>25.71</pm10_0_atm_b>
 	<p_10_0_um_b>0.0</p_10_0_um_b>
-	<p25aqic>rgb(255,252,0)</p25aqic>
-	<pm2.5_aqi>65</pm2.5_aqi>
-	<pm1_0_cf_1>12.93</pm1_0_cf_1>
-	<p_0_3_um>2540.84</p_0_3_um>
-	<pm2_5_cf_1>18.8</pm2_5_cf_1>
-	<p_0_5_um>691.11</p_0_5_um>
-	<pm10_0_cf_1>20.38</pm10_0_cf_1>
-	<p_1_0_um>109.7</p_1_0_um>
-	<pm1_0_atm>12.93</pm1_0_atm>
-	<p_2_5_um>9.86</p_2_5_um>
-	<pm2_5_atm>18.8</pm2_5_atm>
-	<p_5_0_um>1.5</p_5_0_um>
-	<pm10_0_atm>20.38</pm10_0_atm>
-	<p_10_0_um>0.11</p_10_0_um>
-	<pa_latency>333</pa_latency>
+	<p25aqic>rgb(255,221,0)</p25aqic>
+	<pm2.5_aqi>82</pm2.5_aqi>
+	<pm1_0_cf_1>18.03</pm1_0_cf_1>
+	<p_0_3_um>3403.45</p_0_3_um>
+	<pm2_5_cf_1>26.79</pm2_5_cf_1>
+	<p_0_5_um>934.74</p_0_5_um>
+	<pm10_0_cf_1>29.38</pm10_0_cf_1>
+	<p_1_0_um>167.93</p_1_0_um>
+	<pm1_0_atm>18.0</pm1_0_atm>
+	<p_2_5_um>13.24</p_2_5_um>
+	<pm2_5_atm>26.79</pm2_5_atm>
+	<p_5_0_um>3.66</p_5_0_um>
+	<pm10_0_atm>29.38</pm10_0_atm>
+	<p_10_0_um>0.34</p_10_0_um>
+	<pa_latency>304</pa_latency>
 	<response>201</response>
-	<response_date>1628050488</response_date>
-	<latency>465</latency>
+	<response_date>1628106298</response_date>
+	<latency>460</latency>
 	<key1_response>200</key1_response>
-	<key1_response_date>1628050483</key1_response_date>
-	<key1_count>15484</key1_count>
-	<ts_latency>478</ts_latency>
+	<key1_response_date>1628106293</key1_response_date>
+	<key1_count>15949</key1_count>
+	<ts_latency>503</ts_latency>
 	<key2_response>200</key2_response>
-	<key2_response_date>1628050484</key2_response_date>
-	<key2_count>15482</key2_count>
-	<ts_s_latency>476</ts_s_latency>
+	<key2_response_date>1628106295</key2_response_date>
+	<key2_count>15947</key2_count>
+	<ts_s_latency>430</ts_s_latency>
 	<key1_response_b>200</key1_response_b>
-	<key1_response_date_b>1628050485</key1_response_date_b>
-	<key1_count_b>15483</key1_count_b>
-	<ts_latency_b>514</ts_latency_b>
+	<key1_response_date_b>1628106296</key1_response_date_b>
+	<key1_count_b>15948</key1_count_b>
+	<ts_latency_b>444</ts_latency_b>
 	<key2_response_b>200</key2_response_b>
-	<key2_response_date_b>1628050487</key2_response_date_b>
-	<key2_count_b>15485</key2_count_b>
-	<ts_s_latency_b>441</ts_s_latency_b>
+	<key2_response_date_b>1628106297</key2_response_date_b>
+	<key2_count_b>15950</key2_count_b>
+	<ts_s_latency_b>457</ts_s_latency_b>
 	<wlstate>Connected</wlstate>
 	<status_0>2</status_0>
 	<status_1>2</status_1>
@@ -85,7 +84,10 @@
 	<status_8>2</status_8>
 	<status_9>2</status_9>
 	<ssid>AWiFiSSID</ssid>
-	<queryTS>2021-08-04 04:15:38.297227+00:00</queryTS>
-	<odataTS>2021-08-03 21:15:37-07:00</odataTS>
-	<influx_ts_ms>1628050537000</influx_ts_ms>
+	<deviceType>purpleair_pa-ii</deviceType>
+	<queryTS>2021-08-04 19:46:51.021863+00:00</queryTS>
+	<odataTS>2021-08-04 12:46:52-07:00</odataTS>
+	<influx_ts_ms>1628106412000</influx_ts_ms>
+	<pm2.5_atm_stddev>1.6688</pm2.5_atm_stddev>
+	<pm2.5_atm_variance>2.7848</pm2.5_atm_variance>
 </PurpleAirSensor>

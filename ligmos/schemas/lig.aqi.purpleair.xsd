@@ -92,6 +92,8 @@
                 <xsd:element name="queryTS" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="odataTS" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="influx_ts_ms" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="pm2.5_atm_stddev" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="pm2.5_atm_variance" minOccurs="0" type="xsd:decimal"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
