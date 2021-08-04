@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PurpleAir_PA-II>
+<PurpleAirSensor>
 	<SensorId>ec:fa:xx:xx:xx:xx</SensorId>
+	<deviceType>purpleair_pa-ii</deviceType>
 	<Geo>PurpleAir-4317</Geo>
 	<Mem>19312</Mem>
 	<memfrag>21</memfrag>
@@ -87,4 +88,4 @@
 	<queryTS>2021-08-04 04:15:38.297227+00:00</queryTS>
 	<odataTS>2021-08-03 21:15:37-07:00</odataTS>
 	<influx_ts_ms>1628050537000</influx_ts_ms>
-</PurpleAir_PA-II>
+</PurpleAirSensor>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:element name="PurpleAir_PA-II">
+    <xsd:element name="PurpleAirSensor">
         <xsd:complexType mixed="true">
             <xsd:sequence>
                 <xsd:element name="SensorId" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="deviceType" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="DateTime" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="Geo" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="Mem" minOccurs="0" type="xsd:int"/>
