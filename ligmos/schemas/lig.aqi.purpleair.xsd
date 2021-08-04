@@ -89,6 +89,8 @@
                 <xsd:element name="status_9" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="ssid" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="queryTS" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="odataTS" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="influx_ts_ms" minOccurs="0" type="xsd:long"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
