@@ -23,7 +23,7 @@
                 <xsd:element name="period" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="httpsuccess" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="httpsends" minOccurs="0" type="xsd:int"/>
-                <xsd:element name="hardwareversion" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="hardwareversion" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="hardwarediscovered" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="current_temp_f" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="current_humidity" minOccurs="0" type="xsd:int"/>
