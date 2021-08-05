@@ -17,7 +17,7 @@
                 <xsd:element name="Adc" minOccurs="0" type="xsd:decimal"/>
                 <xsd:element name="loggingrate" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="place" minOccurs="0" type="xsd:normalizedString"/>
-                <xsd:element name="version" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="version" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="uptime" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="rssi" minOccurs="0" type="xsd:int"/>
                 <xsd:element name="period" minOccurs="0" type="xsd:int"/>
