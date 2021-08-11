@@ -7,7 +7,7 @@
                     <xsd:complexType mixed="true">
                         <xsd:sequence>
                             <xsd:element name="instrument" minOccurs="0" type="xsd:normalizedString"/>
-                            <xsd:element name="device" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="devicetype" minOccurs="0" type="xsd:normalizedString"/>
                             <xsd:element name="tag" minOccurs="0" type="xsd:normalizedString"/>
                             <xsd:element name="command" minOccurs="0" type="xsd:normalizedString"/>
                             <xsd:element name="argument" minOccurs="0" type="xsd:normalizedString"/>
