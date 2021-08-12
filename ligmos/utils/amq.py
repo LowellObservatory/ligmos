@@ -321,7 +321,7 @@ def checkSingleConnection(broker, subscribe=True):
     return broker
 
 
-def checkConnections(amqbrokers, subscribe=True):
+def checkConnections(amqbrokers, quiet=True, subscribe=True):
     """
     This is intended to be inside of some loop structure.
     It's primarily used for checking whether the connection to the ActiveMQ
@@ -343,7 +343,8 @@ def checkConnections(amqbrokers, subscribe=True):
             print("Connection died! Reestablishing...")
             connChecking.connect(listener=thisListener, subscribe=subscribe)
         else:
-            print("Connection still valid")
+            if quiet is False:
+                print("Connection still valid")
 
         # Make sure we save any connection changes and give it back
         amqbrokers[bconn] = [connChecking, thisListener]
