@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MrFreezeCommunique>
     <request>
-        <instrument>NIHTS</instrument>
-        <device>sunpowergen2</device>
-        <tag>BenchCooler</tag>
-        <command>coldtip</command>
+        <cmd_id>5b18e463-7334-4873-a2d4-6a238c50ab45</cmd_id>
+        <instrument>all</instrument>
+        <device>all</device>
+        <tag></tag>
+        <command>advertise</command>
         <argument></argument>
     </request>
 </MrFreezeCommunique>

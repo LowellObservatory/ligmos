@@ -3,6 +3,7 @@
     <xsd:element name="MrFreezeCommunique">
         <xsd:complexType mixed="true">
             <xsd:sequence>
+                <xsd:element name="cmd_id" minOccurs="0" type="xsd:normalizedString"/>
                 <xsd:element name="request" minOccurs="0">
                     <xsd:complexType mixed="true">
                         <xsd:sequence>
