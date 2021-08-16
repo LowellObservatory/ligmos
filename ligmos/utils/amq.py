@@ -206,7 +206,7 @@ class amqHelper():
                 # NOTE this is the STOMP.py subscribe call here
                 self.conn.subscribe(tstr, tid)
             elif isinstance(sub, list):
-                for i, activeTopic in enumerate(sub):
+                for activeTopic in sub:
                     print("Subscribing to %s" % (activeTopic))
                     tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
                     self.conn.subscribe("/topic/" + activeTopic, tid)
@@ -235,7 +235,7 @@ class amqHelper():
             print(info.format(self.host, topic, message))
 
 
-def setupAMQBroker(cblk, topics, listener=None):
+def setupAMQBroker(cblk, topics, baseid='ligmos', listener=None):
     """
     """
     # ActiveMQ connection checker
@@ -283,6 +283,7 @@ def setupAMQBroker(cblk, topics, listener=None):
                      user=cblk.user,
                      passw=cblk.password,
                      port=cblk.port,
+                     baseid=baseid,
                      connect=False,
                      listener=listener,
                      protocol=bver)
@@ -503,7 +504,7 @@ def checkSample(topicname):
     except xmls.exceptions.XMLSchemaException:
         print("Sample for topic %s not found!" % (topicname))
         return ""
-    except (IOError, OSError) as err:
+    except (IOError, OSError):
         print("Sample for topic %s not found!" % (topicname))
         return ""
 

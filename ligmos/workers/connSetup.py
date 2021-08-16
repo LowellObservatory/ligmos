@@ -38,7 +38,7 @@ def connAMQ_simple(comm, topics, listener=None):
     return bkr
 
 
-def connAMQ(comm, amqtopics, amqlistener=None):
+def connAMQ(comm, amqtopics, baseid='ligmos', amqlistener=None):
     """
     Set up the actual connections, which we'll then give back to the actual
     objects for them to do stuff with afterwards.
@@ -60,6 +60,7 @@ def connAMQ(comm, amqtopics, amqlistener=None):
             #   None initially, in which case amq.setupBroker would give one
             conn, amqlistener = amq.setupAMQBroker(cobj,
                                                    amqtopics[commsection],
+                                                   baseid=baseid,
                                                    listener=amqlistener)
 
             # Store this so we can check/use it later
