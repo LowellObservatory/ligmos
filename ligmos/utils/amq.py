@@ -15,6 +15,7 @@ Further description.
 
 from __future__ import division, print_function, absolute_import
 
+import secrets
 from os.path import basename
 
 import stomp
@@ -37,8 +38,9 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
     """
     Default subscriber that will at least print out stuff
     """
-    def __init__(self, dictify=True):
+    def __init__(self, dictify=True, baseid='ligmos'):
         self.dictify = dictify
+        self.baseid = baseid
 
     # Subclassing stomp.listener.ConnectionListener
     def on_message(self, headers, body):
@@ -91,7 +93,7 @@ class ParrotSubscriber(stomp.listener.ConnectionListener):
 class amqHelper():
     def __init__(self, default_host, topics=None,
                  user=None, passw=None, port=61613,
-                 baseid=8675309, connect=True, listener=None,
+                 baseid='ligmos', connect=True, listener=None,
                  protocol=None):
         self.host = default_host
         self.port = port
@@ -111,7 +113,7 @@ class amqHelper():
         if connect is True:
             self.connect(listener=listener)
             if topics is not None:
-                self.subscribe(baseid=baseid)
+                self.subscribe()
         else:
             self.conn = None
 
@@ -120,12 +122,6 @@ class amqHelper():
         """
         # TODO:
         #   Put a timer on connection
-
-        # Do I really need to duplicate this check that I do in __init__ ?
-        #   Seems like I just need to choose one or the other, but I'm leaving
-        #   this here since I think I have some codes that need this check.
-        if listener is None:
-            listener = ParrotSubscriber()
 
         try:
             print("Connecting to %s" % (self.host))
@@ -163,8 +159,7 @@ class amqHelper():
             #   example of this so I need this here still.
             try:
                 self.conn.start()
-                print("STOMP.py conn.start() worked! Prob. an old broker.")
-            except AttributeError as e:
+            except AttributeError:
                 pass
 
             self.conn.connect()
@@ -193,7 +188,7 @@ class amqHelper():
             self.conn.disconnect()
             print("Disconnected from %s" % (self.host))
 
-    def subscribe(self, topic=None, baseid=8675309):
+    def subscribe(self, topic=None):
         """
         If given a topic argument, subscribe to just that one.
         If it's not given, check for anything to subscribe to in
@@ -206,13 +201,15 @@ class amqHelper():
 
         if self.conn is not None:
             if isinstance(sub, str):
+                tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
                 tstr = "/topic/" + sub
                 # NOTE this is the STOMP.py subscribe call here
-                self.conn.subscribe(tstr, baseid)
+                self.conn.subscribe(tstr, tid)
             elif isinstance(sub, list):
                 for i, activeTopic in enumerate(sub):
                     print("Subscribing to %s" % (activeTopic))
-                    self.conn.subscribe("/topic/" + activeTopic, baseid+i)
+                    tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
+                    self.conn.subscribe("/topic/" + activeTopic, tid)
 
     def publish(self, dest, message, mtype='text', replyto=None, debug=True):
         """
