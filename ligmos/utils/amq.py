@@ -19,75 +19,11 @@ import secrets
 from os.path import basename
 
 import stomp
-import xmltodict as xmld
 import xmlschema as xmls
 import pkg_resources as pkgr
 
 from . import classes
-
-
-class silentSubscriber(stomp.listener.ConnectionListener):
-    """
-    Silent, but deadly (if you don't realize it is fully silent)
-    """
-    def __init__(self):
-        pass
-
-
-class ParrotSubscriber(stomp.listener.ConnectionListener):
-    """
-    Default subscriber that will at least print out stuff
-    """
-    def __init__(self, dictify=True, baseid='ligmos'):
-        self.dictify = dictify
-        self.baseid = baseid
-
-    # Subclassing stomp.listener.ConnectionListener
-    def on_message(self, headers, body):
-        tname = headers['destination'].split('/')[-1]
-        # Manually turn the bytestring into a string
-        try:
-            body = body.decode("utf-8")
-            badMsg = False
-        except Exception as err:
-            print(str(err))
-            print("Badness 10000")
-            print(body)
-            badMsg = True
-
-        if badMsg is False:
-            try:
-                if self.dictify is True:
-                    xml = xmld.parse(body)
-                    res = {tname: [headers, xml]}
-                else:
-                    # If we want to have the XML as a string:
-                    res = {tname: [headers, body]}
-
-            except xmld.expat.ExpatError:
-                # This means that XML wasn't found, so it's just a string
-                #   packet with little/no structure. Attach the sub name
-                #   as a tag so someone else can deal with the thing
-                res = {tname: [headers, body]}
-            except Exception as err:
-                # This means that there was some kind of transport error
-                #   or it couldn't figure out the encoding for some reason.
-                #   Scream into the log but keep moving
-                print("="*42)
-                print(headers)
-                print(body)
-                print("="*42)
-                badMsg = True
-
-        print("Message Source: %s" % (tname))
-        if badMsg:
-            print("Header: %s" % (headers))
-            print("Body: %s" % (body))
-        else:
-            if self.dictify is True:
-                print(res)
-            else:
-                print(headers['timestamp'], body)
+from . import amq_listeners as amql
 
 
 class amqHelper():
@@ -108,7 +44,7 @@ class amqHelper():
         #   experience, then make one or directly pass in the default
         #   stomp.listener ConnectionListener
         if listener is None:
-            listener = ParrotSubscriber()
+            listener = amql.ParrotSubscriber()
 
         if connect is True:
             self.connect(listener=listener)
@@ -260,7 +196,7 @@ def setupAMQBroker(cblk, topics, baseid='ligmos', listener=None):
     #   on their topic name and does the hard stuff!
     # If you don't specify one, the default (print-only) one will be used.
     if listener is None:
-        listener = ParrotSubscriber()
+        listener = amql.ParrotSubscriber()
 
     # Check to see if we have any specific ActiveMQ version hints
     #   NOTE: I forgot I did this, but it's handled better by the

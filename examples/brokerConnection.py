@@ -30,7 +30,7 @@ if __name__ == "__main__":
     print("Setting up listener...")
     # This is a default listener, that will just literally print (to STDOUT)
     #   all messages on all subscribed topics
-    listener = utils.amq.ParrotSubscriber(dictify=False)
+    listener = utils.amq_listeners.ParrotSubscriber(dictify=False)
 
     # Use the ligmos ActiveMQ helper function
     conn = utils.amq.amqHelper(default_host,
