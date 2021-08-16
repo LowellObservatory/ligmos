@@ -113,6 +113,11 @@ class amqHelper():
         if connect is True:
             self.connect(listener=listener)
             if topics is not None:
+                # This is the class subscribe method, not the STOMP one
+                #
+                # NOTE: I don't know why I'm not passing in topics here.
+                #   This could be a very old bug that I've worked around.
+                #
                 self.subscribe()
         else:
             self.conn = None
@@ -190,6 +195,8 @@ class amqHelper():
 
     def subscribe(self, topic=None):
         """
+        NOTE: This is the method of the amqHelper class!  Not the STOMP one!
+
         If given a topic argument, subscribe to just that one.
         If it's not given, check for anything to subscribe to in
         the self.topics property.  It's one, or the other. NOT BOTH.
@@ -204,12 +211,12 @@ class amqHelper():
                 tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
                 tstr = "/topic/" + sub
                 # NOTE this is the STOMP.py subscribe call here
-                self.conn.subscribe(tstr, tid)
+                self.conn.subscribe(tstr, id=tid)
             elif isinstance(sub, list):
                 for activeTopic in sub:
                     print("Subscribing to %s" % (activeTopic))
                     tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
-                    self.conn.subscribe("/topic/" + activeTopic, tid)
+                    self.conn.subscribe("/topic/" + activeTopic, id=tid)
 
     def publish(self, dest, message, mtype='text', replyto=None, debug=True):
         """
