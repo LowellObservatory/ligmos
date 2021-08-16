@@ -209,8 +209,8 @@ class amqHelper():
             if isinstance(sub, str):
                 tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
                 tstr = "/topic/" + sub
-                eheaders = {"activemq.client-id": tid,
-                            "activemq.subscriptionName": tid}
+                eheaders = {"client-id": tid,
+                            "subscriptionName": tid}
                 # NOTE this is the STOMP.py subscribe call here.  stomp10
                 #   still lingers, and id is a keyword param so do it
                 if self.protocol == 'stomp10':
@@ -222,8 +222,8 @@ class amqHelper():
                     print("Subscribing to %s" % (activeTopic))
                     tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
                     tstr = "/topic/" + activeTopic
-                    eheaders = {"activemq.client-id": tid,
-                                "activemq.subscriptionName": tid}
+                    eheaders = {"client-id": tid,
+                                "subscriptionName": tid}
                     if self.protocol == 'stomp10':
                         self.conn.subscribe(tstr, id=tid, headers=eheaders)
                     else:
