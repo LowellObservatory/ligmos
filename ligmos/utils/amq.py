@@ -27,9 +27,8 @@ from . import amq_listeners as amql
 
 
 class amqHelper():
-    def __init__(self, default_host, topics=None,
-                 user=None, passw=None, port=61613,
-                 baseid='ligmos', connect=True, listener=None,
+    def __init__(self, default_host, topics=None, user=None, passw=None,
+                 port=61613, baseid='ligmos', connect=True, listener=None,
                  protocol=None):
         self.host = default_host
         self.port = port
