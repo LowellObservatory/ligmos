@@ -209,13 +209,21 @@ class amqHelper():
             if isinstance(sub, str):
                 tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
                 tstr = "/topic/" + sub
-                # NOTE this is the STOMP.py subscribe call here
-                self.conn.subscribe(tstr, id=tid)
+                # NOTE this is the STOMP.py subscribe call here.  stomp10
+                #   still lingers, and id is a keyword param so do it
+                if self.protocol == 'stomp10':
+                    self.conn.subscribe(tstr, id=tid)
+                else:
+                    self.conn.subscribe(tstr, tid)
             elif isinstance(sub, list):
                 for activeTopic in sub:
                     print("Subscribing to %s" % (activeTopic))
                     tid = "%s_%s" % (self.baseid, secrets.token_hex(nbytes=8))
-                    self.conn.subscribe("/topic/" + activeTopic, id=tid)
+                    tstr = "/topic/" + activeTopic
+                    if self.protocol == 'stomp10':
+                        self.conn.subscribe(tstr, id=tid)
+                    else:
+                        self.conn.subscribe(tstr, tid)
 
     def publish(self, dest, message, mtype='text', replyto=None, debug=True):
         """
