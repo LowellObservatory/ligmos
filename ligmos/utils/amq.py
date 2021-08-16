@@ -114,10 +114,9 @@ class amqHelper():
             self.connect(listener=listener)
             if topics is not None:
                 # This is the class subscribe method, not the STOMP one
-                #
-                # NOTE: I don't know why I'm not passing in topics here.
-                #   This could be a very old bug that I've worked around.
-                #
+                # NOTE: By leaving topic=None here (the default) the method
+                #   just picked up topics from self.topics instead.  That's
+                #   confusing but it's vestigial and not super important.
                 self.subscribe()
         else:
             self.conn = None
