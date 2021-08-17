@@ -20,7 +20,6 @@ import urllib
 import xmltodict as xmld
 from stomp.listener import ConnectionListener
 
-from . import amq
 from . import xmlschemas as myxml
 from . import messageParsers as mp
 
