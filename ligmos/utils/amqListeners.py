@@ -182,17 +182,9 @@ class LIGBaseConsumer(ConnectionListener):
                         mp.parserSimple(headers, body, db=self.dbconn,
                                         datatype=simpleDtype)
                 else:
-                    # Intended to be the endpoint of the auto-XML publisher
-                    #   so I can catch most of them rather than explicitly
-                    #   check in the if/elif block above
                     print("Orphan topic: %s" % (tname))
                     print(headers)
                     print(body)
-            except urllib.error.URLError as err:
-                # This actually implies that the message wasn't a valid XML
-                #   message and couldn't actually be validated.  I think it's
-                #   really a quirk of the xmlschema library but I'm not sure
-                print(err)
             except Exception as err:
                 # Mostly this catches instances where the topic name doesn't
                 #   have a schema, but it catches all oopsies really
