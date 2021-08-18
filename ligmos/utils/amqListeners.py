@@ -96,15 +96,16 @@ class LIGBaseConsumer(ConnectionListener):
     connections stuff is really over there in that class.
     """
     def __init__(self, dbconn=None,
-                 tXML=None, tFloat=None, tStr=None, tBool=None, tSpecial=None):
+                 tXML=None, tFloat=None, tStr=None, tBool=None,
+                 tSpecial=None):
 
         # This should be a *dict* mapping the topic name to a bound method
         #   that is the special/specific parser for that topic.  That lets us
         #   handle any any special cases that aren't generic
         if isinstance(tSpecial, dict):
-            print("WARNING: Special topics must be specified as a dict!")
             self.tSpecial = tSpecial
         else:
+            print("WARNING: No special topics, or improper format!")
             self.tSpecial = None
 
         # These topics are handeled entirely by generic parsers
@@ -162,7 +163,6 @@ class LIGBaseConsumer(ConnectionListener):
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
-                    print("Found schema:", schema)
 
                     mp.parserFlatPacket(headers, body,
                                         schema=schema, db=self.dbconn,
