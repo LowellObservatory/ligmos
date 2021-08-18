@@ -166,11 +166,11 @@ class LIGBaseConsumer(ConnectionListener):
                     funcRef = self.specialMap[tname]
                     funcRef(headers, body, db=self.dbconn)
                 elif tname in self.specialXMLTopics:
-                    # Look for special topics first!
+                    # Look for kinda XML special topics second!
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
-                    funcRef = self.specialMap[tname]
+                    funcRef = self.specialXMLMap[tname]
 
                     # To make sure nothing gets posted early, I'm
                     #   specifically _not_ handing over the db connection.
@@ -178,12 +178,10 @@ class LIGBaseConsumer(ConnectionListener):
                                              schema=schema, db=None,
                                              returnParsed=True)
 
-                    print(rP)
-
                     # Now pass it off to the custom parsing function
                     funcRef(rP, db=self.dbconn)
                 elif tname in self.tXML:
-                    # XML (schema-based) second
+                    # full parsing of XML (schema-based) third
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
