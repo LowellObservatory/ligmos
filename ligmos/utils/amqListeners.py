@@ -95,14 +95,17 @@ class LIGBaseConsumer(ConnectionListener):
     This will really be stuffed into an amqHelper class, so all the
     connections stuff is really over there in that class.
     """
-    def __init__(self, dbconn=None, postProcFunc=None, tSpecial=None,
-                 tXML=None, tFloat=None, tStr=None, tBool=None):
+    def __init__(self, dbconn=None,
+                 tXML=None, tFloat=None, tStr=None, tBool=None, tSpecial=None):
 
-        # This should be a function reference that will be used first
-        #   if specified, to handle any special cases that aren't handled
-        #   by one of the generic parsers below
-        self.postProcFunc = postProcFunc
-        self.tSpecial = tSpecial
+        # This should be a *dict* mapping the topic name to a bound method
+        #   that is the special/specific parser for that topic.  That lets us
+        #   handle any any special cases that aren't generic
+        if isinstance(tSpecial, dict):
+            print("WARNING: Special topics must be specified as a dict!")
+            self.tSpecial = None
+        else:
+            self.tSpecial = tSpecial
 
         # These topics are handeled entirely by generic parsers
         self.tXML = tXML
@@ -142,6 +145,12 @@ class LIGBaseConsumer(ConnectionListener):
         # Now send the packet to the right place for processing.
         if badMsg is False:
             try:
+                if tname in self.tSpecial.keys():
+                    try:
+                        funcRef = self.tSpecial[tname]
+                        funcRef(headers, body, db=self.dbconn)
+                    except KeyError:
+                        print("WTF?")
                 if tname in self.tXML:
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
