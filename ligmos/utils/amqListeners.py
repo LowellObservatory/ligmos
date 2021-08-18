@@ -15,8 +15,6 @@ Further description.
 
 from __future__ import division, print_function, absolute_import
 
-import urllib
-
 import xmltodict as xmld
 from stomp.listener import ConnectionListener
 
@@ -159,8 +157,18 @@ class LIGBaseConsumer(ConnectionListener):
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
-
+                    # A note about time (timestampKey):
+                    #   It should be given in sec/ms/nanosec from the epoch,
+                    #   already localized to the timezone of your influxdb
+                    #   instance.  For many of my things, I've done that in
+                    #   the device parsing/preparation state and stored it in
+                    #   the XML as "influx_ts_" + ("s" ||  "ms" || "ns")
+                    #   depending on the precision available from each device.
+                    # If the packet has no key called influx_ts,
+                    #   the timestamp will not be parsed and influx itself will
+                    #   timestamp the data upon injestion.
                     mp.parserFlatPacket(headers, body,
+                                        timestampKey='influx_ts',
                                         schema=schema, db=self.dbconn,
                                         returnParsed=False)
                 elif (self.tFloat is not None) or (self.tFloat is not None) or\
