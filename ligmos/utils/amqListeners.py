@@ -145,6 +145,8 @@ class LIGBaseConsumer(ConnectionListener):
 
         # Now send the packet to the right place for processing.
         if badMsg is False:
+            # Look for special topics first, then XML, then the rest.
+            #   Wrapped all in a try...except block to catch goof ups
             try:
                 # Make sure it's really a dict one last time to avoid
                 #   an AttributeError trying to take .keys() of None
@@ -155,7 +157,7 @@ class LIGBaseConsumer(ConnectionListener):
                             funcRef(headers, body, db=self.dbconn)
                         except KeyError:
                             print("WTF?")
-                if tname in self.tXML:
+                elif tname in self.tXML:
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
