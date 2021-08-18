@@ -116,15 +116,16 @@ class LIGBaseConsumer(ConnectionListener):
         # Database handle
         self.dbconn = dbconn
 
-        if self.tXML is not None:
-            # This ONLY makes sense if there are XML topics
-            #   Grab all the schemas that are in the ligmos library
+        if self.tXML is None:
+            # If we have no XML packets, skip the schema business because
+            #   it's really not needed at all for this listener
+            self.schemaDict = None
+            self.schemaList = None
+        else:
+            # Grab all the schemas that are in the ligmos library
             self.schemaDict = myxml.schemaDicter()
             self.schemaList = list(self.schemaDict.keys())
             print(self.schemaDict)
-        else:
-            self.schemaDict = None
-            self.schemaList = None
 
     def on_message(self, headers, body):
         """
