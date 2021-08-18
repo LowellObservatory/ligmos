@@ -178,6 +178,8 @@ class LIGBaseConsumer(ConnectionListener):
                                              schema=schema, db=None,
                                              returnParsed=True)
 
+                    print(rP)
+
                     # Now pass it off to the custom parsing function
                     funcRef(rP, db=self.dbconn)
                 elif tname in self.tXML:
