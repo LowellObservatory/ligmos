@@ -95,18 +95,31 @@ class LIGBaseConsumer(ConnectionListener):
     """
     def __init__(self, dbconn=None,
                  tXML=None, tFloat=None, tStr=None, tBool=None,
-                 tSpecial=None):
-
+                 tSpecial=None, tkXMLSpecial=None):
+        """
+        tXML: messages that can be fully parsed by an XML schema and stored
+        kXML: messages that can be parsed with an XML schema, but then
+              require further work (usually due to the use of tags)
+        """
         # This should be a *dict* mapping the topic name to a bound method
         #   that is the special/specific parser for that topic.  That lets us
         #   handle any any special cases that aren't generic
+        self.specialMap = None
+        self.specialTopics = []
         if isinstance(tSpecial, dict):
             self.specialMap = tSpecial
             self.specialTopics = list(tSpecial.keys())
-        else:
-            print("WARNING: No special topics, or improper format!")
-            self.specialMap = None
-            self.specialTopics = []
+
+        # This should be a *dict* mapping the topic name to a bound method
+        #   that is the special/specific parser for that topic.
+        # The difference from the above is that the first step will be to
+        #   parse the message using an XML schema, and not just a totally
+        #   custom parser or any sort
+        self.specialXMLMap = None
+        self.specialXMLTopics = []
+        if isinstance(tkXMLSpecial, dict):
+            self.specialXMLMap = tkXMLSpecial
+            self.specialXMLTopics = list(tkXMLSpecial.keys())
 
         # These topics are handeled entirely by generic parsers
         self.tXML = tXML
@@ -117,7 +130,7 @@ class LIGBaseConsumer(ConnectionListener):
         # Database handle
         self.dbconn = dbconn
 
-        if self.tXML is None:
+        if self.tXML is None and self.specialXMLTopics is None:
             # If we have no XML packets, skip the schema business because
             #   it's really not needed at all for this listener
             self.schemaDict = None
@@ -152,6 +165,21 @@ class LIGBaseConsumer(ConnectionListener):
                     # Look for special topics first!
                     funcRef = self.specialMap[tname]
                     funcRef(headers, body, db=self.dbconn)
+                elif tname in self.specialXMLTopics:
+                    # Look for special topics first!
+                    schema = myxml.findNamedSchema(self.schemaList,
+                                                   self.schemaDict,
+                                                   tname)
+                    funcRef = self.specialMap[tname]
+
+                    # To make sure nothing gets posted early, I'm
+                    #   specifically _not_ handing over the db connection.
+                    rP = mp.parserFlatPacket(headers, body,
+                                             schema=schema, db=None,
+                                             returnParsed=True)
+
+                    # Now pass it off to the custom parsing function
+                    funcRef(rP, db=self.dbconn)
                 elif tname in self.tXML:
                     # XML (schema-based) second
                     schema = myxml.findNamedSchema(self.schemaList,
