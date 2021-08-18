@@ -149,16 +149,13 @@ class LIGBaseConsumer(ConnectionListener):
 
         # Now send the packet to the right place for processing.
         if badMsg is False:
-            # Look for special topics first, then XML, then the rest.
-            #   Wrapped all in a try...except block to catch goof ups
             try:
                 if tname in self.specialTopics:
-                    try:
-                        funcRef = self.specialMap[tname]
-                        funcRef(headers, body, db=self.dbconn)
-                    except KeyError:
-                        print("WTF?")
+                    # Look for special topics first!
+                    funcRef = self.specialMap[tname]
+                    funcRef(headers, body, db=self.dbconn)
                 elif tname in self.tXML:
+                    # XML (schema-based) second
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
@@ -168,6 +165,7 @@ class LIGBaseConsumer(ConnectionListener):
                                         returnParsed=False)
                 elif (self.tFloat is not None) or (self.tFloat is not None) or\
                      (self.tBool is not None) or (self.tStr is not None):
+                    # Everyting else goes last
                     if tname in self.tFloat:
                         simpleDtype = 'float'
                     elif tname in self.tStr:

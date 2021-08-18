@@ -24,7 +24,6 @@ import pkg_resources as pkgr
 def findNamedSchema(schemaList, schemaDict, tname):
     """
     """
-    print("Searching for XML schema...")
     try:
         schema = schemaDict[tname]
     except KeyError:
@@ -50,8 +49,7 @@ def findNamedSchema(schemaList, schemaDict, tname):
             schemaSelected = schema[0]
             schema = schemaDict[schemaSelected]
 
-    print("Schema before call:")
-    print(schema)
+    print("Schema found:", schema)
 
     return schema
 
