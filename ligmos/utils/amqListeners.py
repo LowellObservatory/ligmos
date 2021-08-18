@@ -161,6 +161,7 @@ class LIGBaseConsumer(ConnectionListener):
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
                                                    tname)
+                    print("Found schema:", schema)
 
                     mp.parserFlatPacket(headers, body,
                                         schema=schema, db=self.dbconn,
