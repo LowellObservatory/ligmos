@@ -91,14 +91,13 @@ class ParrotSubscriber(ConnectionListener):
 
 
 class LIGBaseConsumer(ConnectionListener):
+    """
+    This will really be stuffed into an amqHelper class, so all the
+    connections stuff is really over there in that class.
+    """
     def __init__(self, dbconn=None, postProcFunc=None, tSpecial=None,
                  tXML=None, tFloat=None, tStr=None, tBool=None):
-        """
-        This will really be stuffed into a
-        amqHelper class, so all the connections stuff is
-        really over there in that class.  This is just to route
-        specific messages to the right parsers
-        """
+
         # This should be a function reference that will be used first
         #   if specified, to handle any special cases that aren't handled
         #   by one of the generic parsers below
