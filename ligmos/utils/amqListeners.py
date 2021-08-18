@@ -103,10 +103,12 @@ class LIGBaseConsumer(ConnectionListener):
         #   that is the special/specific parser for that topic.  That lets us
         #   handle any any special cases that aren't generic
         if isinstance(tSpecial, dict):
-            self.tSpecial = tSpecial
+            self.specialMap = tSpecial
+            self.specialTopics = list(tSpecial.keys())
         else:
             print("WARNING: No special topics, or improper format!")
-            self.tSpecial = None
+            self.specialMap = None
+            self.specialTopics = []
 
         # These topics are handeled entirely by generic parsers
         self.tXML = tXML
@@ -150,15 +152,12 @@ class LIGBaseConsumer(ConnectionListener):
             # Look for special topics first, then XML, then the rest.
             #   Wrapped all in a try...except block to catch goof ups
             try:
-                # Make sure it's really a dict one last time to avoid
-                #   an AttributeError trying to take .keys() of None
-                if isinstance(self.tSpecial, dict):
-                    if tname in self.tSpecial.keys():
-                        try:
-                            funcRef = self.tSpecial[tname]
-                            funcRef(headers, body, db=self.dbconn)
-                        except KeyError:
-                            print("WTF?")
+                if tname in self.specialTopics:
+                    try:
+                        funcRef = self.specialMap[tname]
+                        funcRef(headers, body, db=self.dbconn)
+                    except KeyError:
+                        print("WTF?")
                 elif tname in self.tXML:
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
