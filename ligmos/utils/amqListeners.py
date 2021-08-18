@@ -137,6 +137,7 @@ class LIGBaseConsumer(ConnectionListener):
         try:
             body = body.decode("utf-8")
             badMsg = False
+            print("Processing message on %s: %s" % (tname, body))
         except UnicodeDecodeError as err:
             print(str(err))
             print("Badness 10000")
