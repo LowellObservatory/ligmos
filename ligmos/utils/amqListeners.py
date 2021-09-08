@@ -15,6 +15,11 @@ Further description.
 
 from __future__ import division, print_function, absolute_import
 
+import time
+from uuid import uuid4
+from copy import deepcopy
+from collections import OrderedDict
+
 import xmltodict as xmld
 from stomp.listener import ConnectionListener
 
@@ -228,3 +233,69 @@ class LIGBaseConsumer(ConnectionListener):
                 print(headers)
                 print(body)
                 print("="*11)
+
+
+class queueMaintainer(LIGBaseConsumer):
+    """
+    """
+    def __init__(self, *args, **kwargs):
+        # Pull out the command and reply topics from the arguments;
+        #    cmd is first, reply is second!
+        self.cmdTopic = args[0]
+        self.replyTopic = args[1]
+
+        self.brokerQueue = OrderedDict()
+
+        # Init the base class and pass thru the keyword arguments
+        super().__init__(**kwargs)
+
+    def queueAdd(self, cmddict):
+        if cmddict != {}:
+            # Track the time it was on the queue for later diagnostics.
+            #   This will be updated to just the difference/elapsed time
+            #   when the action is done and sent back on the reply topic
+            cmddict.update({"timeonqueue": time.time()})
+            # This lets us make sure that we remove the right one from
+            #   the queue when it's processed
+            try:
+                cmduuid = cmddict['cmd_id']
+            except KeyError:
+                # The cmd producer SHOULD have appended a (UNIQUE!) tag
+                #   to the cmd XML before it sent it, but if it wasn't
+                #   there, generate a random UUID so it could be tracked
+                #   at least part of the way back to the source.
+                cmduuid = str(uuid4())
+
+            # Finally put it all on the queue for later consumption
+            self.brokerQueue.update({cmduuid: cmddict})
+
+    def queueEmpty(self):
+        """
+        Pop all the current entries off of the command queue and return them
+        as a dict for actual action elsewhere.
+
+        Also return the time that the entries have sat on the queue for
+        later diagnostics if/when needed!
+        """
+        # We NEED deepcopy() here to prevent the loop from being
+        #   confused by a mutation/addition from the listener
+        checkQueue = deepcopy(self.brokerQueue)
+        if len(checkQueue.items()) > 0:
+            print("%d items in the queue" % len(checkQueue.items()))
+
+        newactions = []
+
+        if checkQueue != {}:
+            for uuid in checkQueue:
+                # Update the timeonqueue entry to show how long it sat
+                action = self.brokerQueue.pop(uuid)
+                toq = time.time() - action['timeonqueue']
+                action['timeonqueue'] = round(toq, 5)
+
+                # Really just a debug print but it helps here
+                print("Removed %s from the queue, ready for action" % (uuid))
+                print(action)
+
+                newactions.append(action)
+
+        return newactions
