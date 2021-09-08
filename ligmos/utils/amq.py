@@ -345,6 +345,8 @@ def getAllTopics(config, comm, queuerole=None):
     connection/reconnection/subscription logic waaaaayy easier
     """
     amqtopics = {}
+    alltopics = []
+
     for sect in config:
         csObj = config[sect]
         try:
