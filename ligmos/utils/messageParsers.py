@@ -267,8 +267,13 @@ def parserSimple(hed, msg, db=None, datatype='float'):
 
 def parserCmdPacket(hed, msg, schema=None, debug=False, db=None):
     """
-    def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
-                         timestampKey='influx_ts', returnParsed=False):
+    NOTE
+
+    This function is totally broken if I call it from a specialXML handling
+    path - by that point the message is parsed and I need to ditch this
+    boilerplate here to roll it back a little bit.  Oops.
+
+    See amqListeners:182 and thereabouts!
 
     db=None is needed for ligmos LIGBaseConsumer compatibility!!
     """
