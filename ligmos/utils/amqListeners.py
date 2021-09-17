@@ -261,20 +261,30 @@ class queueMaintainer(LIGBaseConsumer):
             self.specialXMLMap.update({self.cmdTopic: self.queueAdd})
         self.specialXMLTopics = list(self.specialXMLMap.keys())
 
-    def queueAdd(self, cmddict, db=None):
+    def queueAdd(self, parsedPacketInfo, db=None):
         """
-        NOTE: db=None is REQUIRED as a dummy argument to get this
-              shoehorned into the default/base listener class!
+        NOTE: parsedPacketInfo is really a tuple since it's coming in from
+            parserFlatPacket (with returnParsed=True)!   That means we need
+            to unpack it:
+
+            parsedPacketInfo == meas, ts, timeprec, fields
+
+        db=None is needed for ligmos LIGBaseConsumer compatibility!!
         """
-        if cmddict != {}:
+        originTopic = parsedPacketInfo[0]
+        timestamp = parsedPacketInfo[1]
+        timePrecision = parsedPacketInfo[2]
+        parsedDict = parsedPacketInfo[3]
+
+        if parsedDict != {}:
             # Track the time it was on the queue for later diagnostics.
             #   This will be updated to just the difference/elapsed time
             #   when the action is done and sent back on the reply topic
-            cmddict.update({"timeonqueue": time.time()})
+            parsedDict.update({"timeonqueue": time.time()})
             # This lets us make sure that we remove the right one from
             #   the queue when it's processed
             try:
-                cmduuid = cmddict['cmd_id']
+                cmduuid = parsedDict['cmd_id']
             except KeyError:
                 # The cmd producer SHOULD have appended a (UNIQUE!) tag
                 #   to the cmd XML before it sent it, but if it wasn't
@@ -283,7 +293,7 @@ class queueMaintainer(LIGBaseConsumer):
                 cmduuid = str(uuid4())
 
             # Finally put it all on the queue for later consumption
-            self.brokerQueue.update({cmduuid: cmddict})
+            self.brokerQueue.update({cmduuid: parsedDict})
 
     def queueEmpty(self):
         """
