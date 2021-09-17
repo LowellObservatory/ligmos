@@ -95,8 +95,6 @@ class ParrotSubscriber(ConnectionListener):
 
 class LIGBaseConsumer(ConnectionListener):
     """
-    This will really be stuffed into an amqHelper class, so all the
-    connections stuff is really over there in that class.
     """
     def __init__(self, dbconn=None,
                  tXML=None, tFloat=None, tStr=None, tBool=None,
@@ -184,6 +182,10 @@ class LIGBaseConsumer(ConnectionListener):
                                              returnParsed=True)
 
                     # Now pass it off to the custom parsing function
+                    #   The custom parsing function MUST follow this call,
+                    #   accepting one positional argument and a keyword arg
+                    #   of 'db'.  The latter can just be a dummy but it's
+                    #   gotta be there!
                     funcRef(rP, db=self.dbconn)
                 elif tname in self.tXML:
                     # full parsing of XML (schema-based) third
@@ -249,7 +251,20 @@ class queueMaintainer(LIGBaseConsumer):
         # Init the base class and pass thru the keyword arguments
         super().__init__(**kwargs)
 
-    def queueAdd(self, cmddict):
+        # Link up the command and reply topics with the class methods
+        #   so they can actually be processed and acted upon
+        if self.specialXMLMap is None:
+            # This means that there was nothing previously specified
+            self.specialXMLMap = {self.cmdTopic: self.queueAdd}
+        else:
+            self.specialXMLMap.update({self.cmdTopic: self.queueAdd})
+        self.specialXMLTopics = list(self.specialXMLMap.keys())
+
+    def queueAdd(self, cmddict, db=None):
+        """
+        NOTE: db=None is REQUIRED as a dummy argument to get this
+              shoehorned into the default/base listener class!
+        """
         if cmddict != {}:
             # Track the time it was on the queue for later diagnostics.
             #   This will be updated to just the difference/elapsed time
