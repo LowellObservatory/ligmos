@@ -46,7 +46,11 @@ class ParrotSubscriber(ConnectionListener):
         self.baseid = baseid
 
     # Subclassing stomp.listener.ConnectionListener
-    def on_message(self, headers, body):
+    def on_message(self, frame):
+        # Makes it easier to move from STOMP 6->7
+        headers = frame.headers
+        body = frame.body
+
         tname = headers['destination'].split('/')[-1]
         # Manually turn the bytestring into a string
         try:
@@ -144,9 +148,13 @@ class LIGBaseConsumer(ConnectionListener):
             self.schemaList = list(self.schemaDict.keys())
             print(self.schemaDict)
 
-    def on_message(self, headers, body):
+    def on_message(self, frame):
         """
         """
+        # Makes it easier to move from STOMP 6->7
+        headers = frame.headers
+        body = frame.body
+
         badMsg = False
         tname = headers['destination'].split('/')[-1].strip()
 
