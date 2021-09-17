@@ -265,7 +265,8 @@ def parserSimple(hed, msg, db=None, datatype='float'):
         db.singleCommit(packet, table=db.tablename, close=True)
 
 
-def parserCmdPacket(hed, msg, schema=None, debug=False, db=None):
+# def parserCmdPacket(hed, msg, schema=None, debug=False, db=None):
+def parserCmdPacket(rP, debug=False, db=None):
     """
     NOTE
 
@@ -277,56 +278,24 @@ def parserCmdPacket(hed, msg, schema=None, debug=False, db=None):
 
     db=None is needed for ligmos LIGBaseConsumer compatibility!!
     """
-    # print(msg)
-    # This is really the topic name, so we'll make that the measurement name
-    #   for the sake of clarity. It NEEDS to be a list until I fix packetizer!
-    meas = [os.path.basename(hed['destination'])]
-
-    # Bail if there's a schema not found; needs expansion here
-    if schema is None:
-        print("No schema found for topic %s!" % (meas[0]))
-        return None
-
-    # In this house, we only store valid packets!
-    good = schema.is_valid(msg)
-
-    # A DIRTY DIRTY HACK
-    try:
-        xmlp = schema.to_dict(msg, decimal_type=float, validation='lax')
-        # print(xmlp)
-        good = True
-    except xmls.XMLSchemaValidationError:
-        good = False
+    print(rP)
 
     fields = {}
-    if good is True:
-        # print("Packet good!")
-        try:
-            xmlp = schema.to_dict(msg, decimal_type=float, validation='lax')
-            # I HATE THIS
-            if isinstance(xmlp, tuple):
-                xmlp = xmlp[0]
+    if isinstance(rP, dict):
+        # Store each key:value pairing
+        for each in rP.keys():
+            val = rP[each]
 
-            # Back to normal.
-            keys = xmlp.keys()
+            # TESTING
+            if isinstance(val, dict):
+                flatVals = flatten(val, parent_key=each)
+                fields.update(flatVals)
+            else:
+                fields.update({each: val})
 
-            # Store each key:value pairing
-            for each in keys:
-                val = xmlp[each]
-
-                # TESTING
-                if isinstance(val, dict):
-                    flatVals = flatten(val, parent_key=each)
-                    fields.update(flatVals)
-                else:
-                    fields.update({each: val})
-
-            if fields is not None:
-                # do something ... ?
-                pass
-        except xmls.XMLSchemaDecodeError as err:
-            print(err.message.strip())
-            print(err.reason.strip())
+        if fields is not None:
+            # do something ... ?
+            pass
 
         # Added for itteratively testing parsed packets outside of the
         #   usual operational mode (like in toymodels/PacketSchemer)
