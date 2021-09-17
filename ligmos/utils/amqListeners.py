@@ -257,6 +257,7 @@ class queueMaintainer(LIGBaseConsumer):
             # This means that there was nothing previously specified
             self.specialXMLMap = {self.cmdTopic: self.queueAdd}
         else:
+            print(self.specialXMLMap)
             self.specialXMLMap.update({self.cmdTopic: self.queueAdd})
         self.specialXMLTopics = list(self.specialXMLMap.keys())
 
