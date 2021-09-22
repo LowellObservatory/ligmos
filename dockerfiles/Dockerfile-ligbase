@@ -29,13 +29,12 @@ RUN DEBIAN_RELEASE=bullseye && \
 #   (./ is relative to WORKDIR)
 COPY --chown=lig:lig ./dockerfiles/conda_install.txt ./
 COPY --chown=lig:lig ./dockerfiles/condaforge_install.txt ./
-COPY --chown=lig:lig ./dockerfiles/pip_install.txt ./
 
 # One layer each for the conda and pip installs
-# Trying out things for speed; conda-forge things first since they're complex
-RUN conda install -c conda-forge --file condaforge_install.txt
-RUN conda install -y --file conda_install.txt
+# These need to happen in this specific order to actually work
 RUN pip install --no-cache-dir -r pip_install.txt
+RUN conda install -y --file conda_install.txt
+RUN conda install -c conda-forge --file condaforge_install.txt
 
 USER lig
 RUN mkdir /home/lig/.snmp && mkdir /home/lig/.snmp/mibs
