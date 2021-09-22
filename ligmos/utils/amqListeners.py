@@ -47,6 +47,11 @@ class ParrotSubscriber(ConnectionListener):
 
     # Subclassing stomp.listener.ConnectionListener
     def on_message(self, frame):
+        """
+        Technically this could just be all replaced with the equivalent
+        stomp.py printing parser, but that prints out stuff for every single
+        message and action and that's just too much honestly.
+        """
         # Makes it easier to move from STOMP 6->7
         headers = frame.headers
         body = frame.body
@@ -150,6 +155,10 @@ class LIGBaseConsumer(ConnectionListener):
 
     def on_message(self, frame):
         """
+        Routes the messages (picked up from the frame) to the appropriate
+        generic parsers.  Some capability for custom/special handling
+        such as parsing with an XML schema and then handing off the result
+        for further actions (especially queue command messages)
         """
         # Makes it easier to move from STOMP 6->7
         headers = frame.headers
