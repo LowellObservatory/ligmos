@@ -11,13 +11,15 @@ RUN addgroup --gid ${groupid} lig && \
     --gecos '' --disabled-password
 
 # Additional quality-of-life packages
-RUN apt-get update --fix-missing && apt-get install -y vim build-essential gcc vim rsync wget procps libgl1
+RUN apt-get update --fix-missing && apt-get install -y vim build-essential \
+                                                       gcc vim rsync wget \
+                                                       procps libgl1
 
 # Copy in the lists of stuff that Conda and pip need to install
 #   (./ is relative to WORKDIR)
-COPY --chown=lig:lig conda_install.txt ./
-COPY --chown=lig:lig condaforge_install.txt ./
-COPY --chown=lig:lig pip_install.txt ./
+COPY --chown=lig:lig ./dockerfiles/conda_install.txt ./
+COPY --chown=lig:lig ./dockerfiles/condaforge_install.txt ./
+COPY --chown=lig:lig ./dockerfiles/pip_install.txt ./
 
 # One layer each for the conda and pip installs
 RUN conda install -y --file conda_install.txt
@@ -49,9 +51,12 @@ USER lig:lig
 WORKDIR /home/lig/
 RUN mkdir conf && mkdir logs && mkdir Codes
 
-# Install the ligmos library, for all users
+# Install the ligmos library, for all users.
+#   This is designed to be called from the base ligmos dir already, so
+#   copy over the contents and put it in a subdirectory in the image
 WORKDIR /home/lig/Codes/
-COPY --chown=lig:lig ./ligmos ./ligmos
+RUN mkdir ligmos
+COPY --chown=lig:lig ./ ligmos/
 WORKDIR /home/lig/Codes/ligmos
 
 # Totally unnecessary root install but whatever
