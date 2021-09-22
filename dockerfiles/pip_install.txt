@@ -12,6 +12,7 @@ pyephem
 bs4
 pytz
 schedule
+snimpy
 memory_profiler
 rtsp
 xarray
