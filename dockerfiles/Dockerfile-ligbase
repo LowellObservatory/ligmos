@@ -39,7 +39,7 @@ RUN pip install --no-cache-dir -r pip_install.txt
 
 USER lig
 RUN mkdir /home/lig/.snmp && mkdir /home/lig/.snmp/mibs
-COPY --chown=lig:lig ./mibs/* /home/lig/.snmp/mibs/
+COPY --chown=lig:lig ../mibs/* /home/lig/.snmp/mibs/
 
 # At this point it's a minimal working LIG python image
 #   so copy in the LIG codes and get them going
