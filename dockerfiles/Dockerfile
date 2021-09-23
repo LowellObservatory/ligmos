@@ -1,4 +1,4 @@
-ARG miniconda_version=4.9.2
+ARG miniconda_version=4.10.3
 FROM continuumio/miniconda3:${miniconda_version}
 
 ARG userid="31415"
@@ -10,8 +10,18 @@ RUN addgroup --gid ${groupid} lig && \
     adduser lig --uid ${userid} --gid ${groupid} \
     --gecos '' --disabled-password
 
-# Additional quality-of-life packages
-RUN apt-get update --fix-missing && apt-get install -y vim build-essential gcc vim rsync wget procps libgl1
+# Additional quality-of-life packages, plus SNMP stuff:
+#   Add the non-free repository first so we can get the nonfree MIBs
+RUN export DEBIAN_RELEASE=bullseye && \
+    echo "deb http://deb.debian.org/debian ${DEBIAN_RELEASE} non-free" > \
+        /etc/apt/sources.list.d/debian-non-free.list
+RUN apt-get update --fix-missing && apt-get install -y vim build-essential \
+                                                       gcc vim rsync wget \
+                                                       procps libgl1 \
+                                                       snmp libsnmp-dev \
+                                                       snmp-mibs-downloader \
+                                                       libffi-dev \
+                                                       smitools libsmi2-dev
 
 # Copy in the lists of stuff that Conda and pip need to install
 #   (./ is relative to WORKDIR)
@@ -23,19 +33,6 @@ COPY --chown=lig:lig pip_install.txt ./
 RUN conda install -y --file conda_install.txt
 RUN conda install -c conda-forge --file condaforge_install.txt
 RUN pip install --no-cache-dir -r pip_install.txt
-
-# Add in the SNMP stuff:
-#   Add the non-free repository first so we can get the nonfree MIBs
-#
-# Should find out a way to just get the debian release version automagically
-#
-RUN DEBIAN_RELEASE=buster && \
-    # Adding non-free repo for netperf
-    echo "deb http://deb.debian.org/debian ${DEBIAN_RELEASE} non-free" > \
-        /etc/apt/sources.list.d/debian-non-free.list && \
-    apt-get -qq update && \
-    apt-get -y install snmp libsnmp-dev snmp-mibs-downloader \
-                       libffi-dev smitools libsmi2-dev
 
 RUN pip install snimpy
 
