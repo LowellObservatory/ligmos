@@ -52,11 +52,11 @@ def ping(host, port=22, repeats=7, waittime=0.5, timeout=1,
                 dnss.append(res['durations']['dns'].total_seconds()*1000.)
                 if debug is True:
                     print(res)
-            except TimeoutError as err:
+            except (TimeoutError, multialarm.TimeoutError) as err:
                 # Small quirk; I had thought I needed to call this
                 #   multialarm.TimeoutError, but I think because that lib
-                #   overloads TimeoutError I just need to catch that one now.
-                #   Namespaces are weird.
+                #   overloads TimeoutError I just need to catch that one now
+                #   sometimes, for reasons unknown.  Namespaces are weird.
                 if debug is True:
                     print("Timed out: %s" % (str(err)))
                 dropped += 1
