@@ -93,6 +93,8 @@ class Webcam(object):
         self.extracopy_prefix = None
         self.archive = True
         self.archiveDays = 7
+        self.site = None
+        self.sunvalid = -20.0
         self.enabled = False
 
 

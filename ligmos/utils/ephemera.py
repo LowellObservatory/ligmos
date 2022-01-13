@@ -46,6 +46,16 @@ class observingSite():
 
             # Go ahead and calculate all the angles/times we care about
             self.sunmoon = solarsystemAngles(self.eObserver)
+        elif sitename.lower() == "marshill":
+            # Slipher basement windowsill
+            self.eObserver = ephem.Observer()
+            self.eObserver.lat = '35.202976'
+            self.eObserver.lon = '-111.664855'
+            self.eObserver.elevation = 2150
+            self.eObserver.name = "Mars Hill"
+
+            # Go ahead and calculate all the angles/times we care about
+            self.sunmoon = solarsystemAngles(self.eObserver)
         else:
             print("UNKNOWN OBSERVATORY SITE! ABORTING.")
             raise NotImplementedError
