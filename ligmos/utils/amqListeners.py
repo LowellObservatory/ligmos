@@ -182,10 +182,12 @@ class LIGBaseConsumer(ConnectionListener):
         if badMsg is False:
             try:
                 if tname in self.specialTopics:
+                    print("Defined special topic")
                     # Look for special topics first!
                     funcRef = self.specialMap[tname]
                     funcRef(headers, body, db=self.dbconn)
                 elif tname in self.specialXMLTopics:
+                    print("Defined special XML topic")
                     # Look for kinda XML special topics second!
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
@@ -205,6 +207,7 @@ class LIGBaseConsumer(ConnectionListener):
                     #   gotta be there!
                     funcRef(rP, db=self.dbconn)
                 elif tname in self.tXML:
+                    print("Defined regular XML topic")
                     # full parsing of XML (schema-based) third
                     schema = myxml.findNamedSchema(self.schemaList,
                                                    self.schemaDict,
@@ -225,6 +228,7 @@ class LIGBaseConsumer(ConnectionListener):
                                         returnParsed=False)
                 elif (self.tFloat is not None) or (self.tFloat is not None) or\
                      (self.tBool is not None) or (self.tStr is not None):
+                    print("Defined single type (float, str, bool)")
                     # Everyting else goes last
                     if tname in self.tFloat:
                         simpleDtype = 'float'

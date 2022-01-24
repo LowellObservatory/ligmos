@@ -24,6 +24,9 @@ import pkg_resources as pkgr
 def findNamedSchema(schemaList, schemaDict, tname):
     """
     """
+    print("schemaList: ", schemaList)
+    print("schemaDict: ", schemaDict)
+    print("tname: ", tname)
     try:
         schema = schemaDict[tname]
     except KeyError:
