@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MarsHillTiMoVirtualWeatherStation>
+<VirtualWeatherStation>
 	<timestampdt>2022-01-24 14:46:00-07:00</timestampdt>
 	<influx_ts_s>1643060760</influx_ts_s>
 	<WindSpeed>5.0</WindSpeed>
@@ -28,4 +28,4 @@
 	<Channel1TempRate>0.0</Channel1TempRate>
 	<Channel2TempRate>0.0</Channel2TempRate>
 	<Channel3TempRate>0.0</Channel3TempRate>
-</MarsHillTiMoVirtualWeatherStation>
+</VirtualWeatherStation>

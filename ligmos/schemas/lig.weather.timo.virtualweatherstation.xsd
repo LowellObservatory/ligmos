@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:element name="MarsHillTiMoVirtualWeatherStation">
+    <xsd:element name="VirtualWeatherStation">
         <xsd:complexType mixed="true">
             <xsd:sequence>
                 <xsd:element name="timestampdt" minOccurs="0" type="xsd:string"/>
