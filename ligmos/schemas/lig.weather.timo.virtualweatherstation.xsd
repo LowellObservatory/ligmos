@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="MarsHillTiMoVirtualWeatherStation">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="timestampdt" minOccurs="0" type="xsd:string"/>
+                <xsd:element name="influx_ts_s" minOccurs="0" type="xsd:long"/>
+                <xsd:element name="WindSpeed" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="WindGust" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="WindDir" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="InsideHumidity" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="OutsideHumidity" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="InsideTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="OutsideTemp" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Pressure" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="TotalRain" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="DailyRain" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="HourlyRain" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="ConditionFlag" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Evapotranspiration" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="UVIndex" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="SolarRadiation" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="WindChill" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="IndoorHeatIndex" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="OutdoorHeatIndex" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Dewpoint" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="RainRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="OutdoorTempRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="IndoorTempRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="PressureRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Channel1TempRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Channel2TempRate" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="Channel3TempRate" minOccurs="0" type="xsd:decimal"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

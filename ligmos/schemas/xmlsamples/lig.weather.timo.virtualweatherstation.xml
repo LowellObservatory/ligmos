@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MarsHillTiMoVirtualWeatherStation>
+	<timestampdt>2022-01-24 14:46:00-07:00</timestampdt>
+	<influx_ts_s>1643060760</influx_ts_s>
+	<WindSpeed>5.0</WindSpeed>
+	<WindGust>5.0</WindGust>
+	<WindDir>156.0</WindDir>
+	<InsideHumidity>16.0</InsideHumidity>
+	<OutsideHumidity>18.0</OutsideHumidity>
+	<InsideTemp>69.9</InsideTemp>
+	<OutsideTemp>54.1</OutsideTemp>
+	<Pressure>29.99</Pressure>
+	<TotalRain>0.17</TotalRain>
+	<DailyRain>0.0</DailyRain>
+	<HourlyRain>0.0</HourlyRain>
+	<ConditionFlag>6.0</ConditionFlag>
+	<Evapotranspiration>0.0</Evapotranspiration>
+	<UVIndex>0.0</UVIndex>
+	<SolarRadiation>0.0</SolarRadiation>
+	<WindChill>53.0</WindChill>
+	<IndoorHeatIndex>68.3</IndoorHeatIndex>
+	<OutdoorHeatIndex>52.6</OutdoorHeatIndex>
+	<Dewpoint>11.6</Dewpoint>
+	<RainRate>0.0</RainRate>
+	<OutdoorTempRate>0.2</OutdoorTempRate>
+	<IndoorTempRate>0.4</IndoorTempRate>
+	<PressureRate>-0.0</PressureRate>
+	<Channel1TempRate>0.0</Channel1TempRate>
+	<Channel2TempRate>0.0</Channel2TempRate>
+	<Channel3TempRate>0.0</Channel3TempRate>
+</MarsHillTiMoVirtualWeatherStation>
