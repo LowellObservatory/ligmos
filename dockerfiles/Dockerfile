@@ -12,6 +12,9 @@ RUN addgroup --gid ${groupid} lig && \
 
 # Additional quality-of-life packages, plus SNMP stuff:
 #   Add the non-free repository first so we can get the nonfree MIBs
+#
+# Should find out a way to just get the debian release version automagically
+#
 RUN export DEBIAN_RELEASE=bullseye && \
     echo "deb http://deb.debian.org/debian ${DEBIAN_RELEASE} non-free" > \
         /etc/apt/sources.list.d/debian-non-free.list
@@ -38,7 +41,6 @@ RUN pip install snimpy
 
 USER lig
 RUN mkdir /home/lig/.snmp && mkdir /home/lig/.snmp/mibs
-COPY --chown=lig:lig ./mibs/* /home/lig/.snmp/mibs/
 
 # At this point it's a minimal working LIG python image
 #   so copy in the LIG codes and get them going
@@ -46,9 +48,12 @@ USER lig:lig
 WORKDIR /home/lig/
 RUN mkdir conf && mkdir logs && mkdir Codes
 
-# Install the ligmos library, for all users
+# Install the ligmos library, for all users.
+#   This is designed to be called from the base ligmos dir already, so
+#   copy over the contents and put it in a subdirectory in the image
 WORKDIR /home/lig/Codes/
-COPY --chown=lig:lig ./ligmos ./ligmos
+RUN mkdir ligmos
+COPY --chown=lig:lig ./ ligmos/
 WORKDIR /home/lig/Codes/ligmos
 
 # Totally unnecessary root install but whatever

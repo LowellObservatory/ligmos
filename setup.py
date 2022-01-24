@@ -137,7 +137,7 @@ setup(
                       'serviceping',
                       'paramiko',
                       'xmltodict',
-                      'stomp.py',
+                      'stomp.py>=7.0.0',
                       'xmlschema',
                       'pandas',
                       'pyserial'],
