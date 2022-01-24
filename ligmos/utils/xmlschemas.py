@@ -127,9 +127,10 @@ def schemaDicter():
             #   very specific format!
             # broker.topic.name.vX-Y-Z.xsd
             schparts = schname.split(".")
-            # if it starts with "v" AND also has underscores, it's probably
+            # if it starts with "@" AND also has underscores, it's probably
             #   a tag.  It's dumb but it works for now. Could be improved.
-            if schparts[-1].startswith("v"):
+            if schparts[-1].startswith("@"):
+                print("Likely versioned schema found!")
                 if "_" in schparts[-1]:
                     vtag = schparts[-1]
                     origtag = schname[:-len(vtag)-1]
@@ -157,6 +158,7 @@ def schemaDicter():
                     else:
                         sdict.update({origtag: versionedSchema})
                 else:
+                    print("Storing %s %s" % (origtag, schema))
                     sdict.update({origtag: schema})
             except xmls.exceptions.XMLSchemaException as err:
                 print("xmlschema error!")
