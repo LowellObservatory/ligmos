@@ -132,11 +132,13 @@ def schemaDicter():
             if schparts[-1].startswith("@"):
                 print("Likely versioned schema found!")
                 if "_" in schparts[-1]:
-                    vtag = schparts[-1]
+                    # We want to skip the delimiter ("@") so start at pos. 1
+                    vtag = schparts[-1][1:]
                     origtag = schname[:-len(vtag)-1]
                     # Some more transformations to clean it up to what should
                     #   be in the packets themselves
                     vtag = vtag.replace("_", ".")
+                    print("Schema: %s\nTag: %s" % (origtag, vtag))
             else:
                 origtag = schname
                 vtag = None
