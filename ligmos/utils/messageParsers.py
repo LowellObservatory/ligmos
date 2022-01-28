@@ -182,7 +182,7 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
                     #   for some details on that front.
                     #
                     # Remember; meas is a list and must remain a list!
-                    meas = "%s_%s" % (meas[0], best[1:])
+                    meas = "%s_%s" % (meas[0], best)
                     meas = [meas]
 
                 # Allow a quick exit here after parsing and sorting in case
