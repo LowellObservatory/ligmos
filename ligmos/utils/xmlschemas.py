@@ -133,8 +133,10 @@ def schemaDicter():
                 print("Likely versioned schema found!")
                 if "_" in schparts[-1]:
                     # We want to skip the delimiter ("@") so start at pos. 1
+                    #  for the actual tag, and go to pos. -2 for the name
+                    #  since we're no longer splitting cleanly on "."
                     vtag = schparts[-1][1:]
-                    origtag = schname[:-len(vtag)-1]
+                    origtag = schname[:-len(vtag)-2]
                     # Some more transformations to clean it up to what should
                     #   be in the packets themselves
                     vtag = vtag.replace("_", ".")
