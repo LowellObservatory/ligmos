@@ -21,11 +21,13 @@ from ligmos import utils
 
 
 if __name__ == "__main__":
-    name = "LOUI.nasa42.loisTelemetry"
+    # name = "LOUI.nasa42.loisTelemetry"
+    name = "lig.MrFreeze.cmd"
 
-    schema = utils.amq.checkSchema(name)
-    # sample = utils.amq.checkSample(name)
-    sample = """Lois Telemetry Initialized"""
+    schema = utils.xmlschemas.checkSchema(name)
+    sample = utils.xmlschemas.checkSample(name)
+
+    # sample = """Lois Telemetry Initialized"""
 
     if sample != "":
         print("Sample XML for %s:" % (name))

@@ -57,11 +57,11 @@ def findNamedSchema(schemaList, schemaDict, tname):
     return schema
 
 
-def checkSchema(topicname):
+def checkSchema(topicname, basepath="schemas/"):
     """
     """
     # Put together the expected schema name
-    sn = 'schemas/' + topicname + '.xsd'
+    sn = basepath + topicname + '.xsd'
     try:
         # Define the schema we'll use to convert datatypes. If it doesn't
         #   exist, catch the exception and return 'None' to show that
@@ -78,11 +78,11 @@ def checkSchema(topicname):
         return None
 
 
-def checkSample(topicname):
+def checkSample(topicname, basepath="schemas/xmlsamples/"):
     """
     """
     # Put together the expected schema name
-    sn = 'schemas/xmlsamples/' + topicname + '.xml'
+    sn = basepath + topicname + '.xml'
     try:
         # Define the schema we'll use to convert datatypes. If it doesn't
         #   exist, catch the exception and return 'None' to show that
