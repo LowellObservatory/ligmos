@@ -15,7 +15,8 @@ Further description.
 
 from __future__ import division, print_function, absolute_import
 
-from os.path import basename
+from os import listdir
+from os.path import isdir, basename
 
 import xmlschema as xmls
 import pkg_resources as pkgr
@@ -57,16 +58,21 @@ def findNamedSchema(schemaList, schemaDict, tname):
     return schema
 
 
-def checkSchema(topicname, basepath="schemas/"):
+def checkSchema(topicname, basepath=None):
     """
     """
     # Put together the expected schema name
-    sn = basepath + topicname + '.xsd'
+    if basepath is None:
+        basepath = "schemas/"
+        sn = basepath + topicname + '.xsd'
+        sf = pkgr.resource_filename('ligmos', sn)
+    else:
+        sf = basepath + topicname + '.xsd'
+
     try:
         # Define the schema we'll use to convert datatypes. If it doesn't
         #   exist, catch the exception and return 'None' to show that
         #   the schema didn't exist where it was expected
-        sf = pkgr.resource_filename('ligmos', sn)
         schema = xmls.XMLSchema(sf)
         return schema
     except xmls.exceptions.XMLSchemaException as err:
@@ -78,49 +84,65 @@ def checkSchema(topicname, basepath="schemas/"):
         return None
 
 
-def checkSample(topicname, basepath="schemas/xmlsamples/"):
+def checkSample(topicname, basepath=None):
     """
     """
     # Put together the expected schema name
-    sn = basepath + topicname + '.xml'
+    if basepath is None:
+        basepath = "schemas/xmlsamples/"
+        sn = basepath + topicname + '.xml'
+        sf = pkgr.resource_filename('ligmos', sn)
+    else:
+        sf = basepath + topicname + '.xml'
+
     try:
         # Define the schema we'll use to convert datatypes. If it doesn't
         #   exist, catch the exception and return 'None' to show that
         #   the schema didn't exist where it was expected
-        sf = pkgr.resource_filename('ligmos', sn)
         xmlstr = ""
         with open(sf, 'r') as f:
             xmlstr = f.read()
-
         return xmlstr
     except xmls.exceptions.XMLSchemaException:
-        print("Sample for topic %s not found!" % (topicname))
+        print("Problem with schema for topic %s!" % (topicname))
         return ""
     except (IOError, OSError):
         print("Sample for topic %s not found!" % (topicname))
         return ""
 
 
-def schemaDicter():
+def schemaDicter(schemaBasePath=None):
     """
     Grab all of the schemas in the package directory and return
     a dict organized by topic name.
     """
     sdict = {}
 
-    # Get the list of everything in the schema repo
-    allschemas = pkgr.resource_listdir('ligmos', 'schemas')
+    if schemaBasePath is None:
+        # Get the list of everything in the schema repo
+        schemaBasePath = "schemas"
+        allschemas = pkgr.resource_listdir('ligmos', schemaBasePath)
+    else:
+        allschemas = listdir(schemaBasePath)
 
     for tsch in allschemas:
-        spath = "%s/%s" % ('schemas', tsch)
+        spath = "%s/%s" % (schemaBasePath, tsch)
         schname = basename(tsch)
 
         # Strip the file extension off of it!
         schname = schname[:-4]
 
-        if pkgr.resource_isdir('ligmos', spath):
-            print("%s is a directory! Skipping it." % (tsch))
+        dirBail = False
+        if schemaBasePath is None:
+            if pkgr.resource_isdir('ligmos', spath):
+                print("%s is a directory! Skipping it." % (tsch))
+                dirBail = True
         else:
+            if isdir(spath):
+                print("%s is a directory! Skipping it." % (tsch))
+                dirBail = True
+
+        if dirBail is False:
             print("%s is a potential schema! Looking at it." % (schname))
 
             # Try to peel off a version tag, if there is one. It needs to be a

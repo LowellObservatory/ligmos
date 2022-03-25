@@ -65,7 +65,9 @@ if __name__ == "__main__":
 
                     print(fields)
                 else:
-                    failedParts = schema.validate(sample)
+                    # This returns nothing, but will raise errors.
+                    #   They'll be caught in the bulk/blank Exception below.
+                    schema.validate(sample)
                     print("Failed validation against the schema!")
         except Exception as err:
             print(str(err))
