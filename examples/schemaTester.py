@@ -21,7 +21,6 @@ from ligmos import utils
 
 
 if __name__ == "__main__":
-    # name = "LOUI.nasa42.loisTelemetry"
     name = "lig.MrFreeze.cmd"
 
     schema = utils.xmlschemas.checkSchema(name)
