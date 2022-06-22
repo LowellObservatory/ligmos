@@ -130,17 +130,22 @@ def schemaDicter(schemaBasePath=None):
         schname = basename(tsch)
 
         # Strip the file extension off of it!
-        schname = schname[:-4]
+        if schname.lower().endswith(".xsd"):
+            schname = schname[:-4]
+            dirBail = False
 
-        dirBail = False
-        if schemaBasePath is None:
-            if pkgr.resource_isdir('ligmos', spath):
-                print("%s is a directory! Skipping it." % (tsch))
-                dirBail = True
-        else:
-            if isdir(spath):
-                print("%s is a directory! Skipping it." % (tsch))
-                dirBail = True
+        # if schemaBasePath is None:
+        #     if pkgr.resource_isdir('ligmos', spath):
+        #         print("%s is a directory! Skipping it." % (tsch))
+        #         dirBail = True
+        # else:
+        #     if isdir(spath):
+        #         print("%s is a directory! Skipping it." % (tsch))
+        #         dirBail = True
+
+        if pkgr.resource_isdir('ligmos', spath):
+            print("%s is a directory! Skipping it." % (tsch))
+            dirBail = True
 
         if dirBail is False:
             print("%s is a potential schema! Looking at it." % (schname))
