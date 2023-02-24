@@ -15,8 +15,11 @@ import glob
 import fnmatch
 
 from shutil import rmtree
-from os import walk, statvfs, remove, makedirs, listdir
 from os.path import basename, exists, expanduser, join, isdir
+try:
+    from os import walk, statvfs, remove, makedirs, listdir
+except ImportError:
+    from os import walk, remove, makedirs, listdir
 
 import numpy as np
 
