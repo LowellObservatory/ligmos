@@ -104,6 +104,11 @@ def serLocalComm(devpath, cmds, sParams, timeout=1., debug=True):
     """
     Ideally I would just combine this with the above and pass in appropriate
     **args as needed for a bare Serial instance, but this works for now.
+
+    See
+    https://github.com/pyserial/pyserial/blob/31fa4807d73ed4eb9891a88a15817b439c4eea2d/serial/serialutil.py#L79-L81
+    for the definitions in pyserial; the only tricky ones are the parity
+    definitions but they make sense.
     """
     allreplies = {}
 
