@@ -24,7 +24,8 @@ RUN apt-get update --fix-missing && apt-get install -y vim build-essential \
                                                        snmp libsnmp-dev \
                                                        snmp-mibs-downloader \
                                                        libffi-dev \
-                                                       smitools libsmi2-dev
+                                                       smitools libsmi2-dev \
+                                                       net-tools curl dnsutils
 
 # Copy in the lists of stuff that Conda and pip need to install
 #   (./ is relative to WORKDIR)
