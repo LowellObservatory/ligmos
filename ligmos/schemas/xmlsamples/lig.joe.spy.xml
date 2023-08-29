@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<joeStatus>
+	<uptime>4475.62</uptime>
+	<sockets>
+		<RC1-OMS>ESTABLISHED</RC1-OMS>
+		<RC2-OMS>ESTABLISHED</RC2-OMS>
+		<OMS3>ESTABLISHED</OMS3>
+		<OMS4>ESTABLISHED</OMS4>
+		<DeVeny>ESTABLISHED</DeVeny>
+	</sockets>
+</joeStatus>
+

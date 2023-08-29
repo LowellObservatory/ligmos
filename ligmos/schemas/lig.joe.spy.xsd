@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="joeStatus">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="uptime" minOccurs="0" type="xsd:decimal"/>
+                <xsd:element name="sockets" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="RC1-OMS" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="RC2-OMS" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="OMS3" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="OMS4" minOccurs="0" type="xsd:normalizedString"/>
+                            <xsd:element name="DeVeny" minOccurs="0" type="xsd:normalizedString"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
