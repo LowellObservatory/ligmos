@@ -27,7 +27,7 @@ def rawParser(confname):
     """
     config = None
     try:
-        config = conf.SafeConfigParser()
+        config = conf.ConfigParser()
         config.read_file(open(confname, 'r'))
     except IOError as err:
         print("ERROR: Configuration file %s not found!" % (confname))
