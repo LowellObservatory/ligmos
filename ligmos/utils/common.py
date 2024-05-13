@@ -104,7 +104,15 @@ class HowtoStopNicely():
         # Set up signal handling before anything else!
         self.pidfile = None
         self.halt = False
-        signal.signal(signal.SIGHUP, self.signal_handler)
+        # NOTE: SIGHUP doesn't exist on Windows!  Bah.
+        # 
+        # DEAL WITH THIS STUPID CRAP 
+        #
+        try:
+            signal.signal(signal.SIGHUP, self.signal_handler)
+        except Exception as e:
+            print(str(e))
+            print("Are you on Windows?")
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
 
