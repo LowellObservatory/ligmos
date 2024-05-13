@@ -58,14 +58,14 @@ def findNamedSchema(schemaList, schemaDict, tname):
     return schema
 
 
-def checkSchema(topicname, basepath=None):
+def checkSchema(topicname, pacakgeName="ligmos", basepath=None):
     """
     """
     # Put together the expected schema name
     if basepath is None:
         basepath = "schemas/"
         sn = basepath + topicname + '.xsd'
-        sf = pkgr.resource_filename('ligmos', sn)
+        sf = pkgr.resource_filename(packageName, sn)
     else:
         sf = basepath + topicname + '.xsd'
 
@@ -84,14 +84,14 @@ def checkSchema(topicname, basepath=None):
         return None
 
 
-def checkSample(topicname, basepath=None):
+def checkSample(topicname, packageName="ligmos", basepath=None):
     """
     """
     # Put together the expected schema name
     if basepath is None:
         basepath = "schemas/xmlsamples/"
         sn = basepath + topicname + '.xml'
-        sf = pkgr.resource_filename('ligmos', sn)
+        sf = pkgr.resource_filename(packageName, sn)
     else:
         sf = basepath + topicname + '.xml'
 
@@ -111,7 +111,7 @@ def checkSample(topicname, basepath=None):
         return ""
 
 
-def schemaDicter(schemaBasePath=None):
+def schemaDicter(packageName="ligmos", schemaBasePath=None):
     """
     Grab all of the schemas in the package directory and return
     a dict organized by topic name.
@@ -121,7 +121,7 @@ def schemaDicter(schemaBasePath=None):
     if schemaBasePath is None:
         # Get the list of everything in the schema repo
         schemaBasePath = "schemas"
-        allschemas = pkgr.resource_listdir('ligmos', schemaBasePath)
+        allschemas = pkgr.resource_listdir(packageName, schemaBasePath)
     else:
         allschemas = listdir(schemaBasePath)
 
@@ -143,7 +143,7 @@ def schemaDicter(schemaBasePath=None):
         #         print("%s is a directory! Skipping it." % (tsch))
         #         dirBail = True
 
-        if pkgr.resource_isdir('ligmos', spath):
+        if pkgr.resource_isdir(packageName, spath):
             print("%s is a directory! Skipping it." % (tsch))
             dirBail = True
 
@@ -174,7 +174,7 @@ def schemaDicter(schemaBasePath=None):
 
             try:
                 # Define the schema we'll use to convert datatypes
-                sf = pkgr.resource_filename('ligmos', spath)
+                sf = pkgr.resource_filename(packageName, spath)
                 schema = xmls.XMLSchema(sf)
                 # Deal with our multi-version case
                 if vtag is not None:
