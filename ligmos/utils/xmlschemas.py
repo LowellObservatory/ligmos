@@ -157,7 +157,7 @@ def schemaDicter(packageName="ligmos", schemaBasePath=None):
             # if it starts with "@" AND also has underscores, it's probably
             #   a tag.  It's dumb but it works for now. Could be improved.
             if schparts[-1].startswith("@"):
-                print("Likely versioned schema found!")
+                #print("Likely versioned schema found!")
                 if "_" in schparts[-1]:
                     # We want to skip the delimiter ("@") so start at pos. 1
                     #  for the actual tag, and go to pos. -2 for the name
@@ -167,7 +167,7 @@ def schemaDicter(packageName="ligmos", schemaBasePath=None):
                     # Some more transformations to clean it up to what should
                     #   be in the packets themselves
                     vtag = vtag.replace("_", ".")
-                    print("Schema: %s\nTag: %s" % (origtag, vtag))
+                    #print("Schema: %s\nTag: %s" % (origtag, vtag))
             else:
                 origtag = schname
                 vtag = None
