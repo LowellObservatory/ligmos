@@ -63,13 +63,13 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
         best = None
         for verKey in schema:
             testSchema = schema[verKey]
-            print("Testing schema:")
+            #print("Testing schema:")
             print(testSchema.url)
             good = testSchema.is_valid(msg)
             if good is True:
                 # Override the schema variable with the one that worked
                 best = verKey
-                print("Found working schema %s" % (verKey))
+                print("Found working schema version: %s" % (verKey))
                 break
         if best is not None:
             schema = schema[best]
@@ -97,7 +97,7 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
 
     if good is True:
         try:
-            print("Trying to_dict")
+            # print("Trying to_dict")
             xmlp = schema.to_dict(msg, decimal_type=float, validation='lax')
             # I HATE THIS
             if isinstance(xmlp, tuple):
@@ -122,7 +122,7 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
 
             if fields is not None:
                 if timestampKey is not None:
-                    print("Specified timestamp key: %s" % (timestampKey))
+                    #print("Specified timestamp key: %s" % (timestampKey))
                     # Find a key that starts with the given timestampKey.  In
                     #   pretty much all the cases I control, this will be
                     #   influx_ts_s or influx_ts_ms
@@ -151,11 +151,11 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
                     if validTS is True:
                         try:
                             validTSKey = "%s_%s" % (timestampKey, timeprec)
-                            print("Timestamp key: %s" % (validTSKey))
+                            #print("Timestamp key: %s" % (validTSKey))
                             ts = fields.pop(validTSKey)
                         except KeyError:
-                            print("Timestamp key %s not found, using None"
-                                  % (timestampKey))
+                            #print("Timestamp key %s not found, using None"
+                            #      % (timestampKey))
                             ts = None
                             timeprec = 's'
                 else:
@@ -191,7 +191,7 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
                 if returnParsed is True:
                     return meas, ts, timeprec, fields
                 else:
-                    print("Just before makeInfluxPacket")
+                    #print("Just before makeInfluxPacket")
                     print(ts, timeprec)
                     packet = packetizer.makeInfluxPacket(meas=meas,
                                                          ts=ts,
