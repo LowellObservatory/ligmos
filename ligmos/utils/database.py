@@ -109,7 +109,7 @@ class influxobj():
                                                        time_precision=timeprec)
 
                     # Clear the alarm if we made it through this far
-                    print("Success!")
+                    # print("Success!")
                     # influxPostTimeout.clearAlarm()
                 except InfluxDBClientError as err:
                     if err.code == 403:
