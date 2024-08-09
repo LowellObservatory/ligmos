@@ -16,6 +16,7 @@ Further description.
 from __future__ import division, print_function, absolute_import
 
 import time
+import json
 from uuid import uuid4
 from copy import deepcopy
 from collections import OrderedDict
@@ -81,7 +82,7 @@ class ParrotSubscriber(ConnectionListener):
                 #   packet with little/no structure. Attach the sub name
                 #   as a tag so someone else can deal with the thing
                 res = {tname: [headers, body]}
-            except Exception as err:
+            except Exception:
                 # This means that there was some kind of transport error
                 #   or it couldn't figure out the encoding for some reason.
                 #   Scream into the log but keep moving
@@ -107,7 +108,7 @@ class LIGBaseConsumer(ConnectionListener):
     """
     def __init__(self, dbconn=None,
                  tXML=None, tFloat=None, tStr=None, tBool=None,
-                 tSpecial=None, tkXMLSpecial=None):
+                 tSpecial=None, tkXMLSpecial=None, tJSON=None):
         """
         tXML: messages that can be fully parsed by an XML schema and stored
         kXML: messages that can be parsed with an XML schema, but then
@@ -138,6 +139,7 @@ class LIGBaseConsumer(ConnectionListener):
         self.tFloat = tFloat
         self.tStr = tStr
         self.tBool = tBool
+        self.tJSON = tJSON
 
         # Database handle
         self.dbconn = dbconn
@@ -243,6 +245,8 @@ class LIGBaseConsumer(ConnectionListener):
                     if simpleDtype is not None:
                         mp.parserSimple(headers, body, db=self.dbconn,
                                         datatype=simpleDtype)
+                elif tname in self.tJSON:
+                    pass
                 else:
                     print("Orphan topic: %s" % (tname))
                     print(headers)
