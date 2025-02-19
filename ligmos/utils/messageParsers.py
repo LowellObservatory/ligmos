@@ -16,6 +16,7 @@ Further description.
 from __future__ import division, print_function, absolute_import
 
 import os
+import json
 import collections.abc
 import distutils.util as dut
 
@@ -262,3 +263,30 @@ def parserSimple(hed, msg, db=None, datatype='float'):
     #   writes the packet, and then optionally closes it.
     if db is not None:
         db.singleCommit(packet, table=db.tablename, close=True)
+
+
+def parseJSON(hed, msg, makeFlat=True, db=None, debug=False,
+              timestampKey='influx_ts', returnParsed=False):
+    """
+    With makeFlat=True, this will very closely resemble the setup that
+    the PWI4 values arrive in and let us use most of the same codepath.
+    """
+    topic = os.path.basename(hed['destination'])
+
+    dat = json.loads(msg)
+    if makeFlat is True:
+        ndat = flatten(dat, sep=".")
+    else:
+        ndat = dat
+
+    fdat = {}
+    for key in ndat.keys():
+        # Just try to make everything a float, and if it fails it's a string!
+        try:
+            newVal = float(ndat[key])
+        except ValueError:
+            newVal = str(ndat[key])
+
+        fdat.update({key: newVal})
+
+    return ndat

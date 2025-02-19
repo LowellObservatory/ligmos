@@ -246,7 +246,7 @@ class LIGBaseConsumer(ConnectionListener):
                         mp.parserSimple(headers, body, db=self.dbconn,
                                         datatype=simpleDtype)
                 elif tname in self.tJSON:
-                    pass
+                    mp.parseJSON(headers, body, db=self.dbconn, makeFlat=True)
                 else:
                     print("Orphan topic: %s" % (tname))
                     print(headers)
