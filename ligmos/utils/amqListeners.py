@@ -123,6 +123,10 @@ class LIGBaseConsumer(ConnectionListener):
             self.specialMap = tSpecial
             self.specialTopics = list(tSpecial.keys())
 
+        self.jSpecialTopics = None
+        if isinstance(tJSON, dict):
+            self.jSpecialTopics = list(tJSON.keys())
+
         # This should be a *dict* mapping the topic name to a bound method
         #   that is the special/specific parser for that topic.
         # The difference from the above is that the first step will be to
@@ -208,6 +212,10 @@ class LIGBaseConsumer(ConnectionListener):
                     #   of 'db'.  The latter can just be a dummy but it's
                     #   gotta be there!
                     funcRef(rP, db=self.dbconn)
+                elif tname in self.jSpecialTopics:
+                    theseTags = self.tJSON[tname]
+                    mp.parseJSON(headers, body, tags=theseTags,
+                                 db=self.dbconn, makeFlat=True)
                 elif tname in self.tXML:
                     print("Defined regular XML topic")
                     # full parsing of XML (schema-based) third
@@ -245,8 +253,6 @@ class LIGBaseConsumer(ConnectionListener):
                     if simpleDtype is not None:
                         mp.parserSimple(headers, body, db=self.dbconn,
                                         datatype=simpleDtype)
-                elif tname in self.tJSON:
-                    mp.parseJSON(headers, body, db=self.dbconn, makeFlat=True)
                 else:
                     print("Orphan topic: %s" % (tname))
                     print(headers)

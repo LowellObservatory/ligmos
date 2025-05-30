@@ -265,11 +265,23 @@ def parserSimple(hed, msg, db=None, datatype='float'):
         db.singleCommit(packet, table=db.tablename, close=True)
 
 
-def parseJSON(hed, msg, makeFlat=True, db=None, debug=False,
-              timestampKey='influx_ts', returnParsed=False):
+def parseJSON(hed, msg, makeFlat=True, tags={}, db=None, debug=False):
     """
     With makeFlat=True, this will very closely resemble the setup that
     the PWI4 values arrive in and let us use most of the same codepath.
+
+    TODO: Consider the usage of json2xml to scab in schema based checking
+
+    from json2xml import json2xml
+    from json2xml.utils import readfromurl, readfromstring, readfromjson
+
+    j = '{"id":1,"current":0.020,"voltage":117.1,"act_power":0.0,
+          "aprt_power":2.4,"pf":0.00,"freq":60.0,"calibration":"factory"}'
+    d = readfromstring(j)
+    d.update({"name": "casspwr1"})
+    thisXML = json2xml.Json2xml(d, wrapper="shelly_pwrmon").to_xml()
+    ...
+
     """
     topic = os.path.basename(hed['destination'])
 
@@ -289,4 +301,17 @@ def parseJSON(hed, msg, makeFlat=True, db=None, debug=False,
 
         fdat.update({key: newVal})
 
-    return ndat
+    # Make the InfluxDB style packet
+    meas = [topic]
+
+    # Make and store the influx packet
+    # Note: passing ts=None lets python Influx do the timestamp for you
+    packet = packetizer.makeInfluxPacket(meas=meas,
+                                         ts=None,
+                                         tags=tags,
+                                         fields=fdat)
+
+    # Actually commit the packet. singleCommit opens it,
+    #   writes the packet, and then optionally closes it.
+    if db is not None:
+        db.singleCommit(packet, table=db.tablename, close=True)
