@@ -30,6 +30,19 @@ except (ImportError, ModuleNotFoundError) as err:
 from . import alarms
 
 
+class influx2obj():
+    """
+    """
+    def __init__(self, tablename=None, connect=True,
+                 host='localhost', port=8086,
+                 user='marty', pw='mcfly'):
+        self.host = host
+        self.port = port
+        self.username = user
+        self.password = pw
+        self.tablename = tablename
+
+
 class influxobj():
     """
     Creates an InfluxDB database access object, specific to a database name.
@@ -49,18 +62,6 @@ class influxobj():
             self.openDB()
         else:
             self.client = None
-
-    def alterRetention(self, pname='Hold26w', duration='26w'):
-        """
-        DEPRECIATED
-
-        Changing retentions is not to be done so lightly, since you need
-        to remember to move the data from the previous one into the new one
-        as well.
-
-        Now it's just a noop, basically
-        """
-        print("alterRetention is DEPRECIATED!  Doing nothing.")
 
     def openDB(self):
         """
