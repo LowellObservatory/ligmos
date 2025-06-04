@@ -73,6 +73,38 @@ def connAMQ(comm, amqtopics, baseid='ligmos', amqlistener=None):
     return amqbrokers
 
 
+def connIDB_simple(cobj):
+    """
+    Set up the actual connections, which we'll then give back to the actual
+    objects for them to do stuff with afterwards.
+    """
+
+    # Now check the properties of this object to see if it's something we
+    #   actually regconize and then connect to
+    if cobj.type.lower() == 'influxdb':
+        # Create an influxdb object that can be spread around to
+        #   connect and commit packets when they're created.
+        #   Leave it disconnected initially.
+        # Check to see if we've stuffed in a table name to use
+        if hasattr(cobj, 'tablename') is True:
+            tbl = cobj.tablename
+        else:
+            tbl = None
+
+        idb = database.influxobj(host=cobj.host,
+                                    port=cobj.port,
+                                    user=cobj.user,
+                                    tablename=tbl,
+                                    pw=cobj.password,
+                                    connect=False)
+
+        # Connect briefly to check/verify everything is working
+        idb.connect()
+        idb.disconnect()
+
+    return idb
+
+
 def connIDB(comm):
     """
     Set up the actual connections, which we'll then give back to the actual

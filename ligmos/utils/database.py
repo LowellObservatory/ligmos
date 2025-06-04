@@ -19,6 +19,7 @@ import pandas as pd
 
 from requests.exceptions import ConnectionError as RCE
 
+# Import the (depreciated) influxdb-python library
 try:
     import influxdb
     from influxdb import InfluxDBClient
