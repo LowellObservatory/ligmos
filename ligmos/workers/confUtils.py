@@ -119,9 +119,10 @@ def assignConf(conf, obj, backfill=False, debug=False):
             #   to the value that we found/cleaned up (nkval)
             setattr(classy, key, nkval)
         except KeyError:
-            # This means that
             if debug is True:
-                print("Missing expected configuration key %s" % (key))
+                print("Section %s: Missing expected configuration key %s" %\
+                      (classy.name, key))
+
             # Just set it to None and move on with our lives
             setattr(classy, key, None)
 
