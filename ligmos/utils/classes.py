@@ -95,6 +95,7 @@ class Webcam(object):
         self.archive = True
         self.archiveDays = 7
         self.site = None
+        self.sitename = None
         self.sunvalid = -20.0
         self.enabled = False
 
