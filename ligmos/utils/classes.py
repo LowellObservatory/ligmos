@@ -80,6 +80,7 @@ class Webcam(object):
     Class to contain all the important bits of webcam connection information
     """
     def __init__(self):
+        self.name = None
         self.type = None
         self.url = None
         self.fmas = None
