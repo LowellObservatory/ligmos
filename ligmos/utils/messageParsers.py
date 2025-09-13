@@ -123,7 +123,7 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
 
             if fields is not None:
                 if timestampKey is not None:
-                    #print("Specified timestamp key: %s" % (timestampKey))
+                    print("Specified timestamp key: %s" % (timestampKey))
                     # Find a key that starts with the given timestampKey.  In
                     #   pretty much all the cases I control, this will be
                     #   influx_ts_s or influx_ts_ms
@@ -152,11 +152,11 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
                     if validTS is True:
                         try:
                             validTSKey = "%s_%s" % (timestampKey, timeprec)
-                            #print("Timestamp key: %s" % (validTSKey))
+                            print("Timestamp key: %s" % (validTSKey))
                             ts = fields.pop(validTSKey)
                         except KeyError:
-                            #print("Timestamp key %s not found, using None"
-                            #      % (timestampKey))
+                            print("Timestamp key %s not found, using None"
+                                  % (timestampKey))
                             ts = None
                             timeprec = 's'
                 else:
