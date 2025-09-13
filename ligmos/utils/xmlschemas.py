@@ -58,7 +58,7 @@ def findNamedSchema(schemaList, schemaDict, tname):
     return schema
 
 
-def checkSchema(topicname, pacakgeName="ligmos", basepath=None):
+def checkSchema(topicname, packageName="ligmos", basepath=None):
     """
     """
     # Put together the expected schema name
