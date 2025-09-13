@@ -165,7 +165,7 @@ def parserFlatPacket(hed, msg, schema=None, db=None, debug=False,
                     timeprec = 's'
 
                 # Note: passing ts=None lets python Influx do the timestamp
-                # print("Making packet")a
+                # print("Making packet")
                 if best is not None:
                     # This means we had a version of the packet and not
                     #   just the base topic name, so add the version in

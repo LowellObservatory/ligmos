@@ -123,7 +123,7 @@ class LIGBaseConsumer(ConnectionListener):
             self.specialMap = tSpecial
             self.specialTopics = list(tSpecial.keys())
 
-        self.jSpecialTopics = None
+        self.jSpecialTopics = []
         if isinstance(tJSON, dict):
             self.jSpecialTopics = list(tJSON.keys())
 
