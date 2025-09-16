@@ -214,4 +214,4 @@ class hostTarget(baseTarget):
         # Is this legit? Should one delete attributes inherited from a base
         #   that you actually don't really need?  Who knows!
         delattr(self, 'type')
-        delattr(self, 'name')
+        #delattr(self, 'name')
